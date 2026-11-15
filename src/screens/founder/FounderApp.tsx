@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react"
 import { Routes, Route, useNavigate, Navigate, useLocation } from "react-router-dom"
 import { apiRequest } from "@/lib/api"
+import { ResetLabsFacilitatorDashboard } from "@/screens/employee/ResetLabsSessionSystem"
 
 // ── Shared UI & Badges ─────────────────────────────────────────────────────────
 
@@ -74,6 +75,13 @@ function IconB2CUsers({ active }: { active?: boolean }) {
   return (
     <svg className={`w-5 h-5 ${active ? "text-purple-core" : "text-gray-500"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+    </svg>
+  )
+}
+function IconResetLabs({ active }: { active?: boolean }) {
+  return (
+    <svg className={`w-5 h-5 ${active ? "text-purple-core" : "text-gray-500"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
     </svg>
   )
 }
@@ -5439,6 +5447,15 @@ function SettingsScreen() {
   )
 }
 
+// ── Reset Labs Admin Session Management ──────────────────────────────────────
+function ResetLabsAdminScreen() {
+  return (
+    <div className="space-y-6">
+      <ResetLabsFacilitatorDashboard />
+    </div>
+  )
+}
+
 // ── Layout ────────────────────────────────────────────────────────────────────
 
 export default function FounderApp() {
@@ -5457,6 +5474,7 @@ export default function FounderApp() {
     { id: "users", path: "/founder/users", label: "B2C Users", icon: <IconB2CUsers active={currentPath === "users"} /> },
     { id: "employees", path: "/founder/employees", label: "Employees", icon: <IconUsers active={currentPath === "employees"} /> },
     { id: "assessments", path: "/founder/assessments", label: "Assessments", icon: <IconAssessments active={currentPath === "assessments"} /> },
+    { id: "reset-labs", path: "/founder/reset-labs", label: "Reset Labs", icon: <IconResetLabs active={currentPath === "reset-labs"} /> },
     { id: "activity-logs", path: "/founder/activity-logs", label: "Activity Logs", icon: <IconLogs active={currentPath === "activity-logs"} /> },
     { id: "settings", path: "/founder/settings", label: "Settings", icon: <IconSettings active={currentPath === "settings"} /> },
   ]
@@ -5565,6 +5583,7 @@ export default function FounderApp() {
             <Route path="users" element={<B2CUsersScreen />} />
             <Route path="employees" element={<EmployeesScreen />} />
             <Route path="assessments" element={<AssessmentsScreen />} />
+            <Route path="reset-labs" element={<ResetLabsAdminScreen />} />
             <Route path="activity-logs" element={<LogsScreen />} />
             <Route path="settings" element={<SettingsScreen />} />
             <Route path="*" element={<Navigate to="/founder" />} />

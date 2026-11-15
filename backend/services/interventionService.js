@@ -87,13 +87,21 @@ const STANDARD_INTERVENTIONS = [
     status: "Active",
   },
 
-  // 4. Workshops
+  // 4. Reset Labs / Experiential Programs
   {
     name: "Acoustic Unwind",
-    type: "WORKSHOP",
-    category: "Workshop",
-    description: "Immersive group acoustic recovery workshop targeting cognitive overload and team fatigue.",
-    duration: "30 min",
+    type: "RESET_LAB",
+    category: "Music & Mindfulness",
+    description: "A guided musical wellbeing experience using live acoustic music, mindful listening and moments of reflection to create space for relaxation and emotional expression.",
+    duration: "45 min",
+    status: "Active",
+  },
+  {
+    name: "Express & Unwind",
+    type: "RESET_LAB",
+    category: "Art & Creative Expression",
+    description: "A creative wellbeing experience combining art, colours and guided self-expression to help participants explore their thoughts and emotions in a relaxed environment.",
+    duration: "60 min",
     status: "Active",
   },
 ]

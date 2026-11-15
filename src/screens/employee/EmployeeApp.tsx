@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback, useMemo } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState, useEffect, useCallback, useMemo, useRef } from "react"
+import { createPortal } from "react-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import UpcomingSessionCard, { UpcomingSessionData } from "@/components/UpcomingSessionCard"
 import {
   ResponsiveContainer,
@@ -20,9 +21,12 @@ import Journal from "./Journal"
 import MusicalReset from "./MusicalReset"
 import MovementReset from "./MovementReset"
 import GuidedReset from "./GuidedReset"
+import MindBodyScreen from "./MindBodyScreen"
+import ResetLabsScreen from "./ResetLabsScreen"
 
-type Screen =
+export type Screen =
   | "home"
+  | "mind-body"
   | "checkin-1"
   | "checkin-2"
   | "checkin-3"
@@ -65,6 +69,52 @@ interface CheckInData {
   driver: string
 }
 
+// ── Route & Screen Mapping ───────────────────────────────────────────────────
+
+export const ROUTE_TO_SCREEN: Record<string, Screen> = {
+  "/baseline": "baseline-msi",
+  "/psychometric": "baseline-msi",
+  "/checkin": "checkin-1",
+  "/behavioral": "stress-cause",
+  "/profile": "profile",
+  "/notification-settings": "notifications",
+  "/archetype-quiz": "archetype",
+  "/archetype-reveal": "archetype",
+  "/archetypes-gallery": "archetype",
+  "/dump": "dump-bag",
+  "/response": "dump-response",
+  "/reset": "reset-list",
+  "/stress-labs": "reset-labs",
+  "/productivity-readiness": "recommended",
+  "/listener/connect": "listener-connect",
+  "/listener": "listener-connect",
+  "/listeners": "listener-connect",
+  "/listener-booking": "listener-schedule",
+  "/my-sessions": "my-sessions",
+  "/mind-body": "mind-body",
+  "/mbsi": "mind-body",
+  "/home": "home",
+}
+
+export const SCREEN_TO_ROUTE: Partial<Record<Screen, string>> = {
+  "home": "/home",
+  "mind-body": "/mind-body",
+  "baseline-msi": "/baseline",
+  "checkin-1": "/checkin",
+  "stress-cause": "/behavioral",
+  "profile": "/profile",
+  "notifications": "/notification-settings",
+  "archetype": "/archetype-quiz",
+  "dump-bag": "/dump",
+  "dump-response": "/response",
+  "reset-list": "/reset",
+  "reset-labs": "/stress-labs",
+  "recommended": "/productivity-readiness",
+  "listener-connect": "/listener",
+  "listener-schedule": "/listener-booking",
+  "my-sessions": "/my-sessions",
+}
+
 // ── Bottom nav ─────────────────────────────────────────────────────────────────
 
 function BottomNav({ active, onNav }: { active: string; onNav: (s: Screen) => void }) {
@@ -77,18 +127,30 @@ function BottomNav({ active, onNav }: { active: string; onNav: (s: Screen) => vo
   ]
   const dumpGroup  = ["dump-response"]
   const resetGroup = ["reset-active", "reset-complete", "reset-labs", "priority-reset", "breathing-reset", "journal", "music-reset", "movement-reset", "energy-reset", "relaxation", "sleep-winddown"]
-  const homeGroup  = ["my-stress", "checkin-1", "checkin-2", "checkin-3", "driver", "result", "recommended", "baseline-msi", "stress-cause", "msi-meaning", "profile", "settings", "listener-connect", "listener-schedule", "notifications"]
+  const homeGroup  = ["my-stress", "mind-body", "checkin-1", "checkin-2", "checkin-3", "driver", "result", "recommended", "baseline-msi", "stress-cause", "msi-meaning", "profile", "settings", "listener-connect", "listener-schedule", "notifications"]
 
-  return (
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const navElement = (
     <nav
       aria-label="Bottom Navigation"
-      className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none flex justify-center"
+      style={{
+        position: "fixed",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        top: "auto",
+        width: "100%",
+        zIndex: 9999,
+      }}
+      className="pointer-events-none flex justify-center px-0"
     >
-      <div className="w-full max-w-xl md:max-w-2xl lg:max-w-3xl pointer-events-auto relative">
-        {/* Soft gradient fade upward */}
-        <div className="h-6 bg-gradient-to-t from-midnight/90 to-transparent pointer-events-none" />
-        <div className="bg-midnight/95 backdrop-blur-xl border-t border-white/[0.06] pb-[env(safe-area-inset-bottom,0px)] shadow-[0_-8px_30px_rgba(0,0,0,0.45)]">
-          <div className="flex items-center justify-around px-2 py-2">
+      <div className="w-full max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl pointer-events-auto">
+        <div className="bg-surface/95 backdrop-blur-md border-t border-border-p shadow-[0_-4px_20px_-4px_rgba(92,66,40,0.12)] pb-[max(0.6rem,env(safe-area-inset-bottom,0px))] pt-1.5 px-2 sm:px-4">
+          <div className="grid grid-cols-5 items-center">
             {tabs.map((t) => {
               const Icon = t.icon
               const isActive =
@@ -100,12 +162,12 @@ function BottomNav({ active, onNav }: { active: string; onNav: (s: Screen) => vo
                 <button
                   key={t.id}
                   onClick={() => onNav(t.id as Screen)}
-                  className="flex flex-col items-center gap-1 py-1 px-3 min-h-[44px] transition-all cursor-pointer"
+                  className="flex flex-col items-center justify-center gap-1 py-1 px-1 min-h-[46px] rounded-xl transition-all cursor-pointer hover:bg-black/[0.03]"
                 >
-                  <div className={`w-9 h-9 rounded-2xl flex items-center justify-center transition-all duration-300 ${isActive ? "bg-purple-core/15" : ""}`}>
+                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-200 ${isActive ? "bg-purple-core/15 text-purple-core" : "text-text-muted"}`}>
                     <Icon active={isActive} />
                   </div>
-                  <span className={`text-[9px] font-medium tracking-wide transition-colors ${isActive ? "text-lavender-bright" : "text-text-muted/70"}`}>
+                  <span className={`text-[10px] font-medium tracking-tight transition-colors truncate max-w-full ${isActive ? "text-purple-core font-semibold" : "text-text-muted"}`}>
                     {t.label}
                   </span>
                 </button>
@@ -116,6 +178,12 @@ function BottomNav({ active, onNav }: { active: string; onNav: (s: Screen) => vo
       </div>
     </nav>
   )
+
+  if (!mounted || typeof document === "undefined") {
+    return null
+  }
+
+  return createPortal(navElement, document.body)
 }
 
 function NavHomeIcon({ active }: { active: boolean }) {
@@ -153,7 +221,7 @@ function NavHeartIcon({ active }: { active: boolean }) {
 
 function Shell({ children, noNav }: { children: React.ReactNode; noNav?: boolean }) {
   return (
-    <div className={`flex-1 overflow-y-auto px-5 pt-5 ${noNav ? "pb-6" : "pb-[calc(7rem+env(safe-area-inset-bottom,0px))]"}`}>
+    <div className={`flex-1 overflow-y-auto px-4 sm:px-6 md:px-8 pt-5 sm:pt-6 ${noNav ? "pb-6" : "pb-[calc(8.5rem+env(safe-area-inset-bottom,0px))]"}`}>
       {children}
     </div>
   )
@@ -330,10 +398,8 @@ function getPrimaryRec(msi: number): PrimaryRec {
 function SoftCard({ children, className = "", delay = 0, style }: { children: React.ReactNode; className?: string; delay?: number; style?: React.CSSProperties }) {
   return (
     <div
-      className={`rounded-3xl animate-fade-up ${className}`}
+      className={`card-base animate-fade-up ${className}`}
       style={{
-        background: "rgba(255,255,255,0.04)",
-        border: "1px solid rgba(255,255,255,0.07)",
         animationDelay: `${delay}ms`,
         ...style,
       }}
@@ -350,7 +416,7 @@ function MsiGauge({ pct, color, size = 64 }: { pct: number | null; color: string
   const dash = pct != null ? circ * Math.min(Math.max(numVal / 100, 0), 1) : 0
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="flex-shrink-0">
-      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="4" />
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(138, 121, 102, 0.18)" strokeWidth="4" />
       <circle
         cx={size / 2} cy={size / 2} r={r} fill="none"
         stroke={color} strokeWidth="4"
@@ -359,10 +425,10 @@ function MsiGauge({ pct, color, size = 64 }: { pct: number | null; color: string
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
         style={{ transition: "stroke-dasharray 0.6s ease" }}
       />
-      <text x={size / 2} y={size / 2 - 4} textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="13" fontWeight="700" fontFamily="inherit">
+      <text x={size / 2} y={size / 2 - 4} textAnchor="middle" dominantBaseline="middle" fill="#2A2019" fontSize="13" fontWeight="700" fontFamily="inherit">
         {pct != null ? `${pct}%` : "—"}
       </text>
-      <text x={size / 2} y={size / 2 + 11} textAnchor="middle" dominantBaseline="middle" fill="rgba(255,255,255,0.45)" fontSize="8" fontFamily="inherit" letterSpacing="1">
+      <text x={size / 2} y={size / 2 + 11} textAnchor="middle" dominantBaseline="middle" fill="#8A7966" fontSize="8" fontWeight="600" fontFamily="inherit" letterSpacing="1">
         MSI
       </text>
     </svg>
@@ -500,6 +566,11 @@ function HomeScreen({ onNav }: { onNav: (s: Screen) => void }) {
           } else {
             localStorage.removeItem("cq_next_baseline_date")
           }
+          if (metricsData.data.latestMbsi) {
+            localStorage.setItem("cq_latest_mbsi", JSON.stringify(metricsData.data.latestMbsi))
+          } else {
+            localStorage.removeItem("cq_latest_mbsi")
+          }
         }
         if (rootCauseData.success && rootCauseData.data) {
           setLatestRootCause(rootCauseData.data)
@@ -541,8 +612,14 @@ function HomeScreen({ onNav }: { onNav: (s: Screen) => void }) {
       fetchDashboardData(true)
     }
 
+    const handleMbsiUpdated = () => {
+      homeDashboardCache = null
+      fetchDashboardData(true)
+    }
+
     window.addEventListener("cq_recommendations_updated", handleRecsUpdated)
     window.addEventListener("cq_baseline_updated", handleBaselineUpdated)
+    window.addEventListener("cq_mbsi_updated", handleMbsiUpdated)
     const notifInterval = setInterval(() => {
       if (!document.hidden) {
         fetchNotifications()
@@ -551,6 +628,7 @@ function HomeScreen({ onNav }: { onNav: (s: Screen) => void }) {
     return () => {
       window.removeEventListener("cq_recommendations_updated", handleRecsUpdated)
       window.removeEventListener("cq_baseline_updated", handleBaselineUpdated)
+      window.removeEventListener("cq_mbsi_updated", handleMbsiUpdated)
       clearInterval(notifInterval)
     }
   }, [fetchDashboardData, fetchRecommendations, fetchNotifications])
@@ -595,13 +673,71 @@ function HomeScreen({ onNav }: { onNav: (s: Screen) => void }) {
 
   // Stress category styling and caring human assurance messaging for circular MSI card
   const displayScore = currentMsi ?? baselineMsi ?? null
-  const activeStressCat = displayScore != null ? getMsiStressCategory(displayScore) : null
+  const activeStressCat = getMsiStressCategory(displayScore)
 
   const headline = currentMsi != null && band ? (MSI_HEADLINE[band.label] ?? "Your stress is running smoothly.") : "Baseline established. Check in to track daily shifts."
   const subtext = currentMsi != null && band ? (MSI_SUBTEXT[band.label] ?? "Even a few quiet minutes today can help.") : "Take your daily check-in to monitor changes from your baseline."
   const gaugeColor = currentMsi != null && band ? (GAUGE_COLOR[band.label] ?? "#4ade80") : "#a78bfa"
   const baselineGaugeColor = baselineMsi != null && baselineBand ? (GAUGE_COLOR[baselineBand.label] ?? "#4ade80") : "#a78bfa"
-  const primaryRec = msiForDisplay != null ? getPrimaryRec(msiForDisplay) : null
+  const primaryRec = getPrimaryRec(msiForDisplay ?? 50)
+
+  // Source of truth for MBSI: authoritatively from assessmentMetrics or synchronized local storage cache
+  const cachedMbsiRaw = typeof window !== "undefined" ? localStorage.getItem("cq_latest_mbsi") : null
+  let cachedMbsiObj: any = null
+  if (cachedMbsiRaw) {
+    try {
+      cachedMbsiObj = JSON.parse(cachedMbsiRaw)
+    } catch {}
+  }
+
+  const latestMbsi =
+    assessmentMetrics?.latestMbsi && typeof assessmentMetrics.latestMbsi.score === "number"
+      ? assessmentMetrics.latestMbsi
+      : cachedMbsiObj && typeof cachedMbsiObj.score === "number"
+      ? cachedMbsiObj
+      : null
+
+  const hasCalculatedMbsi = latestMbsi != null && typeof latestMbsi.score === "number"
+
+  const mbsiDateFormatted = latestMbsi?.calculatedAt
+    ? new Date(latestMbsi.calculatedAt).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })
+    : null
+
+  const mbsiPsychContribution = latestMbsi ? (latestMbsi.msiScore * 0.6).toFixed(1) : "0.0"
+  const mbsiBioContribution = latestMbsi ? (latestMbsi.bsiScore * 0.4).toFixed(1) : "0.0"
+
+  const getMbsiCategoryInfo = (score: number) => {
+    if (score <= 30) {
+      return {
+        title: "Low Stress Integration",
+        badgeClass: "text-emerald-700 bg-emerald-50 border-emerald-200 dark:text-emerald-400 dark:bg-emerald-950/40 dark:border-emerald-800/50",
+        dotColor: "bg-emerald-500",
+      }
+    }
+    if (score <= 55) {
+      return {
+        title: "Moderate Stress Integration",
+        badgeClass: "text-amber-800 bg-amber-50 border-amber-200 dark:text-amber-400 dark:bg-amber-950/40 dark:border-amber-800/50",
+        dotColor: "bg-amber-500",
+      }
+    }
+    if (score <= 75) {
+      return {
+        title: "Elevated Stress Integration",
+        badgeClass: "text-[#B5572E] bg-[#B5572E]/10 border-[#B5572E]/25",
+        dotColor: "bg-[#B5572E]",
+      }
+    }
+    return {
+      title: "High Stress Integration",
+      badgeClass: "text-rose-700 bg-rose-50 border-rose-200 dark:text-rose-400 dark:bg-rose-950/40 dark:border-rose-800/50",
+      dotColor: "bg-rose-500",
+    }
+  }
 
   const assessments = JSON.parse(localStorage.getItem("cq_stress_assessments") ?? "[]")
   const recentAssessment = assessments.length > 0 ? assessments[assessments.length - 1] : null
@@ -642,46 +778,46 @@ function HomeScreen({ onNav }: { onNav: (s: Screen) => void }) {
   const todayStr = new Date().toLocaleDateString("en-US", { weekday: "long", day: "numeric", month: "long" })
 
   return (
-    <div className="flex-1 overflow-y-auto pb-[calc(7.5rem+env(safe-area-inset-bottom,0px))] relative">
+    <div className="flex-1 overflow-y-auto pb-[calc(8.5rem+env(safe-area-inset-bottom,0px))] relative">
       {/* Ambient background orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full" style={{ background: "radial-gradient(circle, rgba(155,93,229,0.10) 0%, transparent 68%)", filter: "blur(32px)" }} />
-        <div className="absolute top-1/3 -right-24 w-64 h-64 rounded-full" style={{ background: "radial-gradient(circle, rgba(100,60,200,0.06) 0%, transparent 70%)", filter: "blur(40px)" }} />
+        <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full" style={{ background: "radial-gradient(circle, rgba(181,87,46,0.08) 0%, transparent 68%)", filter: "blur(32px)" }} />
+        <div className="absolute top-1/3 -right-24 w-64 h-64 rounded-full" style={{ background: "radial-gradient(circle, rgba(217,164,91,0.07) 0%, transparent 70%)", filter: "blur(40px)" }} />
       </div>
 
-      <div className="relative px-5 pt-7 space-y-4">
+      <div className="relative px-4 sm:px-6 md:px-8 pt-6 sm:pt-8 space-y-4 sm:space-y-5">
         {/* Greeting */}
-        <div className="flex items-start justify-between mb-2 animate-fade-up">
+        <div className="flex items-start justify-between mb-1 animate-fade-up">
           <div>
             <p className="text-[12px] text-text-muted mb-1 tracking-wide">{todayStr}</p>
-            <h1 className="text-[22px] font-semibold text-warm-white leading-snug">Good morning, {firstName}.</h1>
+            <h1 className="text-xl sm:text-2xl font-semibold text-warm-white leading-snug">Good morning, {firstName}.</h1>
           </div>
           <div className="flex items-center gap-2 mt-1">
             {/* Notification bell */}
             <button
               onClick={() => onNav("notifications")}
-              className="relative w-9 h-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center flex-shrink-0 hover:bg-white/8 transition-all"
+              className="relative w-9 h-9 rounded-full border border-border-p bg-surface flex items-center justify-center flex-shrink-0 hover:bg-elevated hover:border-border-s transition-all shadow-xs cursor-pointer"
               aria-label="Notifications"
             >
-              <svg className="w-4.5 h-4.5 text-text-muted" width="18" height="18" fill="none" viewBox="0 0 24 24">
-                <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+              <svg className="w-4.5 h-4.5 text-text-secondary" width="18" height="18" fill="none" viewBox="0 0 24 24">
+                <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               {unreadCount > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-purple-core border border-midnight flex items-center justify-center">
-                  <span className="text-[9px] font-bold text-warm-white leading-none">{unreadCount}</span>
+                  <span className="text-[9px] font-bold text-white leading-none">{unreadCount}</span>
                 </span>
               )}
             </button>
             {/* Profile */}
             <button
               onClick={() => onNav("profile")}
-              className="w-9 h-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center flex-shrink-0 hover:bg-white/8 transition-all"
+              className="w-9 h-9 rounded-full border border-border-p bg-surface flex items-center justify-center flex-shrink-0 hover:bg-elevated hover:border-border-s transition-all shadow-xs cursor-pointer"
               aria-label="Profile"
             >
-              <svg className="w-5 h-5 text-text-muted" fill="none" viewBox="0 0 24 24">
-                <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.4" />
-                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+              <svg className="w-5 h-5 text-text-secondary" fill="none" viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.5" />
+                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             </button>
           </div>
@@ -692,150 +828,154 @@ function HomeScreen({ onNav }: { onNav: (s: Screen) => void }) {
 
         {/* Weekly Baseline MSI Card */}
         {!hasBaseline ? (
-          <SoftCard delay={40}>
-            <div className="p-5">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-14 h-14 rounded-full bg-purple-core/10 border border-purple-core/20 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-purple-core" fill="none" viewBox="0 0 24 24">
-                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-purple-core/10 border border-purple-core/25 mb-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-purple-core animate-pulse" />
-                    <span className="text-[10px] font-semibold text-lavender-bright uppercase tracking-wider">Initial Calibration</span>
-                  </div>
-                  <h3 className="text-base font-semibold text-warm-white">Let's calculate your baseline MSI</h3>
-                  <p className="text-xs text-text-muted mt-0.5 leading-relaxed">
-                    Establish your personal stress baseline to unlock tailored tracking.
-                  </p>
-                </div>
+          <SoftCard delay={40} className="p-5 sm:p-6">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-13 h-13 rounded-2xl bg-purple-core/10 border border-purple-core/20 flex items-center justify-center flex-shrink-0 text-purple-core">
+                <svg className="w-6 h-6 text-purple-core" fill="none" viewBox="0 0 24 24">
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
               </div>
-
-              <button
-                onClick={() => onNav("baseline-msi")}
-                className="w-full btn-primary py-3.5 rounded-2xl text-sm font-semibold cursor-pointer shadow-lg shadow-purple-900/20"
-              >
-                Let's calculate your baseline MSI →
-              </button>
-            </div>
-          </SoftCard>
-        ) : (
-          <SoftCard delay={30}>
-            <div className="p-5 relative">
-              {/* Top Section Label */}
-              <div className="flex items-center justify-between gap-2 mb-3.5">
-                <p className="text-[11px] font-medium text-lavender-soft/80 flex items-center gap-1.5">
-                  <span>🌱</span>
-                  <span>{"How you're doing right now"}</span>
+              <div className="flex-1 min-w-0">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-purple-core/10 border border-purple-core/25 mb-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-core animate-pulse" />
+                  <span className="text-[10px] font-semibold text-purple-core uppercase tracking-wider">Initial Calibration</span>
+                </div>
+                <h3 className="text-base font-semibold text-warm-white">Let's calculate your baseline MSI</h3>
+                <p className="text-xs text-text-muted mt-0.5 leading-relaxed">
+                  Establish your personal stress baseline to unlock tailored tracking.
                 </p>
               </div>
+            </div>
 
-              {/* Main Wellbeing Section: Circular Indicator on Left, Human Message on Right */}
-              <div className="flex items-start gap-4 mb-4">
-                <div className="flex-shrink-0 pt-0.5">
-                  <MsiGauge pct={displayScore} color={activeStressCat.gaugeColor} size={68} />
-                </div>
-                <div className="flex-1 min-w-0 pt-0.5 space-y-1">
-                  <p className="text-[15px] font-semibold text-warm-white leading-snug">
-                    {activeStressCat.title}
-                  </p>
-                  <p className="text-xs text-text-muted leading-relaxed">
-                    {activeStressCat.subtext}
-                  </p>
-                </div>
+            <button
+              onClick={() => onNav("baseline-msi")}
+              className="w-full btn-primary py-3.5 rounded-xl text-sm font-semibold cursor-pointer shadow-md"
+            >
+              Let's calculate your baseline MSI →
+            </button>
+          </SoftCard>
+        ) : (
+          <SoftCard delay={30} className="p-5 sm:p-6 relative">
+            {/* Top Section Label */}
+            <div className="flex items-center justify-between gap-2 mb-3.5">
+              <p className="text-[11px] font-medium text-lavender-soft flex items-center gap-1.5">
+                <span>🌱</span>
+                <span>{"How you're doing right now"}</span>
+              </p>
+            </div>
+
+            {/* Main Wellbeing Section: Circular Indicator on Left, Human Message on Right */}
+            <div className="flex items-start gap-4 mb-4">
+              <div className="flex-shrink-0 pt-0.5">
+                <MsiGauge pct={displayScore} color={activeStressCat.gaugeColor} size={68} />
+              </div>
+              <div className="flex-1 min-w-0 pt-0.5 space-y-1">
+                <p className="text-[15px] sm:text-base font-semibold text-warm-white leading-snug">
+                  {activeStressCat.title}
+                </p>
+                <p className="text-xs text-text-muted leading-relaxed">
+                  {activeStressCat.subtext}
+                </p>
+              </div>
+            </div>
+
+            {/* Subtle Bottom Section inside same card */}
+            <div className="pt-3 border-t border-border-p flex items-center justify-between gap-2">
+              <div className="min-w-0 flex-1">
+                {isBaselineEligible ? (
+                  <button
+                    onClick={() => onNav("baseline-msi")}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-core hover:text-lavender-bright transition-colors cursor-pointer py-1"
+                  >
+                    <span>Update your baseline MSI</span>
+                    <span>→</span>
+                  </button>
+                ) : (
+                  <div className="inline-flex items-center gap-1.5 text-xs text-text-muted select-none">
+                    <svg className="w-3.5 h-3.5 text-text-muted/70 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    <span>
+                      Update your baseline MSI in {baselineRemainingDays} {baselineRemainingDays === 1 ? "day" : "days"}
+                    </span>
+                  </div>
+                )}
               </div>
 
-              {/* Subtle Bottom Section inside same card */}
-              <div className="pt-3 border-t border-white/5 flex items-center justify-between gap-2">
-                <div className="min-w-0 flex-1">
-                  {isBaselineEligible ? (
-                    <button
-                      onClick={() => onNav("baseline-msi")}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-lavender-bright hover:text-lavender-soft transition-colors cursor-pointer py-1"
-                    >
-                      <span>Update your baseline MSI</span>
-                      <span>→</span>
-                    </button>
-                  ) : (
-                    <div className="inline-flex items-center gap-1.5 text-xs text-text-muted select-none">
-                      <svg className="w-3.5 h-3.5 text-text-muted/70 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                      </svg>
-                      <span>
-                        Update your baseline MSI in {baselineRemainingDays} {baselineRemainingDays === 1 ? "day" : "days"}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Compact Understand it action at bottom right corner */}
-                <button
-                  onClick={() => onNav("my-stress")}
-                  className="inline-flex items-center gap-1 text-xs font-medium text-text-muted/80 hover:text-lavender-bright transition-colors cursor-pointer py-1 px-1.5 rounded-md hover:bg-white/5 active:scale-95 flex-shrink-0"
-                >
-                  <span>Understand it</span>
-                  <span className="text-lavender-soft/70">→</span>
-                </button>
-              </div>
+              {/* Compact Understand it action at bottom right corner */}
+              <button
+                onClick={() => onNav("my-stress")}
+                className="inline-flex items-center gap-1 text-xs font-medium text-text-secondary hover:text-purple-core transition-colors cursor-pointer py-1 px-2 rounded-lg hover:bg-black/[0.03] active:scale-95 flex-shrink-0"
+              >
+                <span>Understand it</span>
+                <span className="text-purple-core">→</span>
+              </button>
             </div>
           </SoftCard>
         )}
 
         {/* Let's understand this */}
         {hasBaseline && currentMsi != null && currentMsi > 40 && (
-          <SoftCard delay={65} className="p-5" style={{ background: "rgba(155,93,229,0.06)", border: "1px solid rgba(155,93,229,0.12)" }}>
-            <p className="text-[10px] text-lavender-soft/60 mb-3">💭 {"Let's understand this"}</p>
-            <p className="text-base font-medium text-warm-white mb-2">{"What's been weighing on you lately?"}</p>
-            <p className="text-sm text-text-muted leading-relaxed mb-4">{"Choose what feels relevant — we'll help you make sense of it."}</p>
+          <SoftCard delay={65} className="p-5 sm:p-6 bg-purple-core/[0.04] border-purple-core/20">
+            <p className="text-[11px] font-medium text-lavender-soft mb-2 flex items-center gap-1.5">
+              <span>💭</span>
+              <span>{"Let's understand this"}</span>
+            </p>
+            <p className="text-base font-semibold text-warm-white mb-1.5">{"What's been weighing on you lately?"}</p>
+            <p className="text-xs sm:text-sm text-text-muted leading-relaxed mb-4">{"Choose what feels relevant — we'll help you make sense of it."}</p>
             
             {latestRootCause && (
-              <div className="mb-4 p-3 rounded-2xl bg-purple-core/10 border border-purple-core/25">
-                <p className="text-[10px] text-lavender-bright uppercase tracking-wider font-semibold mb-0.5">Based on your latest check-in</p>
+              <div className="mb-4 p-3.5 rounded-xl bg-purple-core/10 border border-purple-core/20">
+                <p className="text-[10px] text-purple-core uppercase tracking-wider font-semibold mb-0.5">Based on your latest check-in</p>
                 <p className="text-xs text-warm-white font-medium">
                   Primary Cause: <span className="font-bold text-lavender-soft">{latestRootCause.primaryCause}</span>
                 </p>
               </div>
             )}
 
-            <button onClick={() => onNav("stress-cause")} className="text-sm font-medium text-lavender-bright hover:text-lavender-soft transition-colors cursor-pointer">
-              {latestRootCause ? "View what might help →" : "Let's find out →"}
+            <button onClick={() => onNav("stress-cause")} className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-purple-core hover:text-lavender-bright transition-colors cursor-pointer">
+              <span>{latestRootCause ? "View what might help" : "Let's find out"}</span>
+              <span>→</span>
             </button>
           </SoftCard>
         )}
 
         {/* For right now — AI-powered personalized recommendations */}
         <div className="animate-fade-up" style={{ animationDelay: "80ms" }}>
-          <div className="flex items-center justify-between mb-3 px-1">
-            <p className="text-[10px] text-text-muted">🌱 For right now</p>
+          <div className="flex items-center justify-between mb-2.5 px-0.5">
+            <p className="text-[11px] font-medium text-text-muted flex items-center gap-1.5">
+              <span>🌱</span>
+              <span>For right now</span>
+            </p>
             {recsLoading && (
-              <span className="text-[10px] text-lavender-soft/70 font-mono-data animate-pulse">
+              <span className="text-[10px] text-lavender-soft font-mono-data animate-pulse">
                 Finding something that may help...
               </span>
             )}
           </div>
 
           {!hasBaseline && currentMsi == null ? (
-            <SoftCard className="p-5" style={{ background: "rgba(155,93,229,0.04)", border: "1px solid rgba(155,93,229,0.1)" }}>
-              <div className="text-left space-y-3">
+            <SoftCard className="p-5 sm:p-6">
+              <div className="text-left space-y-2.5">
                 <p className="text-sm font-semibold text-warm-white">
                   Start your check-in to get a recommendation that fits how you're feeling today.
                 </p>
                 <button
                   onClick={() => onNav("checkin-1")}
-                  className="text-xs font-semibold text-lavender-bright hover:text-lavender-soft transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-core hover:text-lavender-bright transition-colors cursor-pointer"
                 >
-                  Check in →
+                  <span>Check in</span>
+                  <span>→</span>
                 </button>
               </div>
             </SoftCard>
           ) : recsLoading && recommendations.length === 0 ? (
-            <SoftCard className="p-5" style={{ background: "rgba(155,93,229,0.04)", border: "1px solid rgba(155,93,229,0.1)" }}>
+            <SoftCard className="p-5 sm:p-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-purple-core/10 border border-purple-core/20 flex items-center justify-center text-lg flex-shrink-0 animate-pulse">
                   🌱
                 </div>
-                <div className="flex-1 min-w-0 space-y-2">
+                <div className="flex-1 min-w-0 space-y-1">
                   <p className="text-sm font-semibold text-warm-white">Finding something that may help...</p>
                   <p className="text-xs text-text-muted">Personalizing recommendations to your stress reflections.</p>
                 </div>
@@ -870,38 +1010,37 @@ function HomeScreen({ onNav }: { onNav: (s: Screen) => void }) {
                 return (
                   <SoftCard
                     key={rec.id || i}
-                    className="p-4 transition-all hover:border-purple-core/30"
-                    style={{ background: "rgba(155,93,229,0.04)", border: "1px solid rgba(155,93,229,0.1)" }}
+                    className="p-4 sm:p-5 transition-all hover:border-purple-core/30"
                   >
                     <div className="flex items-start gap-3.5">
                       <div className="w-9 h-9 rounded-xl bg-purple-core/10 border border-purple-core/20 flex items-center justify-center text-base flex-shrink-0">
                         {rec.icon || (isFeature ? "✨" : "📋")}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
                           <span
                             className={`text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-md ${
                               isFeature
-                                ? "bg-purple-core/20 text-lavender-bright border border-purple-core/30"
-                                : "bg-emerald-500/15 text-emerald-400 border border-emerald-500/25"
+                                ? "bg-purple-core/15 text-purple-core border border-purple-core/25"
+                                : "bg-emerald-500/15 text-emerald-800 border border-emerald-500/25"
                             }`}
                           >
                             {isFeature ? "CortiQuant" : "Action"}
                           </span>
-                          <p className="text-xs font-semibold text-warm-white truncate">{rec.title}</p>
+                          <p className="text-xs sm:text-sm font-semibold text-warm-white truncate">{rec.title}</p>
                         </div>
-                        <p className="text-xs text-text-muted leading-relaxed mb-2.5">{rec.description}</p>
+                        <p className="text-xs text-text-muted leading-relaxed mb-3">{rec.description}</p>
                         
-                        <div className="pt-2 border-t border-purple-core/10 flex items-center justify-between">
+                        <div className="pt-2.5 border-t border-border-p flex items-center justify-between gap-2">
                           {isFeature ? (
                             <button
                               onClick={() => onNav(navTarget)}
-                              className="text-xs font-semibold text-lavender-bright hover:text-lavender-soft transition-colors cursor-pointer"
+                              className="text-xs font-semibold text-purple-core hover:text-lavender-bright transition-colors cursor-pointer"
                             >
                               {ctaText}
                             </button>
                           ) : (
-                            <span className="text-[11px] font-medium text-emerald-400/90 flex items-center gap-1">
+                            <span className="text-[11px] font-medium text-emerald-800 flex items-center gap-1">
                               ✓ {ctaText}
                             </span>
                           )}
@@ -922,7 +1061,7 @@ function HomeScreen({ onNav }: { onNav: (s: Screen) => void }) {
             </div>
           ) : (
             /* Default neutral recommendation when no root-cause analysis has been completed yet or MSI is within range */
-            <SoftCard className="p-5" style={{ background: "rgba(155,93,229,0.04)", border: "1px solid rgba(155,93,229,0.1)" }}>
+            <SoftCard className="p-5 sm:p-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-purple-core/10 border border-purple-core/20 flex items-center justify-center text-lg flex-shrink-0">
                   {primaryRec.icon}
@@ -934,10 +1073,10 @@ function HomeScreen({ onNav }: { onNav: (s: Screen) => void }) {
                   <p className="text-xs text-text-muted leading-relaxed mb-4">
                     {subtext}
                   </p>
-                  <div className="pt-3 border-t border-purple-core/10 flex items-center justify-between gap-3">
+                  <div className="pt-3 border-t border-border-p flex items-center justify-between gap-3">
                     <button
                       onClick={() => onNav(primaryRec.nav)}
-                      className="text-xs font-semibold text-lavender-bright hover:text-lavender-soft transition-colors cursor-pointer"
+                      className="text-xs font-semibold text-purple-core hover:text-lavender-bright transition-colors cursor-pointer"
                     >
                       {primaryRec.cta}
                     </button>
@@ -963,11 +1102,11 @@ function HomeScreen({ onNav }: { onNav: (s: Screen) => void }) {
           return (
             <button
               onClick={() => onNav("archetype")}
-              className="w-full text-left animate-fade-up"
+              className="w-full text-left animate-fade-up block cursor-pointer group"
               style={{ animationDelay: "95ms" }}
             >
-              <SoftCard>
-                <div className="flex items-center gap-3 p-4">
+              <SoftCard className="p-4 sm:p-5 group-hover:border-purple-core/30 transition-all">
+                <div className="flex items-center gap-3.5">
                   <div className={`w-10 h-10 rounded-xl ${p.bg} border ${p.border} flex items-center justify-center flex-shrink-0 text-xl`}>
                     {p.emoji}
                   </div>
@@ -976,7 +1115,7 @@ function HomeScreen({ onNav }: { onNav: (s: Screen) => void }) {
                     <p className={`text-sm font-semibold ${p.color} truncate`}>{archetypeName}</p>
                     <p className="text-xs text-text-muted truncate">{p.tagline}</p>
                   </div>
-                  <svg className="w-4 h-4 text-text-muted/50 flex-shrink-0" fill="none" viewBox="0 0 16 16">
+                  <svg className="w-4 h-4 text-text-muted/60 group-hover:text-purple-core transition-colors flex-shrink-0" fill="none" viewBox="0 0 16 16">
                     <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
@@ -985,12 +1124,156 @@ function HomeScreen({ onNav }: { onNav: (s: Screen) => void }) {
           )
         })()}
 
-        {/* Your body & mind */}
-        <SoftCard delay={120} className="p-5" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)" }}>
-          <p className="text-[10px] text-text-muted mb-3">🫀 Your body & mind</p>
-          <p className="text-sm text-text-secondary leading-relaxed mb-1.5">Want to understand your physical stress signals?</p>
-          <p className="text-xs text-text-muted">Biological measurement · Coming soon</p>
-        </SoftCard>
+        {/* Dedicated Mind-Body Stress Index (MBSI) Card */}
+        <div className="w-full">
+          {hasCalculatedMbsi ? (
+            // State A: Calculated MBSI Result
+            <button
+              type="button"
+              onClick={() => onNav("mind-body")}
+              className="w-full text-left group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-core/40 rounded-2xl transition-transform active:scale-[0.99]"
+            >
+              <SoftCard delay={120} className="p-5 sm:p-6 bg-surface/90 hover:bg-surface border-border-p hover:border-purple-core/40 transition-all duration-200 glow-subtle">
+                {/* Header */}
+                <div className="flex items-start justify-between gap-3 mb-3.5">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-9 h-9 rounded-xl bg-purple-core/10 border border-purple-core/25 flex items-center justify-center text-purple-core group-hover:scale-105 transition-transform flex-shrink-0">
+                      <svg className="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="text-[10px] font-semibold tracking-wider uppercase text-purple-core bg-purple-core/10 px-2 py-0.5 rounded-full border border-purple-core/20">
+                          Mind-Body Stress Index
+                        </span>
+                        <span className="text-[10px] text-text-muted font-medium">· Provisional Framework</span>
+                      </div>
+                      <p className="text-xs text-text-muted font-medium mt-0.5">Your body & mind</p>
+                    </div>
+                  </div>
+
+                  {(() => {
+                    const cat = getMbsiCategoryInfo(latestMbsi.score)
+                    return (
+                      <span className={`text-[10px] font-semibold px-2.5 py-0.5 rounded-full border ${cat.badgeClass} flex items-center gap-1.5 flex-shrink-0`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${cat.dotColor} animate-pulse`} />
+                        <span>{cat.title}</span>
+                      </span>
+                    )
+                  })()}
+                </div>
+
+                {/* Score and Component Breakdown */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 py-3 border-y border-border-p/60 my-2">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl sm:text-4xl font-extrabold text-warm-white tracking-tight">
+                      {Math.round(latestMbsi.score)}
+                    </span>
+                    <span className="text-xs font-medium text-text-muted">/ 100</span>
+                    <span className="text-xs text-text-muted ml-2">
+                      {mbsiDateFormatted ? `Calculated ${mbsiDateFormatted}` : "Active calculation"}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <div className="px-2.5 py-1.5 rounded-xl bg-midnight/50 border border-border-p/50 min-w-[100px]">
+                      <div className="flex items-center justify-between text-[10px]">
+                        <span className="text-text-muted uppercase font-semibold">Psych (60%)</span>
+                        <span className="font-bold text-lavender-bright">+{mbsiPsychContribution}</span>
+                      </div>
+                      <p className="text-[10px] text-text-muted truncate">MSI: {Math.round(latestMbsi.msiScore)}</p>
+                    </div>
+
+                    <div className="px-2.5 py-1.5 rounded-xl bg-midnight/50 border border-border-p/50 min-w-[100px]">
+                      <div className="flex items-center justify-between text-[10px]">
+                        <span className="text-text-muted uppercase font-semibold">Bio (40%)</span>
+                        <span className="font-bold text-lavender-bright">+{mbsiBioContribution}</span>
+                      </div>
+                      <p className="text-[10px] text-text-muted truncate">BSI: {Math.round(latestMbsi.bsiScore)}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Weighted Distribution Bar */}
+                <div className="space-y-1 pt-1 pb-2">
+                  <div className="flex items-center justify-between text-[10px] text-text-muted">
+                    <span>Component Weights</span>
+                    <span>0.60 MSI + 0.40 BSI</span>
+                  </div>
+                  <div className="w-full h-1.5 rounded-full bg-border-p/40 overflow-hidden flex">
+                    <div className="h-full bg-purple-core" style={{ width: "60%" }} title="Psychological: 60%" />
+                    <div className="h-full bg-warm-white/40" style={{ width: "40%" }} title="Biological: 40%" />
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="flex items-center justify-between pt-2.5 border-t border-border-p/60 text-[11px]">
+                  <span className="text-text-muted flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-core" />
+                    <span>Cortisol · DHEA-S · CRP calibrated</span>
+                  </span>
+                  <span className="font-medium text-purple-core flex items-center gap-1 group-hover:underline">
+                    View MBSI Details
+                    <span aria-hidden="true">&rarr;</span>
+                  </span>
+                </div>
+              </SoftCard>
+            </button>
+          ) : (
+            // State B: Not Calculated Yet
+            <button
+              type="button"
+              onClick={() => onNav("mind-body")}
+              className="w-full text-left group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-core/40 rounded-2xl transition-transform active:scale-[0.99]"
+            >
+              <SoftCard delay={120} className="p-5 sm:p-6 bg-surface/90 hover:bg-surface border-border-p hover:border-purple-core/30 transition-all duration-200 glow-subtle">
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-purple-core/10 border border-purple-core/20 flex items-center justify-center text-purple-core group-hover:scale-105 transition-transform flex-shrink-0">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="text-[10px] font-semibold tracking-wider uppercase text-purple-core bg-purple-core/10 px-2 py-0.5 rounded-full border border-purple-core/20">
+                          Mind-Body Stress Index
+                        </span>
+                        <span className="text-[10px] text-text-muted font-medium">· Planned Framework</span>
+                      </div>
+                      <p className="text-xs text-text-muted font-medium mt-0.5">Your body & mind</p>
+                    </div>
+                  </div>
+
+                  <div className="w-7 h-7 rounded-full bg-black/[0.03] group-hover:bg-purple-core/10 flex items-center justify-center text-text-muted group-hover:text-purple-core transition-colors flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 16 16" stroke="currentColor">
+                      <path d="M6 4l4 4-4 4" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                </div>
+
+                <p className="text-sm font-semibold text-warm-white leading-snug mb-1.5 group-hover:text-purple-core transition-colors">
+                  MBSI is not available yet
+                </p>
+                <p className="text-xs text-text-muted leading-relaxed mb-3">
+                  Complete your biological assessment to generate your Mind-Body Stress Index. Integrates your psychological MSI (60%) with biological biomarkers (40% Cortisol, DHEA-S, CRP).
+                </p>
+
+                <div className="flex items-center justify-between pt-2.5 border-t border-border-p/60 text-[11px]">
+                  <span className="text-text-muted flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-core animate-pulse" />
+                    <span>Cortisol · DHEA-S · CRP research integration</span>
+                  </span>
+                  <span className="font-medium text-purple-core flex items-center gap-1 group-hover:underline">
+                    Calculate MBSI
+                    <span aria-hidden="true">&rarr;</span>
+                  </span>
+                </div>
+              </SoftCard>
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )
@@ -1132,6 +1415,7 @@ function ResultScreen({ onNav, data }: { onNav: (s: Screen) => void; data: Check
   const feeling = data.feeling || "Stressed"
   const isElevated = ["A little tense", "Stressed", "Overwhelmed"].includes(feeling)
   const [msi, setMsi] = useState<number>(isElevated ? 67 : 44)
+  const [category, setCategory] = useState<string>(() => getMSIBand(isElevated ? 67 : 44).label)
   const submittedRef = useRef(false)
 
   useEffect(() => {
@@ -1596,143 +1880,10 @@ function DumpResponseScreen({ onNav }: { onNav: (s: Screen) => void }) {
   )
 }
 
-// ── Reset — organized by emotional need ───────────────────────────────────────
-// Categories: Overwhelmed / Frustrated / Drained / Can't Switch Off
-
-const RESET_CATEGORIES = [
-  {
-    id: "overwhelmed",
-    label: "Overwhelmed",
-    emoji: "🌊",
-    desc: "Too much at once",
-    color: "from-purple-primary/30",
-    activities: [
-      { name: "Priority Reset", dur: "5–10 min", desc: "Clear the mental clutter. Get everything out, then find what needs attention first.", screen: "priority-reset" },
-      { name: "Breathing Reset", dur: "3 min", desc: "Slow down and reset. A guided breathing pause for your nervous system.", screen: "breathing-reset" },
-      { name: "Journal", dur: "Whenever you need", desc: "Put it into words. A private space for everything on your mind.", screen: "journal" },
-    ],
-  },
-  {
-    id: "frustrated",
-    label: "Frustrated",
-    emoji: "🔥",
-    desc: "Tense or irritated",
-    color: "from-c-warning/20",
-    activities: [
-      { name: "Music Reset", dur: "10 min", desc: "Curated sound to shift your state. Give yourself a few minutes away from the noise.", screen: "music-reset" },
-      { name: "Movement Reset", dur: "5 min", desc: "Step away from the screen. Short movements to release physical tension.", screen: "movement-reset" },
-      { name: "Digital Dump Bag", dur: "2–10 min", desc: "Get what's on your mind out. No structure needed — just dump it.", screen: "dump-bag" },
-    ],
-  },
-  {
-    id: "drained",
-    label: "Drained",
-    emoji: "🪫",
-    desc: "Low energy or depleted",
-    color: "from-c-info/20",
-    activities: [
-      { name: "Energy Reset", dur: "5 min", desc: "Give yourself five quiet minutes to recharge. No effort required.", screen: "energy-reset" },
-      { name: "Relaxation", dur: "15 min", desc: "Slow everything down. A guided journey to help you let go.", screen: "relaxation" },
-      { name: "Sleep Wind-down", dur: "20 min", desc: "Let the day become quieter. A gentle pre-rest routine.", screen: "sleep-winddown" },
-    ],
-  },
-]
+// ── Reset Labs (exclusively experiential programs) ─────────────────────────────
 
 function ResetListScreen({ onNav }: { onNav: (s: Screen) => void }) {
-  const [selected, setSelected] = useState<string | null>(null)
-
-  return (
-    <Shell>
-      <div className="mb-6 animate-fade-up">
-        <p className="text-[10px] text-text-muted mb-2">Reset</p>
-        <h2 className="text-[22px] font-semibold text-warm-white leading-snug mb-2">How are you feeling?</h2>
-        <p className="text-text-muted text-sm">Choose what fits best. We'll match the right activity.</p>
-      </div>
-
-      {selected === null ? (
-        <div className="space-y-3">
-          {RESET_CATEGORIES.map((cat, i) => (
-            <button
-              key={cat.id}
-              onClick={() => setSelected(cat.id)}
-              className={`w-full card-base overflow-hidden text-left hover:border-border-s transition-all animate-fade-up`}
-              style={{ animationDelay: `${i * 50}ms` }}
-            >
-              <div className={`h-12 bg-gradient-to-r ${cat.color} to-surface flex items-center px-5 gap-3`}>
-                <span className="text-xl">{cat.emoji}</span>
-                <div>
-                  <p className="font-semibold text-warm-white text-sm">{cat.label}</p>
-                  <p className="text-xs text-text-muted">{cat.desc}</p>
-                </div>
-              </div>
-              <div className="px-5 py-3 flex items-center justify-between">
-                <div className="flex gap-1.5">
-                  {cat.activities.map((a) => (
-                    <span key={a.name} className="text-[10px] text-text-muted border border-border-p rounded-full px-2 py-0.5">{a.dur}</span>
-                  ))}
-                </div>
-                <svg className="w-4 h-4 text-text-muted" fill="none" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-              </div>
-            </button>
-          ))}
-
-          <button
-            onClick={() => onNav("reset-labs")}
-            className="w-full card-base p-4 flex items-center gap-3 text-left hover:border-border-s transition-colors animate-fade-up"
-            style={{ animationDelay: "200ms" }}
-          >
-            <div className="w-9 h-9 rounded-xl bg-purple-core/10 border border-purple-core/20 flex items-center justify-center text-base flex-shrink-0">🔬</div>
-            <div>
-              <p className="text-sm font-semibold text-warm-white">Reset Labs</p>
-              <p className="text-xs text-text-muted">Group recovery sessions · Upcoming events</p>
-            </div>
-            <svg className="w-4 h-4 text-text-muted ml-auto" fill="none" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </button>
-        </div>
-      ) : (
-        <div className="animate-fade-up">
-          <button onClick={() => setSelected(null)} className="flex items-center gap-1.5 text-text-muted hover:text-text-secondary transition-colors mb-5 text-sm font-medium">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16"><path d="M10 4L6 8l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            All categories
-          </button>
-          {(() => {
-            const cat = RESET_CATEGORIES.find((c) => c.id === selected)!
-            return (
-              <>
-                <div className="flex items-center gap-2 mb-5">
-                  <span className="text-2xl">{cat.emoji}</span>
-                  <div>
-                    <h3 className="text-lg font-semibold text-warm-white">{cat.label}</h3>
-                    <p className="text-xs text-text-muted">{cat.desc}</p>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  {cat.activities.map((a) => {
-                    const target = (a as { screen?: string }).screen ?? "reset-active"
-                    const cta = target === "journal" ? "Write →" : target === "dump-bag" ? "Open →" : "Start →"
-                    return (
-                      <button
-                        key={a.name}
-                        onClick={() => onNav(target as Screen)}
-                        className="w-full card-base p-5 text-left hover:border-border-s transition-all"
-                      >
-                        <div className="flex items-start justify-between mb-1.5">
-                          <p className="font-semibold text-warm-white">{a.name}</p>
-                          <span className="font-mono-data text-xs text-text-muted border border-border-p rounded-full px-2 py-0.5 ml-3">{a.dur}</span>
-                        </div>
-                        <p className="text-sm text-text-muted mb-3">{a.desc}</p>
-                        <span className="text-sm font-semibold text-purple-core">{cta}</span>
-                      </button>
-                    )
-                  })}
-                </div>
-              </>
-            )
-          })()}
-        </div>
-      )}
-    </Shell>
-  )
+  return <ResetLabsScreen onNav={onNav} />
 }
 
 // ── Active Reset (breathing) ───────────────────────────────────────────────────
@@ -3719,129 +3870,7 @@ function NotificationsScreen({ onBack }: { onBack: () => void }) {
   )
 }
 
-// ── Reset Labs ─────────────────────────────────────────────────────────────────
 
-function ResetLabsScreen({ onNav }: { onNav: (s: Screen) => void }) {
-  const sessions = [
-    {
-      name: "Rhythm for Resilience",
-      desc: "Relax through guided music therapy designed to reduce anxiety, improve focus, and promote emotional balance.",
-      icon: "🎵",
-      decorative: "🎧",
-      bg: "linear-gradient(135deg, rgba(124,58,237,0.52) 0%, rgba(109,40,217,0.34) 100%)",
-      border: "rgba(167,139,250,0.55)",
-      iconBg: "rgba(255,255,255,0.18)",
-    },
-    {
-      name: "Resilience Talks",
-      desc: "Interactive talks by psychologists, wellness coaches and inspiring speakers focused on stress management and personal growth.",
-      icon: "🎤",
-      decorative: "💬",
-      bg: "linear-gradient(135deg, rgba(236,72,153,0.48) 0%, rgba(244,63,94,0.30) 100%)",
-      border: "rgba(251,182,206,0.55)",
-      iconBg: "rgba(255,255,255,0.18)",
-    },
-    {
-      name: "Express and Unwind",
-      desc: "Express emotions creatively through guided drawing, painting and mindful art exercises.",
-      icon: "🎨",
-      decorative: "🖌️",
-      bg: "linear-gradient(135deg, rgba(5,150,105,0.52) 0%, rgba(6,182,212,0.32) 100%)",
-      border: "rgba(110,231,183,0.55)",
-      iconBg: "rgba(255,255,255,0.18)",
-    },
-  ]
-
-  const comingSoon = [
-    { emoji: "🕯️", label: "Meditation" },
-    { emoji: "📖", label: "Journaling" },
-    { emoji: "🫧", label: "Group therapy" },
-    { emoji: "😄", label: "Laughter therapy" },
-    { emoji: "🎵", label: "Sound healing" },
-    { emoji: "🌿", label: "Nature therapy" },
-    { emoji: "☕", label: "Coffee conversations" },
-  ]
-
-  return (
-    <Shell>
-      <BackBtn onBack={() => onNav("reset-list")} />
-
-      {/* Upcoming sessions */}
-      <div className="mb-5">
-        <p className="text-[10px] text-text-muted font-medium mb-4 animate-fade-up">Upcoming sessions</p>
-        <div className="space-y-3">
-          {sessions.map((s, i) => (
-            <div
-              key={s.name}
-              className="relative rounded-3xl overflow-hidden animate-fade-up"
-              style={{ background: s.bg, border: `1px solid ${s.border}`, animationDelay: `${i * 60}ms` }}
-            >
-              <div className="p-5 pr-20">
-                <div className="w-10 h-10 rounded-2xl flex items-center justify-center mb-4" style={{ background: s.iconBg }}>
-                  <span className="text-xl leading-none">{s.icon}</span>
-                </div>
-                <p className="text-[15px] font-semibold text-warm-white mb-2 leading-snug">{s.name}</p>
-                <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.70)" }}>{s.desc}</p>
-              </div>
-              <div className="absolute right-3 top-1/2 -translate-y-1/2 text-5xl" style={{ opacity: 0.55 }}>
-                {s.decorative}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* More labs coming soon */}
-      <div
-        className="rounded-3xl p-5 mb-4 animate-fade-up"
-        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", animationDelay: "200ms" }}
-      >
-        <p className="text-sm font-semibold text-warm-white mb-4">More labs coming soon</p>
-        <div className="flex flex-wrap gap-2">
-          {comingSoon.map((c) => (
-            <span
-              key={c.label}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border-p bg-elevated text-xs text-text-secondary font-medium"
-            >
-              <span className="leading-none">{c.emoji}</span>
-              {c.label}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Booking & Registration */}
-      <div
-        className="rounded-3xl p-5 text-center animate-fade-up"
-        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", animationDelay: "240ms" }}
-      >
-        <div className="text-3xl mb-3">📬</div>
-        <p className="text-base font-semibold text-warm-white mb-2">Booking & registration</p>
-        <p className="text-xs text-text-muted leading-relaxed mb-4">
-          Interested in joining one of our Stress Labs? For booking, collaborations, or corporate wellness sessions, please contact us at:
-        </p>
-        <button
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-semibold text-warm-white transition-colors"
-          style={{ backgroundColor: "#1A5C3A" }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#1F6B43" }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#1A5C3A" }}
-        >
-          <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 16 16">
-            <rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
-            <path d="M2 5l6 4 6-4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-          </svg>
-          cortiqsupport@gmail.com
-        </button>
-        <p className="text-xs text-text-muted mt-3">{"We'll get back to you within 24 hours."}</p>
-        <div className="mt-5 pt-4 border-t border-white/5">
-          <p className="text-xs text-text-muted leading-relaxed">
-            New sessions are announced regularly.<br />Stay tuned for upcoming wellness experiences.
-          </p>
-        </div>
-      </div>
-    </Shell>
-  )
-}
 
 // ── MSI Meaning ────────────────────────────────────────────────────────────────
 
@@ -4435,7 +4464,6 @@ function ArchetypeScreen({ onNav }: { onNav: (s: Screen) => void }) {
     setQIdx(0)
     setAnswers([])
     setSelected(null)
-    setIsTransitioning(false)
     localStorage.removeItem("cq_archetype")
   }
 
@@ -6194,9 +6222,41 @@ function SettingsScreen({ onBack }: { onBack: () => void }) {
 // ── App shell ──────────────────────────────────────────────────────────────────
 
 export default function EmployeeApp({ initialScreen = "home" }: { initialScreen?: Screen }) {
-  const [screen, setScreen] = useState<Screen>(initialScreen)
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const getScreenFromPath = useCallback((pathname: string): Screen => {
+    if (ROUTE_TO_SCREEN[pathname]) return ROUTE_TO_SCREEN[pathname]
+    const rootPath = "/" + (pathname.split("/")[1] || "")
+    if (ROUTE_TO_SCREEN[rootPath]) return ROUTE_TO_SCREEN[rootPath]
+    return initialScreen
+  }, [initialScreen])
+
+  const [screen, setScreen] = useState<Screen>(() => {
+    return getScreenFromPath(location.pathname)
+  })
   const [checkInData, setCheckInData] = useState<CheckInData>({ feeling: "", stressor: "", physical: "", driver: "" })
   const [appCurrentMsi, setAppCurrentMsi] = useState<number | null>(null)
+
+  // Sync screen state when browser location changes (direct URL refresh, back/forward navigation)
+  useEffect(() => {
+    const matchedScreen = getScreenFromPath(location.pathname)
+    setScreen(matchedScreen)
+  }, [location.pathname, getScreenFromPath])
+
+  // Top-level navigation callback that updates both URL and internal state
+  const handleNav = useCallback((nextScreen: Screen) => {
+    const targetRoute = SCREEN_TO_ROUTE[nextScreen]
+    if (targetRoute) {
+      if (location.pathname !== targetRoute) {
+        navigate(targetRoute)
+      } else {
+        setScreen(nextScreen)
+      }
+    } else {
+      setScreen(nextScreen)
+    }
+  }, [navigate, location.pathname])
 
   useEffect(() => {
     const token = localStorage.getItem("cq_token")
@@ -6240,46 +6300,58 @@ export default function EmployeeApp({ initialScreen = "home" }: { initialScreen?
 
   return (
     <div className="flex justify-center items-start min-h-full w-full bg-midnight">
-      <div className="relative w-full max-w-xl md:max-w-2xl lg:max-w-3xl min-h-full bg-midnight flex flex-col">
+      <div className="relative w-full max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl min-h-full bg-midnight flex flex-col mx-auto">
         {/* Screen content */}
         <div className="flex-1 flex flex-col relative w-full">
-          {screen === "home" && <HomeScreen onNav={setScreen} />}
-          {screen === "baseline-msi" && <BaselineMSI onComplete={() => setScreen("home")} onBack={() => setScreen("home")} />}
-          {screen === "stress-cause" && <StressDriverFlow msi={appCurrentMsi} onBack={() => setScreen("home")} onNav={(s) => setScreen(s as Screen)} />}
-          {screen === "msi-meaning" && <MSIMeaningScreen msi={appCurrentMsi ?? 50} onBack={() => setScreen("home")} onNav={setScreen} />}
-          {screen === "checkin-1" && <CheckIn1 onNext={() => setScreen("checkin-2")} onBack={() => setScreen("home")} data={checkInData} setData={setCheckInData} />}
+          {screen === "home" && <HomeScreen onNav={handleNav} />}
+          {screen === "mind-body" && (
+            <MindBodyScreen
+              onBack={() => handleNav("home")}
+              onNav={handleNav}
+              currentMsi={appCurrentMsi}
+              baselineMsi={
+                localStorage.getItem("cq_baseline_msi")
+                  ? parseInt(localStorage.getItem("cq_baseline_msi")!, 10)
+                  : null
+              }
+            />
+          )}
+          {screen === "baseline-msi" && <BaselineMSI onComplete={() => handleNav("home")} onBack={() => handleNav("home")} />}
+          {screen === "stress-cause" && <StressDriverFlow msi={appCurrentMsi} onBack={() => handleNav("home")} onNav={(s) => handleNav(s as Screen)} />}
+          {screen === "msi-meaning" && <MSIMeaningScreen msi={appCurrentMsi ?? 50} onBack={() => handleNav("home")} onNav={handleNav} />}
+          {screen === "checkin-1" && <CheckIn1 onNext={() => setScreen("checkin-2")} onBack={() => handleNav("home")} data={checkInData} setData={setCheckInData} />}
           {screen === "checkin-2" && <CheckIn2 onNext={() => setScreen("checkin-3")} onBack={() => setScreen("checkin-1")} data={checkInData} setData={setCheckInData} />}
           {screen === "checkin-3" && <CheckIn3 onNext={() => setScreen("driver")} onBack={() => setScreen("checkin-2")} data={checkInData} setData={setCheckInData} />}
           {screen === "driver" && <DriverScreen onNext={() => setScreen("result")} onBack={() => setScreen("checkin-3")} data={checkInData} setData={setCheckInData} />}
-          {screen === "result" && <ResultScreen onNav={setScreen} data={checkInData} />}
-          {screen === "recommended" && <RecommendedScreen onNav={setScreen} />}
-          {screen === "dump-bag" && <DumpBagScreen onNav={setScreen} />}
-          {screen === "dump-response" && <DumpResponseScreen onNav={setScreen} />}
-          {screen === "reset-list" && <ResetListScreen onNav={setScreen} />}
-          {screen === "reset-active" && <ActiveResetScreen onNav={setScreen} />}
-          {screen === "priority-reset" && <PriorityReset onBack={() => setScreen("reset-list")} onNav={(s) => setScreen(s as Screen)} />}
-          {screen === "breathing-reset" && <BreathingReset onBack={() => setScreen("reset-list")} onNav={(s) => setScreen(s as Screen)} />}
-          {screen === "journal" && <Journal onBack={() => setScreen("reset-list")} onNav={(s) => setScreen(s as Screen)} />}
-          {screen === "music-reset" && <MusicalReset onBack={() => setScreen("reset-list")} onNav={(s) => setScreen(s as Screen)} />}
-          {screen === "movement-reset" && <MovementReset onBack={() => setScreen("reset-list")} onNav={(s) => setScreen(s as Screen)} />}
-          {screen === "energy-reset" && <GuidedReset module="energy_reset" onBack={() => setScreen("reset-list")} onNav={(s) => setScreen(s as Screen)} />}
-          {screen === "relaxation" && <GuidedReset module="relaxation" onBack={() => setScreen("reset-list")} onNav={(s) => setScreen(s as Screen)} />}
-          {screen === "sleep-winddown" && <GuidedReset module="sleep_wind_down" onBack={() => setScreen("reset-list")} onNav={(s) => setScreen(s as Screen)} />}
-          {screen === "my-stress" && <MyStressScreen onNav={setScreen} />}
-          {screen === "support" && <SupportScreen onNav={setScreen} />}
-          {screen === "professional-support" && <ProfessionalSupportScreen onBack={() => setScreen("support")} />}
-          {screen === "emergency-support" && <EmergencySupportScreen onBack={() => setScreen("support")} />}
-          {screen === "listener-connect" && <ListenerConnectScreen onBack={() => setScreen("support")} onNav={setScreen} />}
-          {screen === "listener-schedule" && <ListenerScheduleScreen onBack={() => setScreen("listener-connect")} onNav={setScreen} />}
-          {screen === "my-sessions" && <MySessionsScreen onBack={() => setScreen("support")} onNav={setScreen} />}
-          {screen === "notifications" && <NotificationsScreen onBack={() => setScreen("home")} />}
-          {screen === "reset-labs" && <ResetLabsScreen onNav={setScreen} />}
-          {screen === "archetype" && <ArchetypeScreen onNav={setScreen} />}
-          {screen === "profile" && <ProfileScreen onBack={() => setScreen("home")} onNav={setScreen} />}
-          {screen === "settings" && <SettingsScreen onBack={() => setScreen("profile")} />}
+          {screen === "result" && <ResultScreen onNav={handleNav} data={checkInData} />}
+          {screen === "recommended" && <RecommendedScreen onNav={handleNav} />}
+          {screen === "dump-bag" && <DumpBagScreen onNav={handleNav} />}
+          {screen === "dump-response" && <DumpResponseScreen onNav={handleNav} />}
+          {screen === "reset-list" && <ResetListScreen onNav={handleNav} />}
+          {screen === "reset-active" && <ActiveResetScreen onNav={handleNav} />}
+          {screen === "priority-reset" && <PriorityReset onBack={() => handleNav("reset-list")} onNav={(s) => handleNav(s as Screen)} />}
+          {screen === "breathing-reset" && <BreathingReset onBack={() => handleNav("reset-list")} onNav={(s) => handleNav(s as Screen)} />}
+          {screen === "journal" && <Journal onBack={() => handleNav("reset-list")} onNav={(s) => handleNav(s as Screen)} />}
+          {screen === "music-reset" && <MusicalReset onBack={() => handleNav("reset-list")} onNav={(s) => handleNav(s as Screen)} />}
+          {screen === "movement-reset" && <MovementReset onBack={() => handleNav("reset-list")} onNav={(s) => handleNav(s as Screen)} />}
+          {screen === "energy-reset" && <GuidedReset module="energy_reset" onBack={() => handleNav("reset-list")} onNav={(s) => handleNav(s as Screen)} />}
+          {screen === "relaxation" && <GuidedReset module="relaxation" onBack={() => handleNav("reset-list")} onNav={(s) => handleNav(s as Screen)} />}
+          {screen === "sleep-winddown" && <GuidedReset module="sleep_wind_down" onBack={() => handleNav("reset-list")} onNav={(s) => handleNav(s as Screen)} />}
+          {screen === "my-stress" && <MyStressScreen onNav={handleNav} />}
+          {screen === "support" && <SupportScreen onNav={handleNav} />}
+          {screen === "professional-support" && <ProfessionalSupportScreen onBack={() => handleNav("support")} />}
+          {screen === "emergency-support" && <EmergencySupportScreen onBack={() => handleNav("support")} />}
+          {screen === "listener-connect" && <ListenerConnectScreen onBack={() => handleNav("support")} onNav={handleNav} />}
+          {screen === "listener-schedule" && <ListenerScheduleScreen onBack={() => handleNav("listener-connect")} onNav={handleNav} />}
+          {screen === "my-sessions" && <MySessionsScreen onBack={() => handleNav("support")} onNav={handleNav} />}
+          {screen === "notifications" && <NotificationsScreen onBack={() => handleNav("home")} />}
+          {screen === "reset-labs" && <ResetLabsScreen onNav={handleNav} />}
+          {screen === "archetype" && <ArchetypeScreen onNav={handleNav} />}
+          {screen === "profile" && <ProfileScreen onBack={() => handleNav("home")} onNav={handleNav} />}
+          {screen === "settings" && <SettingsScreen onBack={() => handleNav("profile")} />}
         </div>
 
-        {!isFullscreen && <BottomNav active={screen} onNav={setScreen} />}
+        {!isFullscreen && <BottomNav active={screen} onNav={handleNav} />}
       </div>
     </div>
   )

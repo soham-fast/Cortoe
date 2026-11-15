@@ -166,4 +166,188 @@ router.post("/record", requireActiveEmployee, async (req, res) => {
   }
 })
 
+// ─────────────────────────────────────────────────────────────────────────────
+// GET /api/interventions/programs
+// Returns Reset Labs programs (Acoustic Unwind & Express & Unwind) and any actual upcoming sessions
+// ─────────────────────────────────────────────────────────────────────────────
+router.get("/programs", requireActiveEmployee, async (req, res) => {
+  try {
+    const user = req.user
+    const { ensureInterventionsForOrg } = require("../services/interventionService")
+    if (user.organisationId) {
+      await ensureInterventionsForOrg(user.organisationId)
+    }
+
+    // Query active Reset Labs programs for this org
+    const orgInterventions = await Intervention.find({
+      organisationId: user.organisationId,
+      status: "Active",
+      name: { $in: ["Acoustic Unwind", "Express & Unwind"] },
+    }).lean()
+
+    // Query actual upcoming sessions scheduled in the database
+    const now = new Date()
+    const upcomingSessions = await InterventionSession.find({
+      organisationId: user.organisationId,
+      interventionName: { $in: ["Acoustic Unwind", "Express & Unwind"] },
+      status: { $in: ["Scheduled", "Upcoming", "Active"] },
+      $or: [
+        { "metadata.scheduledDate": { $gte: now } },
+        { startedAt: { $gte: now } },
+      ],
+    })
+      .sort({ startedAt: 1 })
+      .lean()
+
+    // Check if the current user has registered for any upcoming sessions
+    const myRegistrations = await InterventionSession.find({
+      employeeId: user._id,
+      interventionName: { $in: ["Acoustic Unwind", "Express & Unwind"] },
+      status: { $in: ["Registered", "Requested", "Scheduled"] },
+    })
+      .sort({ createdAt: -1 })
+      .lean()
+
+    return res.json({
+      success: true,
+      programs: orgInterventions,
+      upcomingSessions,
+      myRegistrations,
+    })
+  } catch (err) {
+    console.error("[INTERVENTIONS] Error fetching programs:", err.message)
+    return res.status(500).json({ success: false, message: "Error fetching programs." })
+  }
+})
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/interventions/register
+// Register or express interest in an experiential Reset Lab program
+// ─────────────────────────────────────────────────────────────────────────────
+router.post("/register", requireActiveEmployee, async (req, res) => {
+  try {
+    const user = req.user
+    const { programName, notes = "" } = req.body
+
+    if (!programName) {
+      return res.status(400).json({ success: false, message: "Program name is required." })
+    }
+
+    const intervention = await getOrCreateIntervention(
+      user.organisationId,
+      programName,
+      "RESET_LAB",
+      programName.toLowerCase().includes("acoustic") ? "Music & Mindfulness" : "Art & Creative Expression"
+    )
+
+    // Check if user already registered recently (within last 7 days) and still pending
+    const existing = await InterventionSession.findOne({
+      employeeId: user._id,
+      interventionName: intervention.name,
+      status: { $in: ["Registered", "Requested"] },
+      createdAt: { $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
+    })
+
+    if (existing) {
+      return res.json({
+        success: true,
+        alreadyRegistered: true,
+        message: "You are already registered for upcoming sessions of this program.",
+        registration: existing,
+      })
+    }
+
+    const registration = new InterventionSession({
+      interventionId: intervention._id,
+      interventionName: intervention.name,
+      type: intervention.type,
+      category: intervention.category,
+      employeeId: user._id,
+      organisationId: user.organisationId,
+      departmentId: user.departmentId || null,
+      startedAt: new Date(),
+      status: "Registered",
+      metadata: {
+        registrationType: "interest_waitlist",
+        notes,
+        userEmail: user.email,
+        registeredAt: new Date().toISOString(),
+      },
+    })
+
+    await registration.save()
+
+    return res.status(201).json({
+      success: true,
+      message: `You're registered for ${intervention.name}. We'll notify you when dates are confirmed!`,
+      registration,
+    })
+  } catch (err) {
+    console.error("[INTERVENTIONS] Error registering for program:", err.message)
+    return res.status(500).json({ success: false, message: "Error registering for session." })
+  }
+})
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/interventions/book
+// Book a verified scheduled Reset Lab session
+// ─────────────────────────────────────────────────────────────────────────────
+router.post("/book", requireActiveEmployee, async (req, res) => {
+  try {
+    const user = req.user
+    const { programName, scheduledDate, timeSlot, venue, facilitator, notes = "" } = req.body
+
+    if (!programName) {
+      return res.status(400).json({ success: false, message: "Program name is required." })
+    }
+
+    const intervention = await getOrCreateIntervention(
+      user.organisationId,
+      programName,
+      "RESET_LAB",
+      programName.toLowerCase().includes("acoustic") ? "Music & Mindfulness" : "Art & Creative Expression"
+    )
+
+    const bookingRef = `CQ-LAB-${Math.floor(1000 + Math.random() * 9000)}`
+
+    const session = new InterventionSession({
+      interventionId: intervention._id,
+      interventionName: intervention.name,
+      type: intervention.type,
+      category: intervention.category,
+      employeeId: user._id,
+      organisationId: user.organisationId,
+      departmentId: user.departmentId || null,
+      startedAt: scheduledDate ? new Date(`${scheduledDate}T${timeSlot ? timeSlot.split(" ")[0] : "15:00"}:00`) : new Date(),
+      status: "Scheduled",
+      metadata: {
+        bookingRef,
+        scheduledDate: scheduledDate || "Upcoming Cohort",
+        timeSlot: timeSlot || "15:00 - 15:45",
+        venue: venue || "CortiQuant Wellbeing Studio, Suite 400",
+        facilitator:
+          facilitator ||
+          (programName.toLowerCase().includes("acoustic")
+            ? "Elena Vance, M.Mus."
+            : "Marcus Thorne, ATR-BC"),
+        notes,
+        userEmail: user.email,
+        bookedAt: new Date().toISOString(),
+      },
+    })
+
+    await session.save()
+
+    return res.status(201).json({
+      success: true,
+      message: `Successfully booked ${intervention.name} for ${scheduledDate || "upcoming session"}!`,
+      booking: session,
+      bookingRef,
+    })
+  } catch (err) {
+    console.error("[INTERVENTIONS] Error booking session:", err.message)
+    return res.status(500).json({ success: false, message: "Error booking session." })
+  }
+})
+
 module.exports = router

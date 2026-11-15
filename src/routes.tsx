@@ -127,9 +127,6 @@ export async function requireActiveEmployeeLoader({ request }: { request?: Reque
           if (baselineScore != null) {
             localStorage.setItem("cq_baseline_msi", String(baselineScore))
           }
-          if (isBaselinePath) {
-            return redirect("/home")
-          }
           return null
         } else {
           localStorage.removeItem("cq_baseline_msi")
@@ -178,7 +175,6 @@ export async function requireActiveEmployeeLoader({ request }: { request?: Reque
       if (isBaselinePath) return null
       return redirect("/baseline")
     }
-    if (isBaselinePath) return redirect("/home")
     return null
   }
   if (approval === "rejected") {
@@ -616,6 +612,55 @@ export function AppLayout() {
   )
 }
 
+function BaselineRoute() {
+  return <EmployeeApp initialScreen="baseline-msi" />
+}
+function HomeRoute() {
+  return <EmployeeApp initialScreen="home" />
+}
+function CheckinRoute() {
+  return <EmployeeApp initialScreen="checkin-1" />
+}
+function BehavioralRoute() {
+  return <EmployeeApp initialScreen="stress-cause" />
+}
+function ProfileRoute() {
+  return <EmployeeApp initialScreen="profile" />
+}
+function NotificationSettingsRoute() {
+  return <EmployeeApp initialScreen="notifications" />
+}
+function ArchetypeRoute() {
+  return <EmployeeApp initialScreen="archetype" />
+}
+function DumpRoute() {
+  return <EmployeeApp initialScreen="dump-bag" />
+}
+function ResponseRoute() {
+  return <EmployeeApp initialScreen="dump-response" />
+}
+function ResetRoute() {
+  return <EmployeeApp initialScreen="reset-list" />
+}
+function ProductivityReadinessRoute() {
+  return <EmployeeApp initialScreen="recommended" />
+}
+function ListenerConnectRoute() {
+  return <EmployeeApp initialScreen="listener-connect" />
+}
+function ListenerBookingRoute() {
+  return <EmployeeApp initialScreen="listener-schedule" />
+}
+function MySessionsRoute() {
+  return <EmployeeApp initialScreen="my-sessions" />
+}
+function StressLabsRoute() {
+  return <EmployeeApp initialScreen="reset-labs" />
+}
+function MindBodyRoute() {
+  return <EmployeeApp initialScreen="mind-body" />
+}
+
 // ── createBrowserRouter Definition ─────────────────────────────────────────────
 
 export const router = createBrowserRouter([
@@ -626,6 +671,21 @@ export const router = createBrowserRouter([
       {
         path: "",
         Component: WelcomeScreen,
+        loader: () => {
+          const token = localStorage.getItem("cq_token")
+          const role = (localStorage.getItem("cq_role") || "").toLowerCase()
+          const approval = getApprovalStatus()
+          if (token && role === "employee" && approval === "approved") {
+            return redirect("/home")
+          }
+          if (token && (role === "hr" || role === "admin")) {
+            return redirect("/hr")
+          }
+          if (token && role === "founder") {
+            return redirect("/founder")
+          }
+          return null
+        },
       },
       {
         path: "accept-invite/:token",
@@ -717,7 +777,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "productivity-readiness",
-        Component: () => <EmployeeApp initialScreen="recommended" />,
+        Component: ProductivityReadinessRoute,
       },
       {
         path: "hr-login",
@@ -739,67 +799,77 @@ export const router = createBrowserRouter([
       },
       {
         path: "baseline",
-        Component: () => <EmployeeApp initialScreen="baseline-msi" />,
+        Component: BaselineRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "checkin",
-        Component: () => <EmployeeApp initialScreen="checkin-1" />,
+        Component: CheckinRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "psychometric",
-        Component: () => <EmployeeApp initialScreen="baseline-msi" />,
+        Component: BaselineRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "behavioral",
-        Component: () => <EmployeeApp initialScreen="stress-cause" />,
+        Component: BehavioralRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "profile",
-        Component: () => <EmployeeApp initialScreen="profile" />,
+        Component: ProfileRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "notification-settings",
-        Component: () => <EmployeeApp initialScreen="notifications" />,
+        Component: NotificationSettingsRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "archetype-quiz",
-        Component: () => <EmployeeApp initialScreen="archetype" />,
+        Component: ArchetypeRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "archetype-reveal",
-        Component: () => <EmployeeApp initialScreen="archetype" />,
+        Component: ArchetypeRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "archetypes-gallery",
-        Component: () => <EmployeeApp initialScreen="archetype" />,
+        Component: ArchetypeRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "home/*",
-        Component: () => <EmployeeApp initialScreen="home" />,
+        Component: HomeRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "home",
-        Component: () => <EmployeeApp initialScreen="home" />,
+        Component: HomeRoute,
+        loader: requireActiveEmployeeLoader,
+      },
+      {
+        path: "mind-body",
+        Component: MindBodyRoute,
+        loader: requireActiveEmployeeLoader,
+      },
+      {
+        path: "mbsi",
+        Component: MindBodyRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "dump",
-        Component: () => <EmployeeApp initialScreen="dump-bag" />,
+        Component: DumpRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "response",
-        Component: () => <EmployeeApp initialScreen="dump-response" />,
+        Component: ResponseRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
@@ -828,32 +898,32 @@ export const router = createBrowserRouter([
       },
       {
         path: "listener/connect",
-        Component: () => <EmployeeApp initialScreen="listener-connect" />,
+        Component: ListenerConnectRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "listener",
-        Component: () => <EmployeeApp initialScreen="listener-connect" />,
+        Component: ListenerConnectRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "listeners",
-        Component: () => <EmployeeApp initialScreen="listener-connect" />,
+        Component: ListenerConnectRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "listener-booking",
-        Component: () => <EmployeeApp initialScreen="listener-schedule" />,
+        Component: ListenerBookingRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "my-sessions",
-        Component: () => <EmployeeApp initialScreen="my-sessions" />,
+        Component: MySessionsRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
         path: "reset",
-        Component: () => <EmployeeApp initialScreen="reset-list" />,
+        Component: ResetRoute,
         loader: requireActiveEmployeeLoader,
       },
       {
@@ -956,7 +1026,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "stress-labs",
-        Component: () => <EmployeeApp initialScreen="reset-labs" />,
+        Component: StressLabsRoute,
       },
 
       // Compatibility Aliases for auth flows
@@ -986,7 +1056,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "app/*",
-        Component: () => <EmployeeApp initialScreen="home" />,
+        Component: HomeRoute,
       },
 
       // Fallback

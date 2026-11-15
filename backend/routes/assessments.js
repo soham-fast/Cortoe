@@ -652,6 +652,7 @@ router.get("/metrics", requireActiveEmployee, async (req, res) => {
         currentCategory,
         latestDailyDate,
         lastAssessmentDate: latestAny ? latestAny.completedAt : (user.baselineCompletedAt || null),
+        latestMbsi: user.latestMbsi || null,
       },
     })
   } catch (err) {

@@ -437,10 +437,10 @@ export default function Login({ onEmployeeSignIn, onCreateAccount, onHR, onBack,
     }
   }
 
-  const backLabel = screen === "signup" || screen === "forgot" || screen === "reset" ? "← Back to sign in" : "← Back to home"
+  const backLabel = screen === "signup" || screen === "forgot" || screen === "check-email" ? "← Back to sign in" : "← Back to home"
   function handleBack() {
     setErrorMsg("")
-    if (screen === "signup" || screen === "forgot" || screen === "reset") {
+    if (screen === "signup" || screen === "forgot" || screen === "check-email") {
       setScreen("signin")
     } else {
       onBack()

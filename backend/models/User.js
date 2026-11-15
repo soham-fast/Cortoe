@@ -296,6 +296,13 @@ const userSchema = new mongoose.Schema(
     ],
 
     // ── Baseline Stress Index (MSI) tracking & weekly updates ───────────────
+    latestMbsi: {
+      score: { type: Number, default: null },
+      bsiScore: { type: Number, default: null },
+      msiScore: { type: Number, default: null },
+      calculatedAt: { type: Date, default: null },
+      assessmentId: { type: mongoose.Schema.Types.ObjectId, ref: "MBSIAssessment", default: null },
+    },
     baselineMsi: {
       type: Number,
       min: 0,
