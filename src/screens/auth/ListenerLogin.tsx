@@ -1,5 +1,5 @@
 import { useState } from "react"
-import logoSrc from "@/imports/image-2.png"
+import logoSrc from "@/imports/image copy.png"
 
 interface ListenerLoginProps {
   onSignIn: () => void
@@ -146,7 +146,7 @@ export default function ListenerLogin({ onSignIn, onBack }: ListenerLoginProps) 
         {/* Logo */}
         <div className="flex justify-center mb-8">
           <button onClick={onBack} type="button" className="cursor-pointer">
-            <img src={logoSrc} alt="CortiQuant" className="h-12 object-contain opacity-90 hover:opacity-100 transition-opacity" />
+            <img src={logoSrc} alt="Cortoe" className="h-12 object-contain mix-blend-multiply opacity-90 hover:opacity-100 transition-opacity" />
           </button>
         </div>
 
@@ -161,7 +161,7 @@ export default function ListenerLogin({ onSignIn, onBack }: ListenerLoginProps) 
           <h1 className="text-3xl font-bold text-warm-white mb-1">Sign in with your</h1>
           <h1 className="font-display text-3xl italic text-gradient mb-3">email</h1>
           <p className="text-sm text-text-muted mb-6 leading-relaxed">
-            Use your CortiQuant listener credentials to access the peer support dashboard.
+            Use your Cortoe listener credentials to access the peer support dashboard.
           </p>
 
           {errorMessage && (

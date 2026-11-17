@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import { Link } from "react-router-dom"
-import logoSrc from "@/imports/image-2.png"
+import logoSrc from "@/imports/image copy.png"
 
 interface LoginProps {
   onEmployeeSignIn: () => void
@@ -458,7 +458,7 @@ export default function Login({ onEmployeeSignIn, onCreateAccount, onHR, onBack,
         {/* Logo */}
         <div className="flex justify-center mb-8">
           <button onClick={onBack}>
-            <img src={logoSrc} alt="CortiQuant" className="h-12 object-contain opacity-90 hover:opacity-100 transition-opacity" />
+            <img src={logoSrc} alt="Cortoe" className="h-12 object-contain mix-blend-multiply opacity-90 hover:opacity-100 transition-opacity" />
           </button>
         </div>
 
@@ -473,7 +473,7 @@ export default function Login({ onEmployeeSignIn, onCreateAccount, onHR, onBack,
             </div>
 
             <h1 className="text-3xl font-bold text-warm-white mb-1">Sign in to your</h1>
-            <h1 className="font-display text-3xl italic text-gradient mb-3">CortiQuant account</h1>
+            <h1 className="font-display text-3xl italic text-gradient mb-3">Cortoe account</h1>
             <p className="text-sm text-text-muted mb-8 leading-relaxed">
               Enter your username or email address and password to access your personal dashboard.
             </p>
@@ -672,7 +672,7 @@ export default function Login({ onEmployeeSignIn, onCreateAccount, onHR, onBack,
             </div>
 
             <h1 className="text-3xl font-bold text-warm-white mb-1">Join</h1>
-            <h1 className="font-display text-3xl italic text-gradient mb-3">CortiQuant</h1>
+            <h1 className="font-display text-3xl italic text-gradient mb-3">Cortoe</h1>
             <p className="text-sm text-text-muted mb-6 leading-relaxed">
               Create your personal account to understand your stress patterns and start your recovery journey.
             </p>
@@ -784,7 +784,7 @@ export default function Login({ onEmployeeSignIn, onCreateAccount, onHR, onBack,
                   if (errorMsg && errorMsg.includes("Privacy Policy")) setErrorMsg("")
                 }}
               >
-                I have read, understood, and agree to CortiQuant's{" "}
+                I have read, understood, and agree to Cortoe's{" "}
                 <Link
                   to="/privacy-policy"
                   onClick={(e) => e.stopPropagation()}

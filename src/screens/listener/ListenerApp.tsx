@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { Routes, Route, useNavigate, Navigate, useLocation, useParams } from "react-router-dom"
-import logoSrc from "@/imports/image-2.png"
+import logoSrc from "@/imports/image copy.png"
 import UpcomingSessionCard, { UpcomingSessionData } from "@/components/UpcomingSessionCard"
 
 // ── Icons ────────────────────────────────────────────────────────────
@@ -30,7 +30,7 @@ function PrivacyNotice() {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
       </svg>
       <p className="text-xs text-text-muted leading-relaxed">
-        Client identities are always anonymous. Never share session content. CortiQuant encrypts all conversations end-to-end.
+        Client identities are always anonymous. Never share session content. Cortoe encrypts all conversations end-to-end.
       </p>
     </div>
   )
@@ -967,7 +967,7 @@ function ProfileScreen() {
   }
 
   const listenerName = profile?.name || localStorage.getItem("cq_user_name") || "Alex Listener"
-  const listenerEmail = profile?.email || localStorage.getItem("cq_user_email") || "alex@cortiquant.com"
+  const listenerEmail = profile?.email || localStorage.getItem("cq_user_email") || "alex@cortoe.com"
   const listenerId = profile?.listenerId || localStorage.getItem("cq_listener_id") || "LST-001"
   const initial = (listenerName.charAt(0) || "L").toUpperCase()
 
@@ -1230,7 +1230,7 @@ export function ActiveSessionScreen() {
     <div className="fixed inset-0 bg-midnight z-[100] flex flex-col">
       <header className="h-16 border-b border-border-p bg-surface/50 px-6 flex items-center justify-between flex-shrink-0">
         <div className="flex items-center gap-4">
-          <img src={logoSrc} alt="CortiQuant" className="h-6 opacity-70" />
+          <img src={logoSrc} alt="Cortoe" className="h-6 object-contain mix-blend-multiply opacity-80" />
           <div className="h-4 w-px bg-border-p" />
           <div>
             <p className="text-sm font-semibold text-warm-white">Session {session?.sessionId || sessionId}</p>
@@ -1348,7 +1348,7 @@ function ListenerLayout() {
   }
 
   const listenerName = localStorage.getItem("cq_user_name") || "Listener"
-  const listenerEmail = localStorage.getItem("cq_user_email") || "listener@cortiquant.com"
+  const listenerEmail = localStorage.getItem("cq_user_email") || "listener@cortoe.com"
   const initial = (listenerName.charAt(0) || "L").toUpperCase()
 
   const fetchNotifications = async () => {
@@ -1412,7 +1412,7 @@ function ListenerLayout() {
   const SidebarContent = () => (
     <>
       <div className="px-6 py-6 border-b border-border-p mb-2">
-        <img src={logoSrc} alt="CortiQuant" className="h-8 object-contain object-left opacity-90" />
+        <img src={logoSrc} alt="Cortoe" className="h-8 object-contain object-left mix-blend-multiply opacity-90" />
         <p className="text-[10px] text-text-muted mt-2 font-medium uppercase tracking-widest">Listener Portal</p>
       </div>
       

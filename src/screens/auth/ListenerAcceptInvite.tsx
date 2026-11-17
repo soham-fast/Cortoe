@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
-import logoSrc from "@/imports/image-2.png"
+import logoSrc from "@/imports/image copy.png"
 
 function LockIcon({ focused }: { focused: boolean }) {
   return (
@@ -149,7 +149,7 @@ export default function ListenerAcceptInvite() {
         {/* Logo */}
         <div className="flex justify-center mb-8">
           <button onClick={() => navigate("/")} type="button" className="cursor-pointer">
-            <img src={logoSrc} alt="CortiQuant" className="h-12 object-contain opacity-90 hover:opacity-100 transition-opacity" />
+            <img src={logoSrc} alt="Cortoe" className="h-12 object-contain mix-blend-multiply opacity-90 hover:opacity-100 transition-opacity" />
           </button>
         </div>
 
@@ -204,7 +204,7 @@ export default function ListenerAcceptInvite() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold text-warm-white mb-2">Welcome to CortiQuant!</h2>
+              <h2 className="text-2xl font-bold text-warm-white mb-2">Welcome to Cortoe!</h2>
               <p className="text-sm text-text-muted mb-4">Your listener account has been activated successfully.</p>
               <p className="text-xs text-lavender-bright">Redirecting you to the listener dashboard...</p>
             </div>

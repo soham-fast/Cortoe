@@ -1,0 +1,17 @@
+{
+  "name": "Cortoe",
+  "short_name": "Cortoe",
+  "description": "Mind & Body Stress Resilience Platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF4EB",
+  "theme_color": "#B5572E",
+  "icons": [
+    {
+      "src": "/src/imports/image copy.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png"
+    }
+  ]
+}
+

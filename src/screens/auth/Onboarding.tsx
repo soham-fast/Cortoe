@@ -1,5 +1,5 @@
 import { useState } from "react"
-import logoSrc from "@/imports/image-2.png"
+import logoSrc from "@/imports/image copy.png"
 
 interface OnboardingProps {
   onComplete: (answers: (string | null)[]) => void
@@ -190,7 +190,7 @@ export default function Onboarding({ onComplete, initialStep = 0, initialAnswers
       <div className="relative w-full max-w-md">
         {/* Logo + step counter */}
         <div className="flex items-center justify-between mb-6">
-          <img src={logoSrc} alt="CortiQuant" className="h-8 object-contain opacity-80" />
+          <img src={logoSrc} alt="Cortoe" className="h-8 object-contain mix-blend-multiply opacity-80" />
           <span className="text-xs text-text-muted font-medium">{step + 1} of {STEPS.length}</span>
         </div>
 

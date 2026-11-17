@@ -790,7 +790,7 @@ export default function StressDriverFlow({
         )}
 
         <p className="text-[10px] text-text-muted mt-6 text-center leading-relaxed">
-          CortiQuant uses your self-reported reflections to provide supportive strategies. Questions are non-clinical and non-diagnostic.
+          Cortoe uses your self-reported reflections to provide supportive strategies. Questions are non-clinical and non-diagnostic.
         </p>
       </div>
     )
@@ -872,7 +872,7 @@ export default function StressDriverFlow({
           </div>
 
           {recommendations.map((rec) => {
-            const isCortiquant = rec.type === "cortiquant_feature" || rec.type === "feature"
+            const isCortoe = rec.type === "cortiquant_feature" || rec.type === "feature"
             return (
               <div
                 key={rec.id}
@@ -880,19 +880,19 @@ export default function StressDriverFlow({
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-base">{rec.icon || (isCortiquant ? "✨" : "📋")}</span>
+                    <span className="text-base">{rec.icon || (isCortoe ? "✨" : "📋")}</span>
                     <p className="text-sm font-semibold text-warm-white leading-tight">
                       {rec.title}
                     </p>
                   </div>
                   <span
                     className={`text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider flex-shrink-0 ${
-                      isCortiquant
+                      isCortoe
                         ? "bg-purple-core/20 text-lavender-bright border border-purple-core/30"
                         : "bg-emerald-500/15 text-emerald-300 border border-emerald-500/25"
                     }`}
                   >
-                    {isCortiquant ? "CortiQuant" : "Action"}
+                    {isCortoe ? "Cortoe" : "Action"}
                   </span>
                 </div>
 
@@ -906,7 +906,7 @@ export default function StressDriverFlow({
                   </p>
                 )}
 
-                {isCortiquant && rec.cta && (
+                {isCortoe && rec.cta && (
                   <div className="pt-2 border-t border-border-p/50">
                     <button
                       onClick={() => onNav(rec.cta!)}

@@ -6,7 +6,7 @@
  */
 
 function buildReportInsightPrompt(reportMetrics) {
-  return `You are CortiQuant's Executive Workforce Wellbeing Intelligence AI.
+  return `You are Cortoe's Executive Workforce Wellbeing Intelligence AI.
 Your role is to analyze strictly AGGREGATED organizational stress metrics and produce an executive-ready insight summary for HR leadership.
 
 STRICT SAFETY AND LANGUAGE GUIDELINES:

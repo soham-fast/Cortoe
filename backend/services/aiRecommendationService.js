@@ -421,7 +421,7 @@ function buildPrompt({ msi, rootCause, cause, relevantResponses, employeeContext
     ? `Department: ${employeeContext.department || "Not specified"}, Designation: ${employeeContext.designation || "Not specified"}, Work Arrangement: ${employeeContext.workArrangement || "Not specified"}, Tenure: ${employeeContext.tenure || "Not specified"}`
     : "Not specified"
 
-  return `You are CortiQuant's workplace stress and recovery specialist AI.
+  return `You are Cortoe's workplace stress and recovery specialist AI.
 Your role is to analyze an employee's self-reported stress reflections and generate exactly 3 or 4 personalized, actionable recommendations.
 
 CRITICAL GUIDELINES:
@@ -431,7 +431,7 @@ CRITICAL GUIDELINES:
 4. Do NOT give generic platitudes ("Stay positive", "Exercise more", "Drink water").
 5. Recommendations MUST be a balanced mix of:
    - REAL-WORLD ACTIONS (e.g., renegotiating priorities, calendar blocks, communication boundaries).
-   - CORTIQUANT FEATURES when logically matching:
+   - CORTOE FEATURES when logically matching:
      * "Digital Dump Bag" (for mental overload, racing thoughts, unburdening mind before rest).
      * "Human Listener" (for interpersonal conflict, emotional load, feeling unheard, need to talk).
      * "Reset Labs" (for guided recovery: breathing, acoustic sessions, relaxation, wind-down).
@@ -629,7 +629,7 @@ function parseAndValidateAIResponse(text, expectedCause) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function buildDumpBagPrompt(userText) {
-  return `You are Cortiquant's CBT-informed reflection assistant.
+  return `You are Cortoe's CBT-informed reflection assistant.
 
 Your role is to help a user understand what they have written in their private Dump Bag.
 
@@ -944,7 +944,7 @@ function buildPriorityPrompt({ rawInput, tasks, msi, history, userContext }) {
     ? tasks.join("\n")
     : ""
 
-  return `You are CortiQuant's empathetic, highly intelligent AI Cognitive Wellbeing & Productivity Coach.
+  return `You are Cortoe's empathetic, highly intelligent AI Cognitive Wellbeing & Productivity Coach.
 Analyze the user's input, extract all distinct tasks, and synthesize their personalized "Priority Path".
 
 CRITICAL RULE ON ORDERING:

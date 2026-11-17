@@ -57,6 +57,9 @@ if (!allowedOrigins.includes(configuredFrontend)) {
   allowedOrigins.push(configuredFrontend)
 }
 // Default production domain and localhost in dev
+if (!allowedOrigins.includes("https://cortoe.online")) {
+  allowedOrigins.push("https://cortoe.online")
+}
 if (!allowedOrigins.includes("https://cortiquant.online")) {
   allowedOrigins.push("https://cortiquant.online")
 }
@@ -94,8 +97,8 @@ app.use(cors({
     if (allowedOrigins.includes(origin) || allowedOrigins.includes("*")) {
       return callback(null, true)
     }
-    // Allow https://cortiquant.online by default as well
-    if (origin === "https://cortiquant.online" || origin.endsWith(".cortiquant.online")) {
+    // Allow https://cortoe.online and https://cortiquant.online by default as well
+    if (origin === "https://cortoe.online" || origin.endsWith(".cortoe.online") || origin === "https://cortiquant.online" || origin.endsWith(".cortiquant.online")) {
       return callback(null, true)
     }
     return callback(null, false)
@@ -190,7 +193,7 @@ app.use((err, req, res, _next) => {
 // MongoDB + Server start
 // ─────────────────────────────────────────────────────────────────────────────
 const server = app.listen(PORT, () => {
-  console.log(`[SERVER] CortiQuant backend running on http://localhost:${PORT}`)
+  console.log(`[SERVER] Cortoe backend running on http://localhost:${PORT}`)
   console.log(`[SERVER] CORS allowed origins: ${allowedOrigins.join(", ")}`)
 })
 

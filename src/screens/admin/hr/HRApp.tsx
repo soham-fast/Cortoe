@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react"
-import logoSrc from "@/imports/image-2.png"
+import logoSrc from "@/imports/image copy.png"
 import {
   LineChart,
   Line,
@@ -60,7 +60,7 @@ function Sidebar({
       <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-deep-navy border-r border-border-p flex flex-col py-6 transition-transform duration-300 transform md:relative md:translate-x-0 ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
         {/* Logo */}
         <div className="px-4 mb-6">
-          <img src={logoSrc} alt="CortiQuant" className="h-14 object-contain object-left" />
+          <img src={logoSrc} alt="Cortoe" className="h-14 object-contain object-left mix-blend-multiply" />
           <p className="text-[10px] text-text-muted mt-1 px-1">HR Platform</p>
         </div>
 
@@ -1969,7 +1969,7 @@ function ReportsScreen() {
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement("a")
       a.href = url
-      a.download = `CortiQuant_${report.name.replace(/[^a-zA-Z0-9_-]/g, "_")}_${new Date().toISOString().slice(0, 10)}.docx`
+      a.download = `Cortoe_${report.name.replace(/[^a-zA-Z0-9_-]/g, "_")}_${new Date().toISOString().slice(0, 10)}.docx`
       document.body.appendChild(a)
       a.click()
       window.URL.revokeObjectURL(url)
@@ -2129,7 +2129,7 @@ function ReportsScreen() {
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-[10pt] font-black tracking-widest text-[#7E4CC7] uppercase">
-                      CORTIQUANT INTELLIGENCE
+                      CORTOE INTELLIGENCE
                     </span>
                     <span className="text-gray-400 text-xs">·</span>
                     <span className="text-xs font-semibold text-gray-600">Workforce Wellbeing Analytics</span>
@@ -2151,7 +2151,7 @@ function ReportsScreen() {
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-xs font-bold uppercase tracking-widest text-purple-core">
-                    CORTIQUANT INTELLIGENCE
+                    CORTOE INTELLIGENCE
                   </span>
                   <span className="text-text-muted text-xs">·</span>
                   <span className="text-xs text-text-muted">{detailData?.organisationName || "Organisation"}</span>
@@ -2397,7 +2397,7 @@ function ReportsScreen() {
                 {/* ── PRINT-ONLY PROFESSIONAL FOOTER (A4) ────────────────────── */}
                 <div className="hidden print:flex print-footer items-center justify-between pt-4 mt-8 border-t border-gray-200 text-[8pt] text-gray-500">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-gray-700">CortiQuant</span>
+                    <span className="font-semibold text-gray-700">Cortoe</span>
                     <span>·</span>
                     <span>Workforce Wellbeing Intelligence</span>
                   </div>
@@ -3931,7 +3931,7 @@ function HRSettingsScreen() {
           <div className="card-base p-6">
             <div className="pb-3 border-b border-border-p mb-4">
               <h2 className="text-base font-semibold text-warm-white">Session & Audit Context</h2>
-              <p className="text-xs text-text-muted mt-0.5">Real-time authentication context verified through CortiQuant security gateways.</p>
+              <p className="text-xs text-text-muted mt-0.5">Real-time authentication context verified through Cortoe security gateways.</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
               <div className="p-3 rounded-xl bg-surface/50 border border-border-p">

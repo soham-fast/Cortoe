@@ -31,7 +31,7 @@ export default function ParticipantConsentScreen() {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-core/10 border border-purple-core/25 mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-purple-core animate-pulse" />
               <span className="text-[10px] font-semibold text-lavender-bright uppercase tracking-wider">
-                CortiQuant · Stress Diagnostics. Reimagined.
+                Cortoe · Stress Diagnostics. Reimagined.
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-warm-white tracking-tight">
@@ -48,7 +48,7 @@ export default function ParticipantConsentScreen() {
               What this form is about
             </h2>
             <p className="text-sm text-text-secondary leading-relaxed">
-              You are about to sign up as a participant in Cortiquant's pilot testing program. As part of this program, the Cortiquant app will collect stress-related data through your responses and (where applicable) diagnostic inputs. A portion of this data will be used for research and scientific validation of our platform.
+              You are about to sign up as a participant in Cortoe's pilot testing program. As part of this program, the Cortoe app will collect stress-related data through your responses and (where applicable) diagnostic inputs. A portion of this data will be used for research and scientific validation of our platform.
             </p>
           </section>
 
@@ -65,7 +65,7 @@ export default function ParticipantConsentScreen() {
               <ul className="text-xs text-text-secondary space-y-2 leading-relaxed">
                 <li>• Stress scores and responses from the Mind Stress Index (MSI) questionnaire</li>
                 <li>• Stress category classification based on MSI composite score</li>
-                <li>• Usage patterns within the Cortiquant application</li>
+                <li>• Usage patterns within the Cortoe application</li>
               </ul>
             </div>
 
@@ -78,7 +78,7 @@ export default function ParticipantConsentScreen() {
                 HOW IT IS USED
               </h3>
               <ul className="text-xs text-text-secondary space-y-2 leading-relaxed">
-                <li>• Research validation and scientific accuracy testing of the Cortiquant platform</li>
+                <li>• Research validation and scientific accuracy testing of the Cortoe platform</li>
                 <li>• Improving algorithm performance and stress classification models</li>
                 <li>• Internal product development — not for commercial sale or third-party sharing</li>
               </ul>
@@ -95,7 +95,7 @@ export default function ParticipantConsentScreen() {
               <ul className="text-xs text-text-secondary space-y-2 leading-relaxed">
                 <li>• All data is de-identified — your name, contact, and employer details are removed before any research use</li>
                 <li>• No personally identifiable information (PII) will appear in any research output or report</li>
-                <li>• Data is stored securely and accessible only to the Cortiquant research team</li>
+                <li>• Data is stored securely and accessible only to the Cortoe research team</li>
               </ul>
             </div>
           </div>
@@ -129,7 +129,7 @@ export default function ParticipantConsentScreen() {
               </div>
               <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 text-xs text-text-secondary">
                 <span className="text-emerald-400 font-bold mt-0.5">☑</span>
-                <span>I voluntarily agree to participate in Cortiquant's pilot testing program.</span>
+                <span>I voluntarily agree to participate in Cortoe's pilot testing program.</span>
               </div>
               <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 text-xs text-text-secondary">
                 <span className="text-emerald-400 font-bold mt-0.5">☑</span>
@@ -144,7 +144,7 @@ export default function ParticipantConsentScreen() {
 
           {/* Document Footer */}
           <div className="border-t border-white/[0.08] pt-5 text-center text-xs text-text-muted leading-relaxed font-mono-data">
-            Cortiquant | contact@cortiquant.com | This form is valid for pilot participants only and does not constitute an employment or commercial agreement.
+            Cortoe | contact@Cortoe.com | This form is valid for pilot participants only and does not constitute an employment or commercial agreement.
           </div>
         </div>
       </div>

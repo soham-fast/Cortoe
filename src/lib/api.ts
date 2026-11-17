@@ -1,5 +1,5 @@
 /**
- * Central API client for CortiQuant
+ * Central API client for Cortoe
  * Automatically attaches Authorization header with Bearer token from localStorage.
  * Uses relative URLs (e.g. /api/...) so requests flow through Vite proxy in dev
  * and work seamlessly in production.

@@ -35,13 +35,13 @@ export default function TermsAndConditionsScreen() {
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-warm-white tracking-tight">
-              CORTIQUANT TERMS AND CONDITIONS OF USE
+              Cortoe TERMS AND CONDITIONS OF USE
             </h1>
             <p className="text-xs text-text-muted mt-2 font-mono-data">
-              Effective Date: June 2026 | Version 1.0 | Applies to: Cortiquant Mobile & Web Application
+              Effective Date: June 2026 | Version 1.0 | Applies to: Cortoe Mobile & Web Application
             </p>
             <p className="text-sm text-text-secondary leading-relaxed mt-4">
-              By creating an account, downloading the application, or using any part of the Cortiquant platform, you agree to be bound by these Terms and Conditions. If you do not agree, do not use the platform.
+              By creating an account, downloading the application, or using any part of the Cortoe platform, you agree to be bound by these Terms and Conditions. If you do not agree, do not use the platform.
             </p>
           </div>
 
@@ -51,7 +51,7 @@ export default function TermsAndConditionsScreen() {
               <span className="text-purple-core font-mono-data">1.</span> ACCEPTANCE OF TERMS
             </h2>
             <p className="text-sm text-text-secondary leading-relaxed">
-              These Terms and Conditions (&quot;Terms&quot;) constitute a legally binding agreement between you (&quot;User&quot;) and Cortiquant (&quot;Company&quot;, &quot;we&quot;, &quot;us&quot;, &quot;our&quot;) governing your access to and use of the Cortiquant mobile and web application, platform, services, and all associated features (collectively, the &quot;Platform&quot;). By registering, accessing, or using the Platform, you confirm that you are at least 18 years of age, have read and understood these Terms, and agree to comply with them.
+              These Terms and Conditions (&quot;Terms&quot;) constitute a legally binding agreement between you (&quot;User&quot;) and Cortoe (&quot;Company&quot;, &quot;we&quot;, &quot;us&quot;, &quot;our&quot;) governing your access to and use of the Cortoe mobile and web application, platform, services, and all associated features (collectively, the &quot;Platform&quot;). By registering, accessing, or using the Platform, you confirm that you are at least 18 years of age, have read and understood these Terms, and agree to comply with them.
             </p>
           </section>
 
@@ -61,7 +61,7 @@ export default function TermsAndConditionsScreen() {
               <span className="text-purple-core font-mono-data">2.</span> DESCRIPTION OF THE PLATFORM & SERVICES
             </h2>
             <p className="text-sm text-text-secondary leading-relaxed">
-              Cortiquant is an AI-powered workplace stress analytics platform that generates a Mind-Body Stress Index by combining:
+              Cortoe is an AI-powered workplace stress analytics platform that generates a Mind-Body Stress Index by combining:
             </p>
             <ul className="list-disc list-inside text-sm text-text-secondary space-y-1.5 pl-2">
               <li>Standardised psychometric assessments (Perceived Stress Scale PSS-10, mood inventories)</li>
@@ -79,13 +79,13 @@ export default function TermsAndConditionsScreen() {
             </h2>
             <ul className="list-disc list-inside text-sm text-text-secondary space-y-1.5 pl-2">
               <li>You must provide accurate, complete, and current information at registration and keep it updated.</li>
-              <li>You are responsible for maintaining the confidentiality of your login credentials. You agree to notify Cortiquant immediately at{" "}
+              <li>You are responsible for maintaining the confidentiality of your login credentials. You agree to notify Cortoe immediately at{" "}
                 <a href="mailto:cortiqsupport@gmail.com" className="text-lavender-bright underline underline-offset-2 hover:text-warm-white transition-colors">
                   cortiqsupport@gmail.com
                 </a>{" "}
                 if you suspect unauthorised access to your account.
               </li>
-              <li>Cortiquant reserves the right to suspend or terminate accounts that are found to be providing false information.</li>
+              <li>Cortoe reserves the right to suspend or terminate accounts that are found to be providing false information.</li>
               <li>You may not create more than one account per individual or share your account credentials with any other person.</li>
             </ul>
           </section>
@@ -100,14 +100,14 @@ export default function TermsAndConditionsScreen() {
                 Important Medical Notice
               </p>
               <p className="text-sm text-text-secondary leading-relaxed">
-                The Cortiquant platform is a wellness monitoring tool. It is <strong>NOT</strong> a medical device, clinical diagnostic service, or healthcare provider. The Mind-Body Stress Index is <strong>NOT</strong> a medical diagnosis.
+                The Cortoe platform is a wellness monitoring tool. It is <strong>NOT</strong> a medical device, clinical diagnostic service, or healthcare provider. The Mind-Body Stress Index is <strong>NOT</strong> a medical diagnosis.
               </p>
             </div>
             <ul className="list-disc list-inside text-sm text-text-secondary space-y-1.5 pl-2">
               <li>All stress scores, burnout risk ratings, biomarker interpretations, and recommendations provided by the Platform are for informational and wellness purposes only.</li>
               <li>Platform outputs do not constitute medical advice, diagnosis, prescription, or treatment and must not be used as a substitute for consultation with a qualified medical or mental health professional.</li>
               <li>If you are experiencing a mental health crisis, severe anxiety, depression, or any acute health concern, please seek immediate professional medical help or contact a crisis helpline.</li>
-              <li>Cortiquant does not establish a physician-patient relationship or any therapeutic relationship with any User.</li>
+              <li>Cortoe does not establish a physician-patient relationship or any therapeutic relationship with any User.</li>
             </ul>
           </section>
 
@@ -131,7 +131,7 @@ export default function TermsAndConditionsScreen() {
               <span className="text-purple-core font-mono-data">6.</span> EMPLOYER ACCESS & INDIVIDUAL PRIVACY
             </h2>
             <p className="text-sm text-text-secondary leading-relaxed">
-              If you access Cortiquant through your employer&apos;s corporate subscription:
+              If you access Cortoe through your employer&apos;s corporate subscription:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               <div className="card-elevated p-4 rounded-2xl border border-white/5 space-y-1.5">
@@ -158,7 +158,7 @@ export default function TermsAndConditionsScreen() {
               <span className="text-purple-core font-mono-data">7.</span> PROFESSIONAL & LISTENER SERVICES
             </h2>
             <p className="text-sm text-text-secondary leading-relaxed">
-              Cortiquant offers peer support via Active Listeners and connects users to professional wellbeing specialists. The Active Listener service is designed for empathetic conversational peer support and is <strong>not</strong> clinical therapy or psychiatric treatment.
+              Cortoe offers peer support via Active Listeners and connects users to professional wellbeing specialists. The Active Listener service is designed for empathetic conversational peer support and is <strong>not</strong> clinical therapy or psychiatric treatment.
             </p>
             <div className="card-elevated p-4 rounded-2xl border border-purple-core/20 bg-purple-core/5 space-y-2">
               <p className="text-xs font-semibold text-lavender-bright uppercase tracking-wider">
@@ -193,7 +193,7 @@ export default function TermsAndConditionsScreen() {
               <span className="text-purple-core font-mono-data">9.</span> INTELLECTUAL PROPERTY
             </h2>
             <p className="text-sm text-text-secondary leading-relaxed">
-              All content, features, proprietary algorithms, the Mind-Body Stress Index methodology, software, visual design, and trademarks (including CortiQuant trademarks and logos) are the exclusive property of Cortiquant. You are granted a limited, personal, non-exclusive, non-transferable licence for wellness monitoring use only.
+              All content, features, proprietary algorithms, the Mind-Body Stress Index methodology, software, visual design, and trademarks (including Cortoe trademarks and logos) are the exclusive property of Cortoe. You are granted a limited, personal, non-exclusive, non-transferable licence for wellness monitoring use only.
             </p>
           </section>
 
@@ -206,9 +206,9 @@ export default function TermsAndConditionsScreen() {
               To the maximum extent permitted by applicable Indian law:
             </p>
             <ul className="list-disc list-inside text-sm text-text-secondary space-y-1.5 pl-2">
-              <li>Cortiquant is not liable for indirect, incidental, consequential, punitive, or special damages.</li>
-              <li>Cortiquant is not responsible for any clinical consequences or personnel decisions made by users or employers based on Platform outputs.</li>
-              <li>Cortiquant is not liable for interruptions caused by force majeure events or third-party infrastructure failures.</li>
+              <li>Cortoe is not liable for indirect, incidental, consequential, punitive, or special damages.</li>
+              <li>Cortoe is not responsible for any clinical consequences or personnel decisions made by users or employers based on Platform outputs.</li>
+              <li>Cortoe is not liable for interruptions caused by force majeure events or third-party infrastructure failures.</li>
             </ul>
           </section>
 
@@ -218,7 +218,7 @@ export default function TermsAndConditionsScreen() {
               <span className="text-purple-core font-mono-data">11.</span> CHANGES TO THESE TERMS
             </h2>
             <p className="text-sm text-text-secondary leading-relaxed">
-              Cortiquant reserves the right to modify these Terms at any time. We will notify you of material changes via email or in-app notification at least 14 days before the effective date. Continued use of the Platform after the effective date constitutes acceptance of the revised Terms.
+              Cortoe reserves the right to modify these Terms at any time. We will notify you of material changes via email or in-app notification at least 14 days before the effective date. Continued use of the Platform after the effective date constitutes acceptance of the revised Terms.
             </p>
           </section>
 
@@ -242,7 +242,7 @@ export default function TermsAndConditionsScreen() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
               <div className="card-elevated p-4 rounded-2xl space-y-1">
-                <p className="text-sm font-semibold text-warm-white">CortiQuant Support</p>
+                <p className="text-sm font-semibold text-warm-white">Cortoe Support</p>
                 <p className="text-xs text-text-muted">User Inquiries & Account Services</p>
                 <p className="text-xs text-lavender-bright pt-1">
                   Email: <a href="mailto:cortiqsupport@gmail.com" className="underline hover:text-warm-white transition-colors">cortiqsupport@gmail.com</a>
@@ -250,15 +250,15 @@ export default function TermsAndConditionsScreen() {
               </div>
 
               <div className="card-elevated p-4 rounded-2xl space-y-1">
-                <p className="text-sm font-semibold text-warm-white">CortiQuant Corporate</p>
+                <p className="text-sm font-semibold text-warm-white">Cortoe Corporate</p>
                 <p className="text-xs text-text-muted">Legal & Partnerships</p>
                 <p className="text-xs text-lavender-bright pt-1">
-                  Email: <a href="mailto:cortiquant@gmail.com" className="underline hover:text-warm-white transition-colors">cortiquant@gmail.com</a>
+                  Email: <a href="mailto:Cortoe@gmail.com" className="underline hover:text-warm-white transition-colors">Cortoe@gmail.com</a>
                 </p>
               </div>
             </div>
             <p className="text-xs text-text-muted pt-2 font-mono-data">
-              By using CortiQuant, you acknowledge that you have read and agreed to these Terms.
+              By using Cortoe, you acknowledge that you have read and agreed to these Terms.
             </p>
           </section>
         </div>

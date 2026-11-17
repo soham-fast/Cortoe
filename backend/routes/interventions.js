@@ -324,7 +324,7 @@ router.post("/book", requireActiveEmployee, async (req, res) => {
         bookingRef,
         scheduledDate: scheduledDate || "Upcoming Cohort",
         timeSlot: timeSlot || "15:00 - 15:45",
-        venue: venue || "CortiQuant Wellbeing Studio, Suite 400",
+        venue: venue || "Cortoe Wellbeing Studio, Suite 400",
         facilitator:
           facilitator ||
           (programName.toLowerCase().includes("acoustic")

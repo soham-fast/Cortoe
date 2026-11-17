@@ -1536,7 +1536,7 @@ router.get("/available", async (req, res) => {
       avatar: (l.name ? l.name[0] : "L").toUpperCase(),
       initials: (l.name ? l.name.slice(0, 2) : "LS").toUpperCase(),
       role: "Peer support listener",
-      title: '"CortiQuant Listener"',
+      title: '"Cortoe Listener"',
       desc: l.bio || "Registered peer support listener for the corporate workspace.",
       status: l.availabilityStatus === "Available" ? "Available now" : "Currently unavailable",
       statusNow: l.availabilityStatus === "Available",

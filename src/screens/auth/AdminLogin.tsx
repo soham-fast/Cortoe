@@ -1,5 +1,5 @@
 import { useState } from "react"
-import logoSrc from "@/imports/image-2.png"
+import logoSrc from "@/imports/image copy.png"
 
 interface AdminLoginProps {
   onSignIn: () => void
@@ -139,7 +139,7 @@ export default function AdminLogin({ onSignIn, onBack }: AdminLoginProps) {
         {/* Logo */}
         <div className="flex justify-center mb-8">
           <button onClick={onBack}>
-            <img src={logoSrc} alt="CortiQuant" className="h-12 object-contain opacity-90 hover:opacity-100 transition-opacity" />
+            <img src={logoSrc} alt="Cortoe" className="h-12 object-contain mix-blend-multiply opacity-90 hover:opacity-100 transition-opacity" />
           </button>
         </div>
 

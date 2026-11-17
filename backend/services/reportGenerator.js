@@ -1,7 +1,7 @@
 /**
  * reportGenerator.js
  *
- * Dedicated professional corporate DOCX generator for CortiQuant HR Reports.
+ * Dedicated professional corporate DOCX generator for Cortoe HR Reports.
  * Generates an editable Microsoft Word (.docx) document formatted for corporate
  * review, executive briefing, compliance record-keeping, and audit documentation.
  */
@@ -26,7 +26,7 @@ const {
 } = require("docx")
 
 // Corporate Color Palette for Document Styling
-const BRAND_PURPLE = "7E4CC7"      // Primary CortiQuant Purple
+const BRAND_PURPLE = "7E4CC7"      // Primary Cortoe Purple
 const BRAND_DARK = "191A42"        // Deep Navy Header
 const TEXT_MAIN = "111827"         // Charcoal / Dark Slate for Body
 const TEXT_MUTED = "4B5563"        // Muted Gray
@@ -100,7 +100,7 @@ async function generateDocxReport(reportData) {
             spacing: { before: 200, after: 120 },
             children: [
               new TextRun({
-                text: "CORTIQUANT INTELLIGENCE",
+                text: "CORTOE INTELLIGENCE",
                 bold: true,
                 size: 20, // 10pt
                 color: BRAND_PURPLE,
@@ -198,7 +198,7 @@ async function generateDocxReport(reportData) {
             spacing: { after: 80 },
             children: [
               new TextRun({ text: "PREPARED BY: ", bold: true, size: 20, color: TEXT_MUTED }),
-              new TextRun({ text: "CortiQuant Workforce Wellbeing Platform (AI-Assisted)", size: 22, color: TEXT_MAIN }),
+              new TextRun({ text: "Cortoe Workforce Wellbeing Platform (AI-Assisted)", size: 22, color: TEXT_MAIN }),
             ],
           }),
           new Paragraph({
@@ -239,7 +239,7 @@ async function generateDocxReport(reportData) {
                 spacing: { after: 120 },
                 children: [
                   new TextRun({
-                    text: `CortiQuant Intelligence | ${organisationName} | `,
+                    text: `Cortoe Intelligence | ${organisationName} | `,
                     size: 16,
                     color: TEXT_MUTED,
                   }),
@@ -264,7 +264,7 @@ async function generateDocxReport(reportData) {
                 spacing: { before: 100 },
                 children: [
                   new TextRun({
-                    text: `CortiQuant | Report ID: ${reportId} | Version ${documentVersion}`,
+                    text: `Cortoe | Report ID: ${reportId} | Version ${documentVersion}`,
                     size: 16,
                     color: TEXT_MUTED,
                   }),
@@ -356,10 +356,10 @@ async function generateDocxReport(reportData) {
           // ── 3. DATA METHODOLOGY & PRIVACY SAFEGUARDS ───────────────────────
           createHeading("3. Data Methodology & Privacy Safeguards"),
           new Paragraph({
-            text: "CortiQuant strictly isolates and aggregates employee check-in assessments to safeguard individual confidentiality while supplying leadership with actionable organizational visibility.",
+            text: "Cortoe strictly isolates and aggregates employee check-in assessments to safeguard individual confidentiality while supplying leadership with actionable organizational visibility.",
             spacing: { after: 120 },
           }),
-          createBullet("Data Source: Standardized CortiQuant biometric-calibrated questionnaires and voluntary check-in assessments submitted by verified employees."),
+          createBullet("Data Source: Standardized Cortoe biometric-calibrated questionnaires and voluntary check-in assessments submitted by verified employees."),
           createBullet(`Reporting Cohort: Aggregated from ${overview.totalEmployees || "active"} registered employees belonging to ${departments.length} tracked organizational departments.`),
           createBullet("MSI Scoring Scale: Mean Stress Index (MSI) is a 0–100 composite metric calibrated across autonomic indicators, perceived load, cognitive fatigue, and recovery latency."),
           createBullet("Stress Classifications: Normal (0–40 MSI), Acute Strain (41–60 MSI), Persistent Elevation (61–80 MSI), and Burnout Risk (81–100 MSI)."),
@@ -398,7 +398,7 @@ async function generateDocxReport(reportData) {
           // ── 6. INTERVENTION & RECOVERY IMPACT ─────────────────────────────
           createHeading("6. Intervention & Recovery Impact"),
           new Paragraph({
-            text: "Evaluation of voluntary employee recovery modalities across CortiQuant, including Reset Labs, Human Listener sessions, Digital Dump Bag check-ins, guided exercises, and structured recovery workshops.",
+            text: "Evaluation of voluntary employee recovery modalities across Cortoe, including Reset Labs, Human Listener sessions, Digital Dump Bag check-ins, guided exercises, and structured recovery workshops.",
             spacing: { after: 120 },
           }),
           new Paragraph({
@@ -796,7 +796,7 @@ function createInterventionsTable(interventions = []) {
 
 function createSignOffTable(organisationName, reportId, generatedDate) {
   const rows = [
-    ["Prepared By:", "CortiQuant Workforce Wellbeing Platform (AI-Assisted Engine)"],
+    ["Prepared By:", "Cortoe Workforce Wellbeing Platform (AI-Assisted Engine)"],
     ["Generated Timestamp:", generatedDate],
     ["Document Reference ID:", reportId],
     ["Reviewed By (Name):", "__________________________________________________"],

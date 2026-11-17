@@ -1,5 +1,6 @@
 {
-  "description": "Create and customize interactive designs effortlessly with intuitive tools that streamline your creative workflow and enhance project collaboration.",
+  "title": "Cortoe",
+  "description": "Cortoe is an evidence-based workplace stress intelligence platform combining the Mind Stress Index (MSI) and Mind-Body Stress Index (MBSI) with experiential Reset Labs.",
   "robots": {
     "index": false
   },

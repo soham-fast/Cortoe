@@ -2,21 +2,21 @@ TOTAL PAGES: 10
 
 === PAGE 1 ===
  
-Cortiquant — Legal Documents Confidential 
+Cortoe — Legal Documents Confidential 
  
-© 2026 Cortiquant. All rights reserved. Page 1  
+© 2026 Cortoe. All rights reserved. Page 1  
  
 C O R T I Q U A N T 
 PRIVACY POLICY 
-Effective Date: June 2026  |  Version 1.0  |  Applies to: Cortiquant Mobile & Web Application 
+Effective Date: June 2026  |  Version 1.0  |  Applies to: Cortoe Mobile & Web Application 
  
-This Privacy Policy explains what personal and health data Cortiquant collects, why we 
+This Privacy Policy explains what personal and health data Cortoe collects, why we 
 collect it, how we use and protect it, and your rights over your data. Please read this 
-carefully before using the Cortiquant platform. 
+carefully before using the Cortoe platform. 
  
 1. WHO WE ARE 
  
-Cortiquant ("we", "us", "our") is a healthtech company developing an AI-powered workplace 
+Cortoe ("we", "us", "our") is a healthtech company developing an AI-powered workplace 
 stress analytics platform.For privacy-related queries, contact us at: cortiqsupport@gmail.com  
  
  
@@ -41,9 +41,9 @@ by the platform
 
 === PAGE 2 ===
  
-Cortiquant — Legal Documents Confidential 
+Cortoe — Legal Documents Confidential 
  
-© 2026 Cortiquant. All rights reserved. Page 2  
+© 2026 Cortoe. All rights reserved. Page 2  
  
 2.4 Usage & Technical Data 
 • Device type, operating system, browser type, and IP address 
@@ -60,7 +60,7 @@ stress score, trend analysis, and burnout risk indicators through the platform d
 2. To enable your employer's HR team to view anonymised, aggregated workforce stress 
 trends — individual data is never shared with your employer without your explicit 
 consent. 
-3. To train and improve Cortiquant's AI stress prediction model using anonymised, 
+3. To train and improve Cortoe's AI stress prediction model using anonymised, 
 aggregated data — we will never use your identifiable data for model training without 
 your prior written consent. 
 4. To communicate with you about your account, results, platform updates, and wellness 
@@ -88,12 +88,12 @@ regulations.
 
 === PAGE 3 ===
  
-Cortiquant — Legal Documents Confidential 
+Cortoe — Legal Documents Confidential 
  
-© 2026 Cortiquant. All rights reserved. Page 3  
+© 2026 Cortoe. All rights reserved. Page 3  
 5. HOW WE SHARE YOUR DATA 
  
-Cortiquant does not sell, rent, or trade your personal or health data to any third party. Ever. 
+Cortoe does not sell, rent, or trade your personal or health data to any third party. Ever. 
  
 5.1 With Your Employer 
 Your employer's HR dashboard shows only anonymised, aggregated workforce-level data (e.g., 
@@ -118,10 +118,10 @@ We will notify you of any such requirement unless legally prohibited from doing 
 6. HEALTH DATA — SPECIAL PROTECTIONS 
  
 Biological and psychological health data is classified as Sensitive Personal Data under Indian 
-law and receives the following additional protections on the Cortiquant platform: 
+law and receives the following additional protections on the Cortoe platform: 
 • Encryption at rest (AES-256) and in transit (TLS 1.2+) for all health data stored on AWS 
 infrastructure 
-• Role-based access control — only you and explicitly authorised Cortiquant personnel 
+• Role-based access control — only you and explicitly authorised Cortoe personnel 
 with a legitimate need can access your identifiable health data 
 • Health data is stored in a separate, access-controlled database tier segregated from 
 general platform data 
@@ -131,9 +131,9 @@ general platform data
 
 === PAGE 4 ===
  
-Cortiquant — Legal Documents Confidential 
+Cortoe — Legal Documents Confidential 
  
-© 2026 Cortiquant. All rights reserved. Page 4  
+© 2026 Cortoe. All rights reserved. Page 4  
 7. DATA RETENTION 
  
 We retain your data only for as long as necessary for the purposes described in this Policy: 
@@ -169,7 +169,7 @@ To exercise any of these rights, email us at: cortiqsupport@gmail.com . We will 
  
 9. COOKIES & TRACKING 
  
-The Cortiquant web application uses the following types of cookies and tracking technologies: 
+The Cortoe web application uses the following types of cookies and tracking technologies: 
 • Essential cookies — required for login, session management, and security. Cannot be 
 disabled. 
 • Analytics cookies — anonymised usage data to improve platform performance (e.g., 
@@ -178,9 +178,9 @@ Google Analytics). You may opt out.
 
 === PAGE 5 ===
  
-Cortiquant — Legal Documents Confidential 
+Cortoe — Legal Documents Confidential 
  
-© 2026 Cortiquant. All rights reserved. Page 5  
+© 2026 Cortoe. All rights reserved. Page 5  
 We do not use advertising cookies, third-party tracking pixels, or behavioural profiling cookies. 
 You can manage cookie preferences through your browser settings or the in-app cookie consent 
 banner. 
@@ -188,7 +188,7 @@ banner.
  
 10. CHILDREN'S DATA 
  
-The Cortiquant platform is intended for working adults aged 18 years and above. We do not 
+The Cortoe platform is intended for working adults aged 18 years and above. We do not 
 knowingly collect personal or health data from anyone under the age of 18. If we discover that 
 data from a minor has been collected, we will delete it immediately. If you believe a minor has 
 accessed the platform, please contact us at cortiqsupport@gmail.com . 
@@ -208,11 +208,11 @@ For any privacy-related questions, data requests, or complaints, contact our Dat
 Officer: 
  
 Soham Kadam 
-Data Protection Officer & Co-Founder, Cortiquant 
+Data Protection Officer & Co-Founder, Cortoe 
 Email: cortiqsupport@gmail.com    |  Phone: +91-9833631026 
  
 Mrunal Kulkarni 
-Founder, Cortiquant 
+Founder, Cortoe 
 Email: cortiqsupport@gmail.com    |  Phone: +91-9834149518 
  
 We aim to respond to all privacy queries within 30 days of receipt. 
@@ -223,22 +223,22 @@ We aim to respond to all privacy queries within 30 days of receipt.
 
 === PAGE 6 ===
  
-Cortiquant — Legal Documents Confidential 
+Cortoe — Legal Documents Confidential 
  
-© 2026 Cortiquant. All rights reserved. Page 6  
+© 2026 Cortoe. All rights reserved. Page 6  
 C O R T I Q U A N T 
 TERMS AND CONDITIONS OF USE 
-Effective Date: June 2026  |  Version 1.0  |  Applies to: Cortiquant Mobile & Web Application 
+Effective Date: June 2026  |  Version 1.0  |  Applies to: Cortoe Mobile & Web Application 
  
-By creating an account, downloading the application, or using any part of the Cortiquant 
+By creating an account, downloading the application, or using any part of the Cortoe 
 platform, you agree to be bound by these Terms and Conditions. If you do not agree, do not 
 use the platform. 
  
 1. ACCEPTANCE OF TERMS 
  
 These Terms and Conditions ("Terms") constitute a legally binding agreement between you 
-("User") and Cortiquant ("Company", "we", "us", "our") governing your access to and use of the 
-Cortiquant mobile and web application, platform, services, and all associated features 
+("User") and Cortoe ("Company", "we", "us", "our") governing your access to and use of the 
+Cortoe mobile and web application, platform, services, and all associated features 
 (collectively, the "Platform"). By registering, accessing, or using the Platform, you confirm that 
 you are at least 18 years of age, have read and understood these Terms, and agree to comply 
 with them. 
@@ -246,7 +246,7 @@ with them.
  
 2. DESCRIPTION OF THE PLATFORM 
  
-Cortiquant is an AI-powered workplace stress analytics platform that generates a Mind-Body 
+Cortoe is an AI-powered workplace stress analytics platform that generates a Mind-Body 
 Stress Index by combining: 
 • Standardised psychometric assessments (Perceived Stress Scale PSS-10, mood 
 inventories) 
@@ -262,15 +262,15 @@ representatives.
 • You must provide accurate, complete, and current information at registration and keep it 
 updated. 
 • You are responsible for maintaining the confidentiality of your login credentials. You 
-agree to notify Cortiquant immediately at cortiqsupport@gmail.com  if you suspect 
+agree to notify Cortoe immediately at cortiqsupport@gmail.com  if you suspect 
 unauthorised access to your account. 
 
 === PAGE 7 ===
  
-Cortiquant — Legal Documents Confidential 
+Cortoe — Legal Documents Confidential 
  
-© 2026 Cortiquant. All rights reserved. Page 7  
-• Cortiquant reserves the right to suspend or terminate accounts that are found to be 
+© 2026 Cortoe. All rights reserved. Page 7  
+• Cortoe reserves the right to suspend or terminate accounts that are found to be 
 providing false information 
 • You may not create more than one account per individual or share your account 
 credentials with any other person. 
@@ -278,7 +278,7 @@ credentials with any other person.
  
 4. HEALTH DATA & MEDICAL DISCLAIMER 
  
-IMPORTANT: The Cortiquant platform is a wellness monitoring tool. It is NOT a medical 
+IMPORTANT: The Cortoe platform is a wellness monitoring tool. It is NOT a medical 
 device, clinical diagnostic service, or healthcare provider. The Mind-Body Stress Index is 
 NOT a medical diagnosis. 
  
@@ -290,7 +290,7 @@ health professional.
 • If you are experiencing a mental health crisis, severe anxiety, depression, or any acute 
 health concern, please seek immediate professional medical help or contact a crisis 
 helpline. 
-• Cortiquant does not establish a physician-patient relationship or any therapeutic 
+• Cortoe does not establish a physician-patient relationship or any therapeutic 
 relationship with any User. 
  
  
@@ -314,12 +314,12 @@ dashboard for workforce wellness monitoring
 
 === PAGE 8 ===
  
-Cortiquant — Legal Documents Confidential 
+Cortoe — Legal Documents Confidential 
  
-© 2026 Cortiquant. All rights reserved. Page 8  
+© 2026 Cortoe. All rights reserved. Page 8  
 6. EMPLOYER ACCESS & INDIVIDUAL PRIVACY 
  
-If you access Cortiquant through your employer's corporate subscription, the following rules 
+If you access Cortoe through your employer's corporate subscription, the following rules 
 govern what your employer can and cannot see: 
 What Your Employer CAN See: 
 • Anonymised, aggregated departmental or organisational stress trends (average scores, 
@@ -330,7 +330,7 @@ What Your Employer CANNOT See (Without Your Explicit Written Consent):
 • Your individual Mind-Body Stress Index score 
 • Your psychometric assessment responses or scores 
 • Your identity linked to any stress data point 
-Cortiquant will NEVER allow employers to access identifiable individual health data without 
+Cortoe will NEVER allow employers to access identifiable individual health data without 
 the express written consent of the individual user. Employer access is limited to anonymised 
 aggregate analytics only. 
  
@@ -344,7 +344,7 @@ responses
 • Attempt to access another user's account, health data, or stress scores 
 • Reverse engineer, decompile, or attempt to extract the source code or AI model logic of 
 the Platform 
-• Use the Platform for any commercial purpose without Cortiquant's prior written consent 
+• Use the Platform for any commercial purpose without Cortoe's prior written consent 
 • Share your individual health data received through the Platform with third parties in a 
 manner that violates the Privacy Policy 
 • Use the Platform to develop a competing product or service 
@@ -358,38 +358,38 @@ manner that violates the Privacy Policy
 
 === PAGE 9 ===
  
-Cortiquant — Legal Documents Confidential 
+Cortoe — Legal Documents Confidential 
  
-© 2026 Cortiquant. All rights reserved. Page 9  
+© 2026 Cortoe. All rights reserved. Page 9  
 8. INTELLECTUAL PROPERTY 
  
 All content, features, software, AI models, algorithms, the Mind-Body Stress Index methodology, 
-visual design, trademarks, logos (including the CortiQuant logo), and all other intellectual 
-property on or within the Platform are the exclusive property of Cortiquant. You are granted a 
+visual design, trademarks, logos (including the Cortoe logo), and all other intellectual 
+property on or within the Platform are the exclusive property of Cortoe. You are granted a 
 limited, non-exclusive, non-transferable licence to use the Platform for your personal wellness 
 monitoring purposes only. This licence does not include any right to: 
 • Copy, reproduce, or redistribute any Platform content or intellectual property 
-• Use Cortiquant's name, logo, or brand in any public communication without prior written 
+• Use Cortoe's name, logo, or brand in any public communication without prior written 
 consent 
-• Build any application, model, or product based on Cortiquant's IP or outputs 
+• Build any application, model, or product based on Cortoe's IP or outputs 
  
  
 9. LIMITATION OF LIABILITY 
  
 To the maximum extent permitted by Indian law:. 
-• Cortiquant is not liable for any indirect, incidental, consequential, punitive, or special 
+• Cortoe is not liable for any indirect, incidental, consequential, punitive, or special 
 damages including loss of health data, employment consequences, or decisions made 
 based on Platform outputs. 
-• Cortiquant is not responsible for any clinical consequences of decisions made by Users 
+• Cortoe is not responsible for any clinical consequences of decisions made by Users 
 or employers based on the Platform's stress scores or wellness recommendations. 
-• Cortiquant is not liable for service interruptions caused by force majeure events, third-
+• Cortoe is not liable for service interruptions caused by force majeure events, third-
 party infrastructure failures, or circumstances outside its reasonable control. 
  
  
 10. THIRD-PARTY SERVICES & LINKS 
  
 The Platform may integrate with or link to third-party services including laboratory partners, 
-wellness resource providers, and cloud infrastructure (AWS). Cortiquant is not responsible for 
+wellness resource providers, and cloud infrastructure (AWS). Cortoe is not responsible for 
 the privacy practices, content, or availability of third-party services. Use of third-party services is 
 governed by their own terms and conditions. 
  
@@ -399,20 +399,20 @@ governed by their own terms and conditions.
 If you are experiencing a mental health crisis, suicidal thoughts, or any acute psychological 
 emergency, please do not rely on this platform. Contact iCall (9152987821), Vandrevala 
 Foundation (1860-2662-345), or your nearest hospital emergency immediately. 
-Cortiquant's Active Listener feature (where available) is a peer support service — it is not a crisis 
+Cortoe's Active Listener feature (where available) is a peer support service — it is not a crisis 
 intervention service and is not a substitute for professional mental health care. 
 
 === PAGE 10 ===
  
-Cortiquant — Legal Documents Confidential 
+Cortoe — Legal Documents Confidential 
  
-© 2026 Cortiquant. All rights reserved. Page 10  
+© 2026 Cortoe. All rights reserved. Page 10  
  
  
  
 12. CHANGES TO THESE TERMS 
  
-Cortiquant reserves the right to modify these Terms at any time. We will notify you of material 
+Cortoe reserves the right to modify these Terms at any time. We will notify you of material 
 changes via in-app notification or email at least 14 days before the effective date. Continued use 
 of the Platform after the effective date constitutes acceptance of the revised Terms. If you do not 
 agree to the changes, you must close your account before the effective date. 
@@ -432,8 +432,8 @@ urgent injunctive relief from a competent court.
 • If any provision of these Terms is found to be unenforceable, the remaining provisions 
 continue in full force and effect. 
 • These Terms, together with the Privacy Policy, constitute the entire agreement between 
-you and Cortiquant regarding your use of the Platform. 
-• Cortiquant's failure to enforce any provision at any time does not constitute a waiver of 
+you and Cortoe regarding your use of the Platform. 
+• Cortoe's failure to enforce any provision at any time does not constitute a waiver of 
 its right to enforce it in the future. 
  
  
@@ -441,8 +441,8 @@ its right to enforce it in the future.
  
 For any questions, complaints, or feedback regarding these Terms or the Platform: 
  
-Cortiquant 
-Email: cortiquant121026@gmail.com   |  Support: cortiqsupport@gmail.com   
-By using the Cortiquant platform, you acknowledge that you have read, understood, and agreed 
+Cortoe 
+Email: Cortoe121026@gmail.com   |  Support: cortiqsupport@gmail.com   
+By using the Cortoe platform, you acknowledge that you have read, understood, and agreed 
 to both this Privacy Policy and these Terms and Conditions. 
 

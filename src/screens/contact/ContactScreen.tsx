@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import logoSrc from "@/imports/image-2.png"
+import logoSrc from "@/imports/image copy.png"
 
 export default function ContactScreen() {
   const navigate = useNavigate()
@@ -47,7 +47,7 @@ export default function ContactScreen() {
             ← Back
           </button>
           <span className="text-[11px] font-mono-data text-text-muted">
-            CortiQuant Support & Inquiries
+            Cortoe Support & Inquiries
           </span>
         </div>
 
@@ -61,13 +61,13 @@ export default function ContactScreen() {
               </span>
             </div>
             <div className="flex items-center gap-3 mb-2">
-              <img src={logoSrc} alt="CortiQuant" className="h-8 object-contain" />
+              <img src={logoSrc} alt="Cortoe" className="h-8 object-contain mix-blend-multiply" />
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-warm-white tracking-tight">
-              Contact CortiQuant
+              Contact Cortoe
             </h1>
             <p className="text-sm text-text-secondary leading-relaxed mt-3">
-              Have questions about CortiQuant&apos;s workplace stress analytics, corporate partnerships, privacy practices, or technical support? Our team is dedicated to supporting your wellbeing journey.
+              Have questions about Cortoe&apos;s workplace stress analytics, corporate partnerships, privacy practices, or technical support? Our team is dedicated to supporting your wellbeing journey.
             </p>
           </div>
 
@@ -108,16 +108,16 @@ export default function ContactScreen() {
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">Corporate & Partnerships</p>
                 <a
-                  href="mailto:cortiquant@gmail.com"
+                  href="mailto:contact@cortoe.com"
                   className="text-sm font-semibold text-lavender-bright hover:text-warm-white transition-colors block mt-1"
                 >
-                  cortiquant@gmail.com
+                  contact@cortoe.com
                 </a>
               </div>
               <div className="flex items-center justify-between pt-1">
                 <span className="text-xs text-text-muted">Enterprise & Pilots</span>
                 <button
-                  onClick={() => handleCopy("cortiquant121026@gmail.com", "corp")}
+                  onClick={() => handleCopy("contact@cortoe.com", "corp")}
                   className="text-[11px] text-purple-core hover:text-lavender-soft transition-colors cursor-pointer font-medium"
                 >
                   {copied === "corp" ? "Copied!" : "Copy Email"}
@@ -194,7 +194,7 @@ export default function ContactScreen() {
                     required
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    placeholder="Inquiry regarding CortiQuant enterprise plan"
+                    placeholder="Inquiry regarding Cortoe enterprise plan"
                     className="w-full px-3.5 py-2.5 rounded-xl bg-midnight border border-border-p text-sm text-warm-white placeholder-text-muted/50 focus:outline-none focus:border-purple-core transition-colors"
                   />
                 </div>
@@ -234,7 +234,7 @@ export default function ContactScreen() {
               </div>
               <div className="p-3.5 rounded-xl bg-surface/50 border border-white/5 space-y-0.5">
                 <p className="text-xs font-medium text-warm-white">Mrunal Kulkarni</p>
-                <p className="text-[11px] text-text-muted">Founder, CortiQuant</p>
+                <p className="text-[11px] text-text-muted">Founder, Cortoe</p>
                 <p className="text-[11px] text-lavender-bright">cortiqsupport@gmail.com</p>
               </div>
             </div>

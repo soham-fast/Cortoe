@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import { createPortal } from "react-dom"
 import { useNavigate, useLocation } from "react-router-dom"
 import UpcomingSessionCard, { UpcomingSessionData } from "@/components/UpcomingSessionCard"
+import logoSrc from "@/imports/image copy.png"
 import {
   ResponsiveContainer,
   BarChart,
@@ -1025,7 +1026,7 @@ function HomeScreen({ onNav }: { onNav: (s: Screen) => void }) {
                                 : "bg-emerald-500/15 text-emerald-800 border border-emerald-500/25"
                             }`}
                           >
-                            {isFeature ? "CortiQuant" : "Action"}
+                            {isFeature ? "Cortoe" : "Action"}
                           </span>
                           <p className="text-xs sm:text-sm font-semibold text-warm-white truncate">{rec.title}</p>
                         </div>
@@ -1386,7 +1387,7 @@ function DriverScreen({ onNext, onBack, data, setData }: { onNext: () => void; o
       <div className="mb-7">
         <p className="text-[10px] text-text-muted mb-2">Stress driver discovery</p>
         <h2 className="text-[22px] font-semibold text-warm-white leading-snug mb-2">{"What's contributing"}<br />to this?</h2>
-        <p className="text-text-muted text-sm">You can select more than one. This helps Cortiquant understand context, not just severity.</p>
+        <p className="text-text-muted text-sm">You can select more than one. This helps Cortoe understand context, not just severity.</p>
       </div>
       <div className="space-y-2 mb-6">
         {DRIVER_OPTIONS.map((opt) => (
@@ -1499,14 +1500,14 @@ function ResultScreen({ onNav, data }: { onNav: (s: Screen) => void; data: Check
         )}
       </div>
 
-      {/* Cortiquant insight */}
+      {/* Cortoe insight */}
       {isElevated && (
         <div className="card-base p-4 mb-5 border-purple-core/20 animate-fade-up" style={{ animationDelay: "120ms" }}>
           <div className="flex items-center gap-2 mb-2">
             <div className="w-5 h-5 rounded-full bg-purple-core/20 flex items-center justify-center">
               <div className="w-1.5 h-1.5 rounded-full bg-purple-core" />
             </div>
-            <span className="text-xs font-semibold text-lavender-soft">Cortiquant insight</span>
+            <span className="text-xs font-semibold text-lavender-soft">Cortoe insight</span>
           </div>
           <p className="text-sm text-text-secondary leading-relaxed">
             Your recent responses suggest increasing mental load. This looks like more than a one-day spike.
@@ -1725,7 +1726,7 @@ function DumpBagScreen({ onNav }: { onNav: (s: Screen) => void }) {
             <span>Thinking this through...</span>
           </>
         ) : text.trim() ? (
-          "See what Cortiquant notices →"
+          "See what Cortoe notices →"
         ) : (
           "Write something first"
         )}
@@ -1818,7 +1819,7 @@ function DumpResponseScreen({ onNav }: { onNav: (s: Screen) => void }) {
       <BackBtn onBack={() => onNav("dump-bag")} />
       <div className="mb-6 animate-fade-up">
         <p className="text-[10px] text-text-muted mb-2">Dump bag · response</p>
-        <h2 className="text-[22px] font-semibold text-warm-white leading-snug">{"Here's what Cortiquant noticed."}</h2>
+        <h2 className="text-[22px] font-semibold text-warm-white leading-snug">{"Here's what Cortoe noticed."}</h2>
       </div>
 
       <div className="space-y-3 mb-6">
@@ -2507,7 +2508,7 @@ function SupportScreen({ onNav }: { onNav: (s: Screen) => void }) {
       </div>
       <div className="card-elevated border border-border-p rounded-2xl p-4">
         <p className="text-[10px] text-text-muted mb-2">Not a clinical service</p>
-        <p className="text-xs text-text-muted leading-relaxed">Cortiquant is a wellbeing support tool. If you are in immediate danger, contact emergency services in your country.</p>
+        <p className="text-xs text-text-muted leading-relaxed">Cortoe is a wellbeing support tool. If you are in immediate danger, contact emergency services in your country.</p>
       </div>
     </Shell>
   )
@@ -2761,7 +2762,7 @@ function ProfessionalSupportScreen({ onBack }: { onBack: () => void }) {
       )}
 
       <p className="text-[10px] text-text-muted leading-relaxed text-center px-3 pb-2">
-        Cortiquant is not an emergency service. If you are in immediate danger, contact emergency services directly.
+        Cortoe is not an emergency service. If you are in immediate danger, contact emergency services directly.
       </p>
     </Shell>
   )
@@ -2850,7 +2851,7 @@ function EmergencySupportScreen({ onBack }: { onBack: () => void }) {
       </div>
 
       <p className="text-[10px] text-text-muted leading-relaxed text-center px-3 pb-2">
-        Cortiquant is not an emergency service. If you are in immediate danger, contact emergency services directly.
+        Cortoe is not an emergency service. If you are in immediate danger, contact emergency services directly.
       </p>
     </Shell>
   )
@@ -4471,7 +4472,7 @@ function ArchetypeScreen({ onNav }: { onNav: (s: Screen) => void }) {
     if (!result) return
     const p = ARCHETYPE_PROFILES[result.winner]
     navigator.clipboard.writeText(
-      `My stress archetype is ${result.winner}\n"${p.tagline}"\n\nDiscover yours at CortiQuant.`
+      `My stress archetype is ${result.winner}\n"${p.tagline}"\n\nDiscover yours at Cortoe.`
     ).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000) })
   }
 
@@ -4569,7 +4570,7 @@ function ArchetypeScreen({ onNav }: { onNav: (s: Screen) => void }) {
                 <div className={`w-1.5 h-1.5 rounded-full ${result.confidence === "High" ? "bg-c-success" : result.confidence === "Medium" ? "bg-c-warning" : "bg-text-muted"}`} />
                 <span className="text-[10px] text-text-muted font-medium">{result.confidence} confidence</span>
               </div>
-              <span className="text-[10px] text-text-muted font-mono-data">cortiquant.com</span>
+              <span className="text-[10px] text-text-muted font-mono-data">cortoe.com</span>
             </div>
           </div>
         </div>
@@ -5390,7 +5391,7 @@ function ProfileScreen({ onBack, onNav }: { onBack: () => void; onNav: (s: Scree
             </div>
 
             <p className="text-xs text-text-secondary leading-relaxed">
-              This will permanently delete your CortiQuant account and associated personal data. This action cannot be undone.
+              This will permanently delete your Cortoe account and associated personal data. This action cannot be undone.
             </p>
 
             {deleteError && (
@@ -5799,7 +5800,7 @@ function ProfileScreen({ onBack, onNav }: { onBack: () => void; onNav: (s: Scree
                 <p className="text-[11px] text-text-muted mt-0.5">
                   {linkStep === "success"
                     ? "Pending HR approval"
-                    : "Connect your personal CortiQuant account"}
+                    : "Connect your personal Cortoe account"}
                 </p>
               </div>
               <button
@@ -5817,7 +5818,7 @@ function ProfileScreen({ onBack, onNav }: { onBack: () => void; onNav: (s: Scree
                 <div>
                   <h4 className="text-sm font-semibold text-warm-white">Link your account to an organisation</h4>
                   <p className="text-xs text-text-muted mt-1 leading-relaxed">
-                    Connect your CortiQuant account with your organisation to access organisation-related features.
+                    Connect your Cortoe account with your organisation to access organisation-related features.
                   </p>
                 </div>
 
@@ -6202,8 +6203,16 @@ function SettingsScreen({ onBack }: { onBack: () => void }) {
         {/* App info */}
         <div>
           <p className="text-[10px] font-semibold text-text-muted mb-2 px-1">About</p>
+          <div className="card-base p-4 mb-3 flex items-center gap-3">
+            <img src={logoSrc} alt="Cortoe" className="h-10 w-10 object-contain mix-blend-multiply rounded-xl bg-white/60 p-1" />
+            <div>
+              <p className="text-sm font-semibold text-warm-white">Cortoe</p>
+              <p className="text-xs text-text-muted">Mind &amp; Body Stress Resilience Platform</p>
+            </div>
+          </div>
           <div className="card-base divide-y divide-border-p overflow-hidden">
             {[
+              { label: "Application", value: "Cortoe" },
               { label: "Version", value: "1.0.0-beta" },
               { label: "Build", value: "2026.08" },
             ].map((r) => (

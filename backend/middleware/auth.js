@@ -99,7 +99,7 @@ async function requireUser(req, res, next) {
     const role = (req.user?.role || "").toLowerCase()
     // Restrict only pure external listener accounts from user personal features
     if (role === "listener") {
-      return res.status(403).json({ success: false, message: "Access restricted to CortiQuant user accounts." })
+      return res.status(403).json({ success: false, message: "Access restricted to Cortoe user accounts." })
     }
     // Block disabled / inactive accounts
     if (req.user?.status === "Disabled" || req.user?.status === "Inactive") {

@@ -125,7 +125,7 @@ router.post("/verify-organisation-code", orgVerificationLimiter, async (req, res
 //
 // Public — B2C individual user signup. No organisation code, employeeId, or HR approval.
 // Creates account with role "employee" and status "Active".
-// Returns token & user so user can proceed directly into personal CortiQuant onboarding/baseline.
+// Returns token & user so user can proceed directly into personal Cortoe onboarding/baseline.
 // ─────────────────────────────────────────────────────────────────────────────
 router.post("/signup", signupLimiter, async (req, res) => {
   try {

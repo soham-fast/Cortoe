@@ -40,7 +40,7 @@ const resetLabSessionSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      default: "CortiQuant Wellbeing Studio, Suite 400",
+      default: "Cortoe Wellbeing Studio, Suite 400",
     },
 
     facilitator: {

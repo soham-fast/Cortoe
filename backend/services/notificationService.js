@@ -284,7 +284,7 @@ async function sendEmployeeApprovalStatusEmail(employee, decision, options = {})
           status: "SENT",
           sentAt: sentTimestamp,
           title: "Account Approved",
-          message: `Your CortiQuant account has been approved. You can now sign in at ${loginUrl}`,
+          message: `Your Cortoe account has been approved. You can now sign in at ${loginUrl}`,
           read: false,
         }).catch((notifErr) => {
           console.warn("[NOTIFICATION SERVICE] Failed creating Notification audit log for approved email:", notifErr.message)
@@ -337,7 +337,7 @@ async function sendEmployeeApprovalStatusEmail(employee, decision, options = {})
           status: "SENT",
           sentAt: sentTimestamp,
           title: "Account Registration Update",
-          message: `Your CortiQuant registration was not approved by your organisation's HR administrator.${rejectionReason ? ` Reason: ${rejectionReason}` : ""}`,
+          message: `Your Cortoe registration was not approved by your organisation's HR administrator.${rejectionReason ? ` Reason: ${rejectionReason}` : ""}`,
           read: false,
         }).catch((notifErr) => {
           console.warn("[NOTIFICATION SERVICE] Failed creating Notification audit log for rejected email:", notifErr.message)

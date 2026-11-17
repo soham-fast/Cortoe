@@ -22,7 +22,7 @@ function resolveOrgPrefix(org) {
   }
 
   const cleanName = (org.name || "").trim().toLowerCase()
-  if (cleanName === "cortiquant" || cleanName === "cortiquant technologies") {
+  if (cleanName === "cortoe" || cleanName === "cortoe technologies" || cleanName === "cortiquant" || cleanName === "cortiquant technologies") {
     return "EMP"
   }
 

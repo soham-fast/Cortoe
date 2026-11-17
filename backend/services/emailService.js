@@ -66,7 +66,7 @@ function buildInvitationHtml({ hrName, orgName, orgCode, acceptUrl, expiresInDay
 <html>
 <head>
   <meta charset="utf-8">
-  <title>CortiQuant HR Invitation</title>
+  <title>Cortoe HR Invitation</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f9fafb; color: #111827;">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 20px;">
@@ -76,7 +76,7 @@ function buildInvitationHtml({ hrName, orgName, orgCode, acceptUrl, expiresInDay
           <!-- Header -->
           <tr>
             <td style="background-color: #701198; padding: 32px 40px; text-align: left;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">CortiQuant</h1>
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">Cortoe</h1>
               <p style="color: rgba(255, 255, 255, 0.85); margin: 6px 0 0 0; font-size: 13px;">Mental Readiness & Workplace Performance Intelligence</p>
             </td>
           </tr>
@@ -85,7 +85,7 @@ function buildInvitationHtml({ hrName, orgName, orgCode, acceptUrl, expiresInDay
             <td style="padding: 40px;">
               <p style="font-size: 16px; margin: 0 0 16px 0; color: #111827;">Hello <strong>${hrName}</strong>,</p>
               <p style="font-size: 14px; line-height: 24px; margin: 0 0 24px 0; color: #4b5563;">
-                You have been invited to join <strong>${orgName}</strong> as an <strong>HR Administrator</strong> on CortiQuant.
+                You have been invited to join <strong>${orgName}</strong> as an <strong>HR Administrator</strong> on Cortoe.
               </p>
 
               <!-- Org Info Box -->
@@ -132,7 +132,7 @@ function buildInvitationHtml({ hrName, orgName, orgCode, acceptUrl, expiresInDay
 
               <p style="font-size: 13px; color: #4b5563; margin: 0;">
                 Regards,<br>
-                <strong>The CortiQuant Team</strong>
+                <strong>The Cortoe Team</strong>
               </p>
             </td>
           </tr>
@@ -158,12 +158,12 @@ function buildInvitationHtml({ hrName, orgName, orgCode, acceptUrl, expiresInDay
 async function sendHRInvitation({ to, hrName, orgName, orgCode, rawToken }) {
   const acceptUrl = buildFrontendUrl("/hr/accept-invitation", { token: rawToken })
 
-  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "CortiQuant <cortiquant@gmail.com>"
-  const subject = "You're invited to join CortiQuant as an HR Administrator"
+  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "Cortoe <cortiquant@gmail.com>"
+  const subject = "You're invited to join Cortoe as an HR Administrator"
   const html = buildInvitationHtml({ hrName, orgName, orgCode, acceptUrl, expiresInDays: 7 })
   const text = `Hello ${hrName},
 
-You have been invited to join ${orgName} as an HR Administrator on CortiQuant.
+You have been invited to join ${orgName} as an HR Administrator on Cortoe.
 
 Organisation: ${orgName}
 Organisation Code: ${orgCode}
@@ -176,7 +176,7 @@ This invitation expires in 7 days.
 If you did not expect this invitation, you can safely ignore this email.
 
 Regards,
-CortiQuant Team`
+Cortoe Team`
 
   console.log(`[EMAIL] Preparing HR invitation for ${to} (${orgName})`)
   console.log(`[EMAIL] From: ${fromAddress}`)
@@ -213,7 +213,7 @@ function buildListenerInvitationHtml({ listenerName, acceptUrl, expiresInHours =
 <html>
 <head>
   <meta charset="utf-8">
-  <title>CortiQuant Listener Invitation</title>
+  <title>Cortoe Listener Invitation</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #08091F; color: #F5F5FA;">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 20px; background-color: #08091F;">
@@ -223,7 +223,7 @@ function buildListenerInvitationHtml({ listenerName, acceptUrl, expiresInHours =
           <!-- Header -->
           <tr>
             <td style="background-color: #701198; padding: 32px 40px; text-align: left;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">CortiQuant</h1>
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">Cortoe</h1>
               <p style="color: rgba(255, 255, 255, 0.85); margin: 6px 0 0 0; font-size: 13px;">Peer Support &amp; Workplace Wellbeing</p>
             </td>
           </tr>
@@ -232,14 +232,14 @@ function buildListenerInvitationHtml({ listenerName, acceptUrl, expiresInHours =
             <td style="padding: 40px;">
               <p style="font-size: 16px; margin: 0 0 16px 0; color: #FFFFFF;">Hello <strong>${listenerName}</strong>,</p>
               <p style="font-size: 14px; line-height: 24px; margin: 0 0 20px 0; color: #A0A5C0;">
-                You have been invited to join <strong>CortiQuant</strong> as a verified <strong>Peer-Support Listener</strong>.
+                You have been invited to join <strong>Cortoe</strong> as a verified <strong>Peer-Support Listener</strong>.
               </p>
 
               <!-- Role Mission Callout -->
               <div style="background-color: rgba(112, 17, 152, 0.12); border-left: 4px solid #9B5DE5; border-radius: 8px; padding: 18px 20px; margin-bottom: 28px;">
                 <p style="margin: 0; font-size: 13px; line-height: 22px; color: #E0E2EC;">
                   <strong>What a Listener does:</strong><br />
-                  Provide confidential, compassionate peer-support listening to employees through the CortiQuant platform.
+                  Provide confidential, compassionate peer-support listening to employees through the Cortoe platform.
                 </p>
               </div>
 
@@ -269,7 +269,7 @@ function buildListenerInvitationHtml({ listenerName, acceptUrl, expiresInHours =
 
               <p style="font-size: 13px; color: #A0A5C0; margin: 0;">
                 Warm regards,<br />
-                <strong>The CortiQuant Team</strong>
+                <strong>The Cortoe Team</strong>
               </p>
             </td>
           </tr>
@@ -293,13 +293,13 @@ function buildListenerInvitationHtml({ listenerName, acceptUrl, expiresInHours =
 async function sendListenerInvitation({ to, listenerName, rawToken }) {
   const acceptUrl = buildFrontendUrl("/listener/accept-invite", { token: rawToken })
 
-  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "CortiQuant <cortiquant@gmail.com>"
-  const subject = "CortiQuant Listener Invitation"
+  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "Cortoe <cortiquant@gmail.com>"
+  const subject = "Cortoe Listener Invitation"
   const html = buildListenerInvitationHtml({ listenerName, acceptUrl, expiresInHours: 72 })
   const text = `Hello ${listenerName},
 
-You have been invited to join CortiQuant as a Peer-Support Listener.
-Provide confidential peer-support listening to employees through the CortiQuant platform.
+You have been invited to join Cortoe as a Peer-Support Listener.
+Provide confidential peer-support listening to employees through the Cortoe platform.
 
 Click the link below to accept your invitation and create your account:
 ${acceptUrl}
@@ -309,7 +309,7 @@ This invitation expires in 72 hours.
 If you did not expect this invitation, you can safely ignore this email.
 
 Regards,
-The CortiQuant Team`
+The Cortoe Team`
 
   console.log(`[EMAIL] Preparing Listener invitation for ${to}`)
   console.log(`[EMAIL] From: ${fromAddress}`)
@@ -349,13 +349,13 @@ async function sendTestEmail(recipientEmail) {
     throw new Error("SMTP is not configured. Please set SMTP_PASSWORD in backend/.env.")
   }
 
-  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "CortiQuant <cortiquant@gmail.com>"
-  const subject = "CortiQuant Email Service Test"
-  const text = "This is a test email from CortiQuant."
+  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "Cortoe <cortiquant@gmail.com>"
+  const subject = "Cortoe Email Service Test"
+  const text = "This is a test email from Cortoe."
   const html = `
     <div style="font-family: sans-serif; padding: 20px; color: #111827;">
-      <h2 style="color: #701198;">CortiQuant Email Service Test</h2>
-      <p>This is a test email confirming that CortiQuant Gmail SMTP delivery is functional.</p>
+      <h2 style="color: #701198;">Cortoe Email Service Test</h2>
+      <p>This is a test email confirming that Cortoe Gmail SMTP delivery is functional.</p>
       <p style="color: #6b7280; font-size: 12px;">Sent from cortiquant@gmail.com</p>
     </div>
   `
@@ -377,8 +377,8 @@ async function sendTestEmail(recipientEmail) {
  */
 async function sendListenerSessionReminder({ listenerEmail, listenerName, startTime, duration = 10, sessionId }) {
   const transporter = getTransporter()
-  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "CortiQuant <cortiquant@gmail.com>"
-  const subject = "Your CortiQuant listening session starts in 5 minutes"
+  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "Cortoe <cortiquant@gmail.com>"
+  const subject = "Your Cortoe listening session starts in 5 minutes"
   const text = `Your peer support session starts in 5 minutes.\n\nTime: ${startTime}\nDuration: ${duration} minutes\nSession ID: ${sessionId}`
   const html = `
 <!DOCTYPE html>
@@ -394,7 +394,7 @@ async function sendListenerSessionReminder({ listenerEmail, listenerName, startT
         <table width="100%" max-width="600" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
           <tr>
             <td style="background-color: #701198; padding: 28px 36px; text-align: left;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.5px;">CortiQuant</h1>
+              <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.5px;">Cortoe</h1>
               <p style="color: rgba(255, 255, 255, 0.85); margin: 4px 0 0 0; font-size: 13px;">Peer Support Listener Portal</p>
             </td>
           </tr>
@@ -457,9 +457,9 @@ async function sendListenerSessionReminder({ listenerEmail, listenerName, startT
  */
 async function sendBookingConfirmationEmail({ listenerEmail, listenerName, date, time, duration = 10, sessionId }) {
   const transporter = getTransporter()
-  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "CortiQuant <cortiquant@gmail.com>"
-  const subject = "Your CortiQuant session has been booked"
-  const text = `Hello ${listenerName || "Listener"},\n\nYour CortiQuant peer support session has been confirmed.\n\nDate: ${date}\nTime: ${time}\nDuration: ${duration} minutes\nSession ID: ${sessionId}\n\nPlease log into your Listener Portal to prepare for the session.`
+  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "Cortoe <cortiquant@gmail.com>"
+  const subject = "Your Cortoe session has been booked"
+  const text = `Hello ${listenerName || "Listener"},\n\nYour Cortoe peer support session has been confirmed.\n\nDate: ${date}\nTime: ${time}\nDuration: ${duration} minutes\nSession ID: ${sessionId}\n\nPlease log into your Listener Portal to prepare for the session.`
   const html = `
 <!DOCTYPE html>
 <html>
@@ -474,7 +474,7 @@ async function sendBookingConfirmationEmail({ listenerEmail, listenerName, date,
         <table width="100%" max-width="600" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
           <tr>
             <td style="background-color: #701198; padding: 28px 36px; text-align: left;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.5px;">CortiQuant</h1>
+              <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.5px;">Cortoe</h1>
               <p style="color: rgba(255, 255, 255, 0.85); margin: 4px 0 0 0; font-size: 13px;">Peer Support Listener Portal</p>
             </td>
           </tr>
@@ -547,17 +547,17 @@ function employeeApprovalRequestTemplate({ employeeName, email, department, empl
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Employee Approval Request - CortiQuant</title>
+  <title>Employee Approval Request - Cortoe</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0d0c1d; color: #f3f4f6;">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 20px; background-color: #0d0c1d;">
     <tr>
       <td align="center">
         <table width="100%" max-width="600" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #17152b; border: 1px solid rgba(139, 92, 246, 0.25); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);">
-          <!-- Header with CortiQuant Branding -->
+          <!-- Header with Cortoe Branding -->
           <tr>
             <td style="background: linear-gradient(135deg, #701198 0%, #4a0d66 100%); padding: 32px 40px; text-align: left;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">CortiQuant</h1>
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">Cortoe</h1>
               <p style="color: rgba(255, 255, 255, 0.85); margin: 6px 0 0 0; font-size: 13px;">Mental Readiness & Workplace Performance Intelligence</p>
             </td>
           </tr>
@@ -567,7 +567,7 @@ function employeeApprovalRequestTemplate({ employeeName, email, department, empl
             <td style="padding: 40px;">
               <p style="font-size: 16px; margin: 0 0 16px 0; color: #ffffff;">Hello HR Team,</p>
               <p style="font-size: 14px; line-height: 24px; margin: 0 0 24px 0; color: #d1d5db;">
-                A new employee has requested access to your CortiQuant workspace.
+                A new employee has requested access to your Cortoe workspace.
               </p>
 
               <!-- Employee Details Card -->
@@ -628,7 +628,7 @@ function employeeApprovalRequestTemplate({ employeeName, email, department, empl
           <tr>
             <td style="background-color: #121024; padding: 20px 40px; text-align: center; border-top: 1px solid rgba(139, 92, 246, 0.15);">
               <p style="font-size: 12px; color: #6b7280; margin: 0;">
-                This is an automated notification from CortiQuant Workplace Performance Intelligence.
+                This is an automated notification from Cortoe Workplace Performance Intelligence.
               </p>
             </td>
           </tr>
@@ -655,14 +655,14 @@ async function sendEmployeeApprovalRequestEmail({
   reviewUrl,
 }) {
   const transporter = getTransporter()
-  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "CortiQuant <cortiquant@gmail.com>"
-  const subject = "New Employee Approval Request - CortiQuant"
+  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "Cortoe <cortiquant@gmail.com>"
+  const subject = "New Employee Approval Request - Cortoe"
 
   const ctaUrl = reviewUrl || buildFrontendUrl("/hr/approval-queue")
 
   const text = `Hello HR Team,
 
-A new employee has requested access to your CortiQuant workspace.
+A new employee has requested access to your Cortoe workspace.
 
 Employee Details:
 
@@ -735,7 +735,7 @@ function employeeApprovedEmailTemplate({ employeeName, loginUrl }) {
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Your CortiQuant Account Has Been Approved</title>
+  <title>Your Cortoe Account Has Been Approved</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f9fafb; color: #111827;">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 20px;">
@@ -745,7 +745,7 @@ function employeeApprovedEmailTemplate({ employeeName, loginUrl }) {
           <!-- Header -->
           <tr>
             <td style="background-color: #701198; padding: 32px 40px; text-align: left;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">CortiQuant</h1>
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">Cortoe</h1>
               <p style="color: rgba(255, 255, 255, 0.85); margin: 6px 0 0 0; font-size: 13px;">Workplace Wellness & Performance Intelligence</p>
             </td>
           </tr>
@@ -754,10 +754,10 @@ function employeeApprovedEmailTemplate({ employeeName, loginUrl }) {
             <td style="padding: 40px;">
               <p style="font-size: 16px; margin: 0 0 16px 0; color: #111827;">Hello <strong>${safeName}</strong>,</p>
               <p style="font-size: 14px; line-height: 24px; margin: 0 0 20px 0; color: #4b5563;">
-                Your CortiQuant account has been approved by your organisation's HR administrator.
+                Your Cortoe account has been approved by your organisation's HR administrator.
               </p>
               <p style="font-size: 14px; line-height: 24px; margin: 0 0 24px 0; color: #4b5563;">
-                You can now sign in and begin your CortiQuant journey. Use your registered username and password to access your wellness dashboard, check-ins, and workplace tools.
+                You can now sign in and begin your Cortoe journey. Use your registered username and password to access your wellness dashboard, check-ins, and workplace tools.
               </p>
 
               <!-- CTA Button -->
@@ -765,7 +765,7 @@ function employeeApprovedEmailTemplate({ employeeName, loginUrl }) {
                 <tr>
                   <td align="center">
                     <a href="${ctaUrl}" target="_blank" style="display: inline-block; background-color: #701198; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 10px; font-size: 14px; font-weight: 600; box-shadow: 0 2px 4px rgba(112, 17, 152, 0.2);">
-                      Sign In to CortiQuant
+                      Sign In to Cortoe
                     </a>
                   </td>
                 </tr>
@@ -780,14 +780,14 @@ function employeeApprovedEmailTemplate({ employeeName, loginUrl }) {
 
               <p style="font-size: 14px; color: #4b5563; margin: 0 0 4px 0;">
                 Thank you,<br>
-                <strong>Team CortiQuant</strong>
+                <strong>Team Cortoe</strong>
               </p>
             </td>
           </tr>
           <!-- Footer -->
           <tr>
             <td style="background-color: #f9fafb; padding: 20px 40px; text-align: center; border-top: 1px solid #e5e7eb;">
-              <p style="font-size: 12px; color: #9ca3af; margin: 0;">&copy; ${new Date().getFullYear()} CortiQuant. All rights reserved.</p>
+              <p style="font-size: 12px; color: #9ca3af; margin: 0;">&copy; ${new Date().getFullYear()} Cortoe. All rights reserved.</p>
             </td>
           </tr>
         </table>
@@ -804,22 +804,22 @@ function employeeApprovedEmailTemplate({ employeeName, loginUrl }) {
  */
 async function sendEmployeeApprovedEmail({ to, employeeName, loginUrl }) {
   const transporter = getTransporter()
-  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "CortiQuant <cortiquant@gmail.com>"
-  const subject = "Your CortiQuant Account Has Been Approved"
+  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "Cortoe <cortiquant@gmail.com>"
+  const subject = "Your Cortoe Account Has Been Approved"
   const ctaUrl = loginUrl || buildFrontendUrl("/company-login")
   const displayName = employeeName || "Employee"
 
   const text = `Hello ${displayName},
 
-Your CortiQuant account has been approved by your organisation's HR administrator.
+Your Cortoe account has been approved by your organisation's HR administrator.
 
-You can now sign in and begin your CortiQuant journey.
+You can now sign in and begin your Cortoe journey.
 
 Sign in here using your registered username and password:
 ${ctaUrl}
 
 Thank you,
-Team CortiQuant`
+Team Cortoe`
 
   const html = employeeApprovedEmailTemplate({ employeeName: displayName, loginUrl: ctaUrl })
 
@@ -856,7 +856,7 @@ function employeeRejectedEmailTemplate({ employeeName, rejectionReason }) {
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Update Regarding Your CortiQuant Registration</title>
+  <title>Update Regarding Your Cortoe Registration</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f9fafb; color: #111827;">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 20px;">
@@ -866,7 +866,7 @@ function employeeRejectedEmailTemplate({ employeeName, rejectionReason }) {
           <!-- Header -->
           <tr>
             <td style="background-color: #701198; padding: 32px 40px; text-align: left;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">CortiQuant</h1>
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">Cortoe</h1>
               <p style="color: rgba(255, 255, 255, 0.85); margin: 6px 0 0 0; font-size: 13px;">Workplace Wellness & Performance Intelligence</p>
             </td>
           </tr>
@@ -875,7 +875,7 @@ function employeeRejectedEmailTemplate({ employeeName, rejectionReason }) {
             <td style="padding: 40px;">
               <p style="font-size: 16px; margin: 0 0 16px 0; color: #111827;">Hello <strong>${safeName}</strong>,</p>
               <p style="font-size: 14px; line-height: 24px; margin: 0 0 16px 0; color: #4b5563;">
-                Thank you for registering with CortiQuant.
+                Thank you for registering with Cortoe.
               </p>
               <p style="font-size: 14px; line-height: 24px; margin: 0 0 20px 0; color: #4b5563;">
                 After reviewing your registration, your organisation's HR administrator has not approved your account at this time.
@@ -898,14 +898,14 @@ function employeeRejectedEmailTemplate({ employeeName, rejectionReason }) {
 
               <p style="font-size: 14px; color: #4b5563; margin: 0 0 4px 0;">
                 Thank you,<br>
-                <strong>Team CortiQuant</strong>
+                <strong>Team Cortoe</strong>
               </p>
             </td>
           </tr>
           <!-- Footer -->
           <tr>
             <td style="background-color: #f9fafb; padding: 20px 40px; text-align: center; border-top: 1px solid #e5e7eb;">
-              <p style="font-size: 12px; color: #9ca3af; margin: 0;">&copy; ${new Date().getFullYear()} CortiQuant. All rights reserved.</p>
+              <p style="font-size: 12px; color: #9ca3af; margin: 0;">&copy; ${new Date().getFullYear()} Cortoe. All rights reserved.</p>
             </td>
           </tr>
         </table>
@@ -922,21 +922,21 @@ function employeeRejectedEmailTemplate({ employeeName, rejectionReason }) {
  */
 async function sendEmployeeRejectedEmail({ to, employeeName, rejectionReason }) {
   const transporter = getTransporter()
-  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "CortiQuant <cortiquant@gmail.com>"
-  const subject = "Update Regarding Your CortiQuant Registration"
+  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "Cortoe <cortiquant@gmail.com>"
+  const subject = "Update Regarding Your Cortoe Registration"
   const displayName = employeeName || "Employee"
   const reasonText = rejectionReason && rejectionReason.trim() ? `\n\nReason provided by HR:\n${rejectionReason.trim()}` : ""
 
   const text = `Hello ${displayName},
 
-Thank you for registering with CortiQuant.
+Thank you for registering with Cortoe.
 
 After reviewing your registration, your organisation's HR administrator has not approved your account at this time.${reasonText}
 
 For further clarification, please contact your organisation's HR administrator.
 
 Thank you,
-Team CortiQuant`
+Team Cortoe`
 
   const html = employeeRejectedEmailTemplate({ employeeName: displayName, rejectionReason })
 
@@ -966,28 +966,28 @@ Team CortiQuant`
  */
 async function sendEmailChangeVerificationCode({ toEmail, userName, verificationCode, expiresInMinutes = 15 }) {
   const transporter = getTransporter()
-  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_USER || "CortiQuant <cortiquant@gmail.com>"
-  const displayName = userName ? userName.trim() : "CortiQuant User"
+  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_USER || "Cortoe <cortiquant@gmail.com>"
+  const displayName = userName ? userName.trim() : "Cortoe User"
   const to = toEmail.trim().toLowerCase()
-  const subject = "Your CortiQuant Email Verification Code"
+  const subject = "Your Cortoe Email Verification Code"
 
   const text = `Hello ${displayName},
 
-You recently requested to change your email address on CortiQuant.
+You recently requested to change your email address on Cortoe.
 
 Your verification code is: ${verificationCode}
 
 This code will expire in ${expiresInMinutes} minutes. If you did not make this request, please ignore this email and your account email will remain unchanged.
 
 Best regards,
-The CortiQuant Team`
+The Cortoe Team`
 
   const html = `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>CortiQuant Email Verification Code</title>
+  <title>Cortoe Email Verification Code</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0b0c10; color: #ffffff;">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 20px;">
@@ -997,7 +997,7 @@ The CortiQuant Team`
           <!-- Header -->
           <tr>
             <td style="background: linear-gradient(135deg, #701198 0%, #4c1d95 100%); padding: 32px 36px; text-align: left;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">CortiQuant</h1>
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">Cortoe</h1>
               <p style="color: rgba(255, 255, 255, 0.85); margin: 6px 0 0 0; font-size: 13px;">Personal Account Security</p>
             </td>
           </tr>
@@ -1006,7 +1006,7 @@ The CortiQuant Team`
             <td style="padding: 36px; text-align: left;">
               <p style="font-size: 16px; margin: 0 0 14px 0; color: #f3f4f6;">Hello <strong>${displayName}</strong>,</p>
               <p style="font-size: 14px; line-height: 22px; margin: 0 0 24px 0; color: #9ca3af;">
-                We received a request to update the email address associated with your personal CortiQuant account to <strong style="color: #ffffff;">${to}</strong>.
+                We received a request to update the email address associated with your personal Cortoe account to <strong style="color: #ffffff;">${to}</strong>.
               </p>
               
               <!-- Code Box -->
@@ -1017,7 +1017,7 @@ The CortiQuant Team`
               </div>
 
               <p style="font-size: 13px; line-height: 20px; color: #6b7280; margin: 0 0 8px 0;">
-                Enter this code in your CortiQuant profile to confirm and update your email address.
+                Enter this code in your Cortoe profile to confirm and update your email address.
               </p>
               <p style="font-size: 12px; line-height: 18px; color: #6b7280; margin: 0;">
                 If you did not request this change, you can safely ignore this email. Your account email will remain unchanged.
@@ -1027,7 +1027,7 @@ The CortiQuant Team`
           <!-- Footer -->
           <tr>
             <td style="padding: 20px 36px; background-color: #0d0e14; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center; font-size: 11px; color: #4b5563;">
-              &copy; ${new Date().getFullYear()} CortiQuant. All rights reserved.
+              &copy; ${new Date().getFullYear()} Cortoe. All rights reserved.
             </td>
           </tr>
         </table>

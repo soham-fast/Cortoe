@@ -6,7 +6,7 @@ import {
   AttendanceRecord,
 } from "./ResetLabsSessionSystem"
 
-// ── CortiQuant Brand Palette Constants ─────────────────────────────────────────
+// ── Cortoe Brand Palette Constants ─────────────────────────────────────────
 // Warm ivory / cream: #F8F1E6
 // Soft peach:         #F3DCC8
 // Terracotta:         #C45B32
@@ -102,7 +102,7 @@ export const RESET_LAB_PROGRAMS: Record<ResetLabProgramId, ProgramConfig> = {
       bio: "Master of Music (Acoustic Performance) with 11+ years specialising in psychoacoustics, autonomic nervous system down-regulation, and receptive sound meditation.",
       credentials: "M.Mus., Certified Neurological Music Therapist",
     },
-    venue: "CortiQuant Wellbeing Studio, Suite 400 · Acoustic Chamber",
+    venue: "Cortoe Wellbeing Studio, Suite 400 · Acoustic Chamber",
     teaserDurationSecs: 38,
     accentColor: "#C45B32",
     badgeBg: "rgba(243, 220, 200, 0.75)",
@@ -185,14 +185,14 @@ export const RESET_LAB_PROGRAMS: Record<ResetLabProgramId, ProgramConfig> = {
         date: "Thursday, Nov 26, 2026",
         time: "15:00 – 15:45",
         seatsLeft: 6,
-        venue: "CortiQuant Wellbeing Studio, Suite 400",
+        venue: "Cortoe Wellbeing Studio, Suite 400",
       },
       {
         id: "slot-au-2",
         date: "Tuesday, Dec 1, 2026",
         time: "11:30 – 12:15",
         seatsLeft: 4,
-        venue: "CortiQuant Wellbeing Studio, Suite 400",
+        venue: "Cortoe Wellbeing Studio, Suite 400",
       },
     ],
   },
@@ -209,7 +209,7 @@ export const RESET_LAB_PROGRAMS: Record<ResetLabProgramId, ProgramConfig> = {
       bio: "14+ years facilitating creative recovery in clinical and corporate settings. Specialises in non-verbal somatic externalisation, tactile grounding, and mindfulness-based creative exploration.",
       credentials: "ATR-BC, Licensed Creative Arts Practitioner",
     },
-    venue: "CortiQuant Wellbeing Studio, Suite 400 · Creative Studio",
+    venue: "Cortoe Wellbeing Studio, Suite 400 · Creative Studio",
     teaserDurationSecs: 35,
     accentColor: "#D98268",
     badgeBg: "rgba(243, 220, 200, 0.75)",
@@ -312,14 +312,14 @@ export const RESET_LAB_PROGRAMS: Record<ResetLabProgramId, ProgramConfig> = {
         date: "Wednesday, Nov 25, 2026",
         time: "16:00 – 17:00",
         seatsLeft: 5,
-        venue: "CortiQuant Wellbeing Studio, Suite 400",
+        venue: "Cortoe Wellbeing Studio, Suite 400",
       },
       {
         id: "slot-eu-2",
         date: "Monday, Nov 30, 2026",
         time: "14:00 – 15:00",
         seatsLeft: 3,
-        venue: "CortiQuant Wellbeing Studio, Suite 400",
+        venue: "Cortoe Wellbeing Studio, Suite 400",
       },
     ],
   },
@@ -995,7 +995,7 @@ export function InstagramReelEmbedPlayer({
 
   return (
     <div className="w-full flex flex-col items-center">
-      {/* Player Frame with CortiQuant Claymorphic Styling */}
+      {/* Player Frame with Cortoe Claymorphic Styling */}
       <div className={`w-full ${compact ? "max-w-full" : "max-w-[420px]"} rounded-3xl overflow-hidden border-2 border-[#F3DCC8] bg-[#FAF4EB] shadow-[0_14px_36px_rgba(121,100,82,0.10),inset_0_2px_4px_rgba(255,255,255,0.95)]`}>
         {/* Header Bar */}
         <div className="px-4 py-2.5 bg-[#FAF4EB] border-b border-[#F3DCC8] flex items-center justify-between gap-2">

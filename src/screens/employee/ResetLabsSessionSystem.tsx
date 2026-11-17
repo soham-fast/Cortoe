@@ -1181,7 +1181,7 @@ export function ResetLabsReportCard({ attendance, onClose }: ReportCardProps) {
       {/* Non-clinical disclaimer */}
       <div className="p-3 rounded-xl bg-[#FAF4EB] border border-[#F3DCC8] text-[10px] text-[#796452] leading-relaxed text-center">
         <em>
-          CortiQuant Reset Labs reports reflect self-reported observational wellbeing metrics. They are not intended as clinical diagnoses, therapeutic treatments or psychological medical evaluations.
+          Cortoe Reset Labs reports reflect self-reported observational wellbeing metrics. They are not intended as clinical diagnoses, therapeutic treatments or psychological medical evaluations.
         </em>
       </div>
     </div>
@@ -1389,7 +1389,7 @@ export function ResetLabsFacilitatorDashboard() {
   const [newTitle, setNewTitle] = useState("Acoustic Unwind")
   const [newDate, setNewDate] = useState("2026-11-25")
   const [newTime, setNewTime] = useState("16:00 - 16:45")
-  const [newVenue, setNewVenue] = useState("CortiQuant Wellbeing Studio, Suite 400")
+  const [newVenue, setNewVenue] = useState("Cortoe Wellbeing Studio, Suite 400")
   const [newFacilitator, setNewFacilitator] = useState("Elena Vance, M.Mus.")
   const [newCapacity, setNewCapacity] = useState(8)
   const [newNotes, setNewNotes] = useState("")

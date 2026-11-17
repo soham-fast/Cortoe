@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import logoSrc from "@/imports/image-2.png"
+import logoSrc from "@/imports/image copy.png"
 
 const OCCUPATIONS = [
   "Working Professional",
@@ -200,7 +200,7 @@ export default function CreateProfile() {
       <div className="relative w-full max-w-lg animate-fade-up">
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <img src={logoSrc} alt="CortiQuant" className="h-10 object-contain opacity-90" />
+          <img src={logoSrc} alt="Cortoe" className="h-10 object-contain mix-blend-multiply opacity-90" />
         </div>
 
         {/* Card */}
@@ -211,7 +211,7 @@ export default function CreateProfile() {
             </span>
             <h1 className="text-2xl font-bold text-warm-white">Create Your Profile</h1>
             <p className="text-xs text-text-muted mt-1.5 max-w-sm mx-auto">
-              Please complete your personal CortiQuant profile to tailor your wellbeing insights.
+              Please complete your personal Cortoe profile to tailor your wellbeing insights.
             </p>
           </div>
 

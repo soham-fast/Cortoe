@@ -10,7 +10,7 @@ const { requireEmployee, requireHR } = require("../middleware/auth")
 // ─────────────────────────────────────────────────────────────────────────────
 // MSI CALCULATION
 //
-// Formula (agreed CortiQuant spec):
+// Formula (agreed Cortoe spec):
 //   MSI = (moodScore/8 * 20) + (psychometricScore/24 * 55) + (physicalScore/4 * 25)
 //   Final value clamped to 0–100.
 //

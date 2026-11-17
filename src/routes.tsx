@@ -20,7 +20,7 @@ import ParticipantConsentScreen from "@/screens/legal/ParticipantConsent"
 import ContactScreen from "@/screens/contact/ContactScreen"
 import CreateProfile from "@/screens/auth/CreateProfile"
 import ResetPassword from "@/screens/auth/ResetPassword"
-import logoSrc from "@/imports/image-2.png"
+import logoSrc from "@/imports/image copy.png"
 
 // ── Auth & Storage Helpers ───────────────────────────────────────────────────
 
@@ -288,7 +288,7 @@ function WaitingApprovalScreen() {
 
       <div className="relative w-full max-w-md animate-fade-up">
         <div className="flex justify-center mb-8">
-          <img src={logoSrc} alt="CortiQuant" className="h-12 object-contain opacity-90" />
+          <img src={logoSrc} alt="Cortoe" className="h-12 object-contain mix-blend-multiply opacity-90" />
         </div>
 
         <div className="card-base p-8 glow-subtle text-center">
@@ -377,7 +377,7 @@ function ApprovalRejectedScreen() {
 
       <div className="relative w-full max-w-md animate-fade-up">
         <div className="flex justify-center mb-8">
-          <img src={logoSrc} alt="CortiQuant" className="h-12 object-contain opacity-90" />
+          <img src={logoSrc} alt="Cortoe" className="h-12 object-contain mix-blend-multiply opacity-90" />
         </div>
 
         <div className="card-base p-8 glow-subtle text-center">
@@ -415,7 +415,7 @@ function AcceptInviteScreen() {
     <div className="min-h-full bg-midnight flex items-center justify-center px-4 py-12">
       <div className="card-base p-8 max-w-md w-full text-center">
         <h1 className="text-2xl font-bold text-warm-white mb-3">Accept Invitation</h1>
-        <p className="text-sm text-text-muted mb-6">You've been invited to join CortiQuant through your organization.</p>
+        <p className="text-sm text-text-muted mb-6">You've been invited to join Cortoe through your organization.</p>
         <button onClick={() => navigate("/company-signup")} className="btn-primary w-full py-3 text-sm rounded-xl">
           Complete Registration &rarr;
         </button>
@@ -602,7 +602,7 @@ export function AppLayout() {
 
       {/* Persistent logo watermark — top-right */}
       <div className="fixed top-3 right-4 z-50 hidden items-center gap-2 pointer-events-none select-none sm:flex">
-        <img src={logoSrc} alt="CortiQuant" className="logo-ink h-7 object-contain opacity-70" />
+        <img src={logoSrc} alt="Cortoe" className="logo-ink h-7 object-contain opacity-70" />
       </div>
 
       <div key={section} className="page-enter size-full">

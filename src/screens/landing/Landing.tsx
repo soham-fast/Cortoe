@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react"
 import { Link } from "react-router-dom"
-import logoSrc from "@/imports/image-2.png"
+import logoSrc from "@/imports/image copy.png"
 import Reveal from "@/components/Reveal"
 
 interface LandingProps {
@@ -290,7 +290,7 @@ export default function Landing({ onGetStarted, onHRLogin }: LandingProps) {
           }`}
         >
           <button onClick={() => scrollTo("hero")} className="cursor-pointer focus:outline-none">
-            <img src={logoSrc} alt="CortiQuant" className="logo-ink h-9 object-contain" />
+            <img src={logoSrc} alt="Cortoe" className="logo-ink h-9 object-contain" />
           </button>
 
           <div className="hidden items-center gap-7 md:flex">
@@ -342,7 +342,7 @@ export default function Landing({ onGetStarted, onHRLogin }: LandingProps) {
               className="animate-fade-up mx-auto mt-7 max-w-xl text-base leading-relaxed text-text-secondary sm:text-lg lg:mx-0"
               style={{ animationDelay: "280ms" }}
             >
-              CortiQuant helps you understand how stress shows up in your everyday life, track your stress patterns
+              Cortoe helps you understand how stress shows up in your everyday life, track your stress patterns
               over time, and discover personalized ways to reset and recover.
             </p>
 
@@ -399,7 +399,7 @@ export default function Landing({ onGetStarted, onHRLogin }: LandingProps) {
               </h2>
             </div>
             <p className="max-w-md text-base leading-relaxed text-text-secondary md:justify-self-end">
-              Stress is personal. CortiQuant gives you actionable tools to measure, understand, and ease mental tension
+              Stress is personal. Cortoe gives you actionable tools to measure, understand, and ease mental tension
               on your own terms.
             </p>
           </Reveal>
@@ -535,7 +535,7 @@ export default function Landing({ onGetStarted, onHRLogin }: LandingProps) {
                   "You don't have to carry this alone."
                 </p>
                 <p className="mb-8 text-sm leading-relaxed text-text-secondary">
-                  Whether you need a listening ear after a tough day or targeted coping strategies, CortiQuant connects
+                  Whether you need a listening ear after a tough day or targeted coping strategies, Cortoe connects
                   you directly when you need it most.
                 </p>
                 <button onClick={onGetStarted} className="btn-secondary w-full cursor-pointer py-3.5 text-sm">
@@ -553,7 +553,7 @@ export default function Landing({ onGetStarted, onHRLogin }: LandingProps) {
           <Reveal className="mb-20 max-w-2xl">
             <Eyebrow>How It Works</Eyebrow>
             <h2 className="mt-5 mb-5 font-display text-4xl leading-[1.08] text-warm-white sm:text-5xl">
-              The CortiQuant Personal Loop
+              The Cortoe Personal Loop
             </h2>
             <p className="max-w-lg text-base text-text-secondary">
               A simple, non-intrusive routine that builds long-term self-awareness and recovery habits.
@@ -657,7 +657,7 @@ export default function Landing({ onGetStarted, onHRLogin }: LandingProps) {
                 Looking to support wellbeing across your team?
               </h3>
               <p className="text-sm leading-relaxed text-[#CDBFAA]">
-                CortiQuant also helps organisations understand aggregated workplace wellbeing patterns while keeping all
+                Cortoe also helps organisations understand aggregated workplace wellbeing patterns while keeping all
                 individual responses 100% private.
               </p>
             </div>
@@ -694,7 +694,7 @@ export default function Landing({ onGetStarted, onHRLogin }: LandingProps) {
       <footer className="relative border-t border-border-p px-6 py-12">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row">
           <div className="flex items-center gap-3">
-            <img src={logoSrc} alt="CortiQuant" className="logo-ink h-8 object-contain" />
+            <img src={logoSrc} alt="Cortoe" className="logo-ink h-8 object-contain" />
             <span className="text-xs text-text-muted">Personal Stress & Wellbeing</span>
           </div>
 

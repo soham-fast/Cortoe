@@ -377,7 +377,7 @@ router.get("/:reportId/export/docx", requireHR, async (req, res) => {
 
     const sanitizedOrg = (org.name || "Organisation").replace(/[^a-zA-Z0-9_-]/g, "_")
     const sanitizedTitle = resolvedTitle.replace(/[^a-zA-Z0-9_-]/g, "_")
-    const filename = `CortiQuant_${sanitizedOrg}_${sanitizedTitle}_${new Date().toISOString().slice(0, 10)}.docx`
+    const filename = `Cortoe_${sanitizedOrg}_${sanitizedTitle}_${new Date().toISOString().slice(0, 10)}.docx`
 
     res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     res.setHeader("Content-Disposition", `attachment; filename="${filename}"`)
@@ -421,7 +421,7 @@ router.post("/generate", requireHR, async (req, res) => {
 
     const sanitizedOrg = (org.name || "Organisation").replace(/[^a-zA-Z0-9_-]/g, "_")
     const sanitizedTitle = resolvedTitle.replace(/[^a-zA-Z0-9_-]/g, "_")
-    const filename = `CortiQuant_${sanitizedOrg}_${sanitizedTitle}_${new Date().toISOString().slice(0, 10)}.docx`
+    const filename = `Cortoe_${sanitizedOrg}_${sanitizedTitle}_${new Date().toISOString().slice(0, 10)}.docx`
 
     res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     res.setHeader("Content-Disposition", `attachment; filename="${filename}"`)

@@ -1,5 +1,5 @@
 === PAGE 1 ===
-CortiQuant 
+Cortoe 
 Mind Stress Index (MSI) — v3 
 Instrument Design, Scoring Logic, and Scientific Credibility Report 
 This document details the final 16-item Mind Stress Index (MSI v3), the reasoning behind its structure, 
@@ -9,7 +9,7 @@ design intended to establish its credibility as a self-report stress-screening i
 
 === PAGE 2 ===
 1. Overview of the MSI v3 
-The Mind Stress Index (MSI) is a 16-item self-report instrument developed by CortiQuant to screen for 
+The Mind Stress Index (MSI) is a 16-item self-report instrument developed by Cortoe to screen for 
 workplace and academic stress. It is organised into four subscales, each capturing a distinct dimension 
 of the stress experience: 
 • Mood — recent emotional state (past week) 

@@ -25,7 +25,7 @@ function buildPasswordResetHtml({ userName, resetUrl, expiresInMinutes = 60 }) {
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Reset your CortiQuant password</title>
+  <title>Reset your Cortoe password</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #08091F; color: #F5F5FA;">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 20px; background-color: #08091F;">
@@ -35,7 +35,7 @@ function buildPasswordResetHtml({ userName, resetUrl, expiresInMinutes = 60 }) {
           <!-- Header -->
           <tr>
             <td style="background-color: #701198; padding: 32px 40px; text-align: left;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">CortiQuant</h1>
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">Cortoe</h1>
               <p style="color: rgba(255, 255, 255, 0.85); margin: 6px 0 0 0; font-size: 13px;">Mental Readiness &amp; Workplace Performance Intelligence</p>
             </td>
           </tr>
@@ -44,7 +44,7 @@ function buildPasswordResetHtml({ userName, resetUrl, expiresInMinutes = 60 }) {
             <td style="padding: 40px;">
               <p style="font-size: 16px; margin: 0 0 16px 0; color: #FFFFFF;">Hello ${safeName},</p>
               <p style="font-size: 14px; line-height: 24px; margin: 0 0 20px 0; color: #A0A5C0;">
-                We received a request to reset your CortiQuant password.
+                We received a request to reset your Cortoe password.
               </p>
               <p style="font-size: 14px; line-height: 24px; margin: 0 0 28px 0; color: #A0A5C0;">
                 Click the button below to create a new password:
@@ -77,7 +77,7 @@ function buildPasswordResetHtml({ userName, resetUrl, expiresInMinutes = 60 }) {
 
               <p style="font-size: 13px; color: #A0A5C0; margin: 0;">
                 Warm regards,<br />
-                <strong>The CortiQuant Team</strong>
+                <strong>The Cortoe Team</strong>
               </p>
             </td>
           </tr>
@@ -101,13 +101,13 @@ function buildPasswordResetHtml({ userName, resetUrl, expiresInMinutes = 60 }) {
  */
 async function sendPasswordResetEmail({ to, userName, rawToken }) {
   const resetUrl = buildFrontendUrl("/reset-password", { token: rawToken })
-  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "CortiQuant <cortiquant@gmail.com>"
-  const subject = "Reset your CortiQuant password"
+  const fromAddress = process.env.EMAIL_FROM || process.env.SMTP_FROM || "Cortoe <cortiquant@gmail.com>"
+  const subject = "Reset your Cortoe password"
   const html = buildPasswordResetHtml({ userName, resetUrl, expiresInMinutes: 60 })
 
   const text = `Hello,
 
-We received a request to reset your CortiQuant password.
+We received a request to reset your Cortoe password.
 
 Click the link below to create a new password:
 ${resetUrl}
@@ -117,7 +117,7 @@ This link will expire in 60 minutes and can only be used once.
 If you did not request a password reset, you can safely ignore this email. Your password will remain unchanged.
 
 Warm regards,
-The CortiQuant Team`
+The Cortoe Team`
 
   const transporter = getTransporter()
 

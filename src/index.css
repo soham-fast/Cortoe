@@ -4,7 +4,7 @@
 @import 'tailwindcss';
 
 /* ═════════════════════════════════════════════════════════════════════════════
-   CortiQuant — design system v3 · "Warm paper"
+   Cortoe — design system v3 · "Warm paper"
    Light, sun-bleached palette. Token names are unchanged so every screen
    inherits it. Surfaces are matte paper, not glass.
    ═════════════════════════════════════════════════════════════════════════════ */
@@ -394,9 +394,10 @@ body {
   border: 1px solid var(--color-border-s);
 }
 
-/* Brand mark rendered as a single espresso silhouette on light surfaces */
+/* Brand mark rendered cleanly on light and cream surfaces */
 .logo-ink {
-  filter: brightness(0) opacity(0.82);
+  mix-blend-mode: multiply;
+  object-fit: contain;
 }
 
 /* Organic arch frame used by the hero */
@@ -645,7 +646,7 @@ select:focus {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   EXECUTIVE A4 PRINT STYLES FOR CORTIQUANT HR REPORTS
+   EXECUTIVE A4 PRINT STYLES FOR CORTOE HR REPORTS
    ───────────────────────────────────────────────────────────────────────────── */
 
 @media print {

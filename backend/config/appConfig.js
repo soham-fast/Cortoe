@@ -17,7 +17,7 @@ function getFrontendUrl() {
   }
 
   if (process.env.NODE_ENV === "production") {
-    return "https://cortiquant.online"
+    return process.env.FRONTEND_URL || "https://cortoe.online"
   }
 
   return "http://localhost:8443"

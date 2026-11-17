@@ -69,29 +69,29 @@ const DURATIONS = [
 
 const TRACKS: Record<ModeId, { title: string; artist: string }[]> = {
   "slow-down": [
-    { title: "Evening Drift", artist: "Cortiquant Reset" },
-    { title: "Still Waters", artist: "Cortiquant Reset" },
-    { title: "Low Tide", artist: "Cortiquant Reset" },
+    { title: "Evening Drift", artist: "Cortoe Reset" },
+    { title: "Still Waters", artist: "Cortoe Reset" },
+    { title: "Low Tide", artist: "Cortoe Reset" },
   ],
   "unwind": [
-    { title: "Warm Light", artist: "Cortiquant Reset" },
-    { title: "Gentle Hours", artist: "Cortiquant Reset" },
-    { title: "Sunday Space", artist: "Cortiquant Reset" },
+    { title: "Warm Light", artist: "Cortoe Reset" },
+    { title: "Gentle Hours", artist: "Cortoe Reset" },
+    { title: "Sunday Space", artist: "Cortoe Reset" },
   ],
   "clear-head": [
-    { title: "Open Space", artist: "Cortiquant Reset" },
-    { title: "Quiet Mind", artist: "Cortiquant Reset" },
-    { title: "Empty Room", artist: "Cortiquant Reset" },
+    { title: "Open Space", artist: "Cortoe Reset" },
+    { title: "Quiet Mind", artist: "Cortoe Reset" },
+    { title: "Empty Room", artist: "Cortoe Reset" },
   ],
   "lift-up": [
-    { title: "Morning Shift", artist: "Cortiquant Reset" },
-    { title: "Soft Rise", artist: "Cortiquant Reset" },
-    { title: "First Light", artist: "Cortiquant Reset" },
+    { title: "Morning Shift", artist: "Cortoe Reset" },
+    { title: "Soft Rise", artist: "Cortoe Reset" },
+    { title: "First Light", artist: "Cortoe Reset" },
   ],
   "just-listen": [
-    { title: "Uninterrupted", artist: "Cortiquant Reset" },
-    { title: "No Words", artist: "Cortiquant Reset" },
-    { title: "Signal", artist: "Cortiquant Reset" },
+    { title: "Uninterrupted", artist: "Cortoe Reset" },
+    { title: "No Words", artist: "Cortoe Reset" },
+    { title: "Signal", artist: "Cortoe Reset" },
   ],
 }
 

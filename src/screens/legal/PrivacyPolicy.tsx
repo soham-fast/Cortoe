@@ -35,13 +35,13 @@ export default function PrivacyPolicyScreen() {
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-warm-white tracking-tight">
-              CORTIQUANT PRIVACY POLICY
+              Cortoe PRIVACY POLICY
             </h1>
             <p className="text-xs text-text-muted mt-2 font-mono-data">
-              Effective Date: June 2026 | Version 1.0 | Applies to: Cortiquant Mobile & Web Application
+              Effective Date: June 2026 | Version 1.0 | Applies to: Cortoe Mobile & Web Application
             </p>
             <p className="text-sm text-text-secondary leading-relaxed mt-4">
-              This Privacy Policy explains what personal and health data Cortiquant collects, why we collect it, how we use and protect it, and your rights over your data. Please read this carefully before using the Cortiquant platform.
+              This Privacy Policy explains what personal and health data Cortoe collects, why we collect it, how we use and protect it, and your rights over your data. Please read this carefully before using the Cortoe platform.
             </p>
           </div>
 
@@ -51,7 +51,7 @@ export default function PrivacyPolicyScreen() {
               <span className="text-purple-core font-mono-data">1.</span> WHO WE ARE
             </h2>
             <p className="text-sm text-text-secondary leading-relaxed">
-              Cortiquant ("we", "us", "our") is a healthtech company developing an AI-powered workplace stress analytics platform. For privacy-related queries, contact us at:{" "}
+              Cortoe ("we", "us", "our") is a healthtech company developing an AI-powered workplace stress analytics platform. For privacy-related queries, contact us at:{" "}
               <a href="mailto:cortiqsupport@gmail.com" className="text-lavender-bright underline underline-offset-2 hover:text-warm-white transition-colors">
                 cortiqsupport@gmail.com
               </a>.
@@ -112,7 +112,7 @@ export default function PrivacyPolicyScreen() {
             <ol className="list-decimal list-inside text-sm text-text-secondary space-y-2 leading-relaxed">
               <li>To generate your personalised Mind-Body Stress Index and provide you with your stress score, trend analysis, and burnout risk indicators through the platform dashboard.</li>
               <li>To enable your employer's HR team to view anonymised, aggregated workforce stress trends — <strong>individual data is never shared with your employer without your explicit consent</strong>.</li>
-              <li>To train and improve Cortiquant's AI stress prediction model using anonymised, aggregated data — <strong>we will never use your identifiable data for model training without your prior written consent</strong>.</li>
+              <li>To train and improve Cortoe's AI stress prediction model using anonymised, aggregated data — <strong>we will never use your identifiable data for model training without your prior written consent</strong>.</li>
               <li>To communicate with you about your account, results, platform updates, and wellness resources.</li>
               <li>To comply with applicable laws, including India's Digital Personal Data Protection (DPDP) Act, 2023.</li>
             </ol>
@@ -140,7 +140,7 @@ export default function PrivacyPolicyScreen() {
               <span className="text-purple-core font-mono-data">5.</span> HOW WE SHARE YOUR DATA
             </h2>
             <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 text-xs font-semibold text-warm-white">
-              Cortiquant does not sell, rent, or trade your personal or health data to any third party. Ever.
+              Cortoe does not sell, rent, or trade your personal or health data to any third party. Ever.
             </div>
 
             <div className="space-y-2 mt-2">
@@ -178,11 +178,11 @@ export default function PrivacyPolicyScreen() {
               <span className="text-purple-core font-mono-data">6.</span> HEALTH DATA — SPECIAL PROTECTIONS
             </h2>
             <p className="text-sm text-text-secondary">
-              Biological and psychological health data is classified as Sensitive Personal Data under Indian law and receives the following additional protections on the Cortiquant platform:
+              Biological and psychological health data is classified as Sensitive Personal Data under Indian law and receives the following additional protections on the Cortoe platform:
             </p>
             <ul className="list-disc list-inside text-sm text-text-secondary space-y-1.5 leading-relaxed">
               <li>Encryption at rest (AES-256) and in transit (TLS 1.2+) for all health data stored on AWS infrastructure.</li>
-              <li>Role-based access control — only you and explicitly authorised Cortiquant personnel with a legitimate need can access your identifiable health data.</li>
+              <li>Role-based access control — only you and explicitly authorised Cortoe personnel with a legitimate need can access your identifiable health data.</li>
               <li>Health data is stored in a separate, access-controlled database tier segregated from general platform data.</li>
               <li>No health data is used for advertising, marketing profiling, or sold to any third party.</li>
             </ul>
@@ -236,7 +236,7 @@ export default function PrivacyPolicyScreen() {
               <span className="text-purple-core font-mono-data">9.</span> COOKIES & TRACKING
             </h2>
             <p className="text-sm text-text-secondary">
-              The Cortiquant web application uses the following types of cookies and tracking technologies:
+              The Cortoe web application uses the following types of cookies and tracking technologies:
             </p>
             <ul className="list-disc list-inside text-sm text-text-secondary space-y-1.5 leading-relaxed">
               <li><strong className="text-warm-white">Essential cookies:</strong> Required for login, session management, and security. Cannot be disabled.</li>
@@ -254,7 +254,7 @@ export default function PrivacyPolicyScreen() {
               <span className="text-purple-core font-mono-data">10.</span> CHILDREN'S DATA
             </h2>
             <p className="text-sm text-text-secondary leading-relaxed">
-              The Cortiquant platform is intended for working adults aged 18 years and above. We do not knowingly collect personal or health data from anyone under the age of 18. If we discover that data from a minor has been collected, we will delete it immediately. If you believe a minor has accessed the platform, please contact us at{" "}
+              The Cortoe platform is intended for working adults aged 18 years and above. We do not knowingly collect personal or health data from anyone under the age of 18. If we discover that data from a minor has been collected, we will delete it immediately. If you believe a minor has accessed the platform, please contact us at{" "}
               <a href="mailto:cortiqsupport@gmail.com" className="text-lavender-bright underline underline-offset-2">
                 cortiqsupport@gmail.com
               </a>.
@@ -282,7 +282,7 @@ export default function PrivacyPolicyScreen() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
               <div className="card-elevated p-4 rounded-2xl space-y-1">
                 <p className="text-sm font-semibold text-warm-white">Soham Kadam</p>
-                <p className="text-xs text-text-muted">Data Protection Officer & Co-Founder, Cortiquant</p>
+                <p className="text-xs text-text-muted">Data Protection Officer & Co-Founder, Cortoe</p>
                 <p className="text-xs text-lavender-bright pt-1">
                   Email: <a href="mailto:cortiqsupport@gmail.com" className="underline">cortiqsupport@gmail.com</a>
                 </p>
@@ -291,7 +291,7 @@ export default function PrivacyPolicyScreen() {
 
               <div className="card-elevated p-4 rounded-2xl space-y-1">
                 <p className="text-sm font-semibold text-warm-white">Mrunal Kulkarni</p>
-                <p className="text-xs text-text-muted">Founder, Cortiquant</p>
+                <p className="text-xs text-text-muted">Founder, Cortoe</p>
                 <p className="text-xs text-lavender-bright pt-1">
                   Email: <a href="mailto:cortiqsupport@gmail.com" className="underline">cortiqsupport@gmail.com</a>
                 </p>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
-import logoSrc from "@/imports/image-2.png"
+import logoSrc from "@/imports/image copy.png"
 
 export default function AcceptInvitation() {
   const [searchParams] = useSearchParams()
@@ -91,8 +91,8 @@ export default function AcceptInvitation() {
     <div className="min-h-screen bg-gradient-to-b from-[#f5f0fa] via-white to-[#f5f0fa] flex flex-col items-center justify-center p-4 selection:bg-purple-core selection:text-white">
       {/* Brand Header */}
       <div className="mb-8 flex flex-col items-center">
-        <img src={logoSrc} alt="CortiQuant" className="h-9 mb-3 object-contain" />
-        <h1 className="text-xl font-bold text-gray-900 tracking-tight">CortiQuant HR Portal</h1>
+        <img src={logoSrc} alt="Cortoe" className="h-9 mb-3 object-contain mix-blend-multiply" />
+        <h1 className="text-xl font-bold text-gray-900 tracking-tight">Cortoe HR Portal</h1>
       </div>
 
       <div className="w-full max-w-md bg-white border border-gray-100 rounded-3xl shadow-xl shadow-purple-900/5 overflow-hidden">

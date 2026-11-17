@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react"
 import { Routes, Route, useNavigate, Navigate, useLocation } from "react-router-dom"
 import { apiRequest } from "@/lib/api"
 import { ResetLabsFacilitatorDashboard } from "@/screens/employee/ResetLabsSessionSystem"
+import logoSrc from "@/imports/image copy.png"
 
 // ── Shared UI & Badges ─────────────────────────────────────────────────────────
 
@@ -1582,7 +1583,7 @@ function InviteListenerModal({
         <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
           <div>
             <h2 className="text-lg font-bold text-gray-900">Invite Listener</h2>
-            <p className="text-xs text-gray-500 mt-0.5">Invite a trained peer-support listener to join CortiQuant.</p>
+            <p className="text-xs text-gray-500 mt-0.5">Invite a trained peer-support listener to join Cortoe.</p>
           </div>
           <button onClick={onClose} disabled={loading} className="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 cursor-pointer">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
@@ -1613,7 +1614,7 @@ function InviteListenerModal({
             <label className="block text-xs font-semibold text-gray-700 mb-1.5">Listener Email *</label>
             <input
               type="email"
-              placeholder="e.g. jordan@cortiquant.com"
+              placeholder="e.g. jordan@cortoe.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
@@ -2587,7 +2588,7 @@ function AddEditProfessionalModal({
               {professional ? "Edit Professional" : "Add Professional"}
             </h2>
             <p className="text-xs text-gray-500 mt-0.5">
-              {professional ? "Update professional consultation details." : "Register a qualified wellbeing professional for CortiQuant."}
+              {professional ? "Update professional consultation details." : "Register a qualified wellbeing professional for Cortoe."}
             </p>
           </div>
           <button
@@ -3626,7 +3627,7 @@ function B2CUsersScreen() {
   return (
     <TablePage
       title="B2C Users"
-      desc="Overview of all personal B2C CortiQuant users who are not currently connected to an approved organisation."
+      desc="Overview of all personal B2C Cortoe users who are not currently connected to an approved organisation."
       columns={["User", "Email", "Organisation", "Org Link Status", "Account Status", "Joined Date"]}
       data={filteredUsers}
       searchValue={search}
@@ -5481,10 +5482,10 @@ export default function FounderApp() {
 
   const SidebarContent = () => (
     <>
-      <div className="px-6 py-6 border-b border-gray-100 flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-purple-core text-white flex items-center justify-center font-bold text-lg leading-none">C</div>
+      <div className="px-6 py-5 border-b border-gray-100 flex items-center gap-3">
+        <img src={logoSrc} alt="Cortoe" className="h-8 w-8 object-contain mix-blend-multiply" />
         <div>
-          <p className="font-bold text-gray-900 leading-tight tracking-tight">CortiQuant</p>
+          <p className="font-bold text-gray-900 leading-tight tracking-tight">Cortoe</p>
           <p className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mt-0.5">Admin Platform</p>
         </div>
       </div>
