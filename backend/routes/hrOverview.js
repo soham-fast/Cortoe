@@ -9,6 +9,7 @@ const Intervention = require("../models/Intervention")
 const InterventionSession = require("../models/InterventionSession")
 const { requireHR } = require("../middleware/auth")
 const { ensureDepartmentsForOrg } = require("../services/departmentService")
+const { APPROVED_DEPARTMENTS, normalizeDepartment } = require("../config/departments")
 const { ensureInterventionsForOrg } = require("../services/interventionService")
 const { logActivity } = require("../services/activityService")
 const { mapMsiToStressState } = require("../services/msiClassification")
@@ -65,10 +66,13 @@ router.get("/departments", requireHR, async (req, res) => {
       ...(mongoose.isValidObjectId(org._id) ? [{ organisationId: org._id }] : []),
     ]
 
-    const departments = await Department.find({
+    let departments = await Department.find({
       $or: orgIdFilter,
       status: "Active",
     }).sort({ name: 1 })
+
+    // Ensure strictly the 8 approved departments are returned
+    departments = departments.filter((d) => APPROVED_DEPARTMENTS.includes(d.name))
 
     // If simple format requested (e.g. for dropdowns), return lightweight array
     if (req.query.simple === "true") {
@@ -124,7 +128,7 @@ router.get("/departments", requireHR, async (req, res) => {
     for (const dept of departments) {
       // Find all employees belonging to this department (scoped to org)
       const deptEmployees = allOrgEmployees.filter(
-        (e) => e.departmentId === dept.departmentId || e.department === dept.name
+        (e) => e.departmentId === dept.departmentId || normalizeDepartment(e.department) === dept.name
       )
       const employeeCount = deptEmployees.length
       const activeEmployees = deptEmployees.filter((e) => e.status === "Active" || e.status === "Approved")
@@ -136,7 +140,7 @@ router.get("/departments", requireHR, async (req, res) => {
       const deptAssessments30d = assessmentsInPeriod.filter(
         (a) =>
           a.departmentId === dept.departmentId ||
-          a.department === dept.name ||
+          normalizeDepartment(a.department) === dept.name ||
           deptUserIds.has(String(a.userId))
       )
 
@@ -144,7 +148,7 @@ router.get("/departments", requireHR, async (req, res) => {
       const deptPrevAssessments = prevAssessments.filter(
         (a) =>
           a.departmentId === dept.departmentId ||
-          a.department === dept.name ||
+          normalizeDepartment(a.department) === dept.name ||
           deptUserIds.has(String(a.userId))
       )
 
@@ -152,7 +156,7 @@ router.get("/departments", requireHR, async (req, res) => {
       const deptAllAssessments = allHistoricalAssessments.filter(
         (a) =>
           a.departmentId === dept.departmentId ||
-          a.department === dept.name ||
+          normalizeDepartment(a.department) === dept.name ||
           deptUserIds.has(String(a.userId))
       )
 
@@ -407,8 +411,9 @@ router.get("/overview", requireHR, async (req, res) => {
       ...(mongoose.isValidObjectId(org._id) ? [{ organisationId: org._id }] : []),
     ]
 
-    // Ensure departments exist
-    const allOrgDepartments = await ensureDepartmentsForOrg(org.organisationId)
+    // Ensure departments exist and strictly match approved 8
+    const rawOrgDepartments = await ensureDepartmentsForOrg(org.organisationId)
+    const allOrgDepartments = rawOrgDepartments.filter((d) => APPROVED_DEPARTMENTS.includes(d.name))
     const deptMap = new Map(allOrgDepartments.map((d) => [d.departmentId, d.name]))
 
     // Handle department filtering
@@ -654,7 +659,7 @@ router.get("/overview", requireHR, async (req, res) => {
     for (const dept of allOrgDepartments) {
       // Find employees in this department
       const deptEmployees = allOrgEmployees.filter(
-        (e) => e.departmentId === dept.departmentId || e.department === dept.name
+        (e) => e.departmentId === dept.departmentId || normalizeDepartment(e.department) === dept.name
       )
       const deptUserIds = new Set(deptEmployees.map((e) => String(e._id)))
 
@@ -662,14 +667,14 @@ router.get("/overview", requireHR, async (req, res) => {
       const deptAssessments = allOrgAssessments.filter(
         (a) =>
           a.departmentId === dept.departmentId ||
-          a.department === dept.name ||
+          normalizeDepartment(a.department) === dept.name ||
           deptUserIds.has(String(a.userId))
       )
 
       const deptPrevAssessments = allPrevOrgAssessments.filter(
         (a) =>
           a.departmentId === dept.departmentId ||
-          a.department === dept.name ||
+          normalizeDepartment(a.department) === dept.name ||
           deptUserIds.has(String(a.userId))
       )
 
@@ -812,8 +817,9 @@ router.get("/workforce", requireHR, async (req, res) => {
       ...(mongoose.isValidObjectId(org._id) ? [{ organisationId: org._id }] : []),
     ]
 
-    // Ensure departments exist for this organisation
-    const allOrgDepartments = await ensureDepartmentsForOrg(org.organisationId)
+    // Ensure departments exist for this organisation and strictly match approved 8
+    const rawOrgDepartments = await ensureDepartmentsForOrg(org.organisationId)
+    const allOrgDepartments = rawOrgDepartments.filter((d) => APPROVED_DEPARTMENTS.includes(d.name))
 
     // Fetch all active employees in this organisation
     const employees = await User.find({
@@ -901,7 +907,7 @@ router.get("/workforce", requireHR, async (req, res) => {
       // Find assessments belonging to this department
       const deptAssessments = assessments.filter((a) => {
         if (a.departmentId && a.departmentId === dept.departmentId) return true
-        if (a.department && a.department.toLowerCase() === dept.name.toLowerCase()) return true
+        if (a.department && normalizeDepartment(a.department) === dept.name) return true
         if (a.userId && userDeptMap.get(String(a.userId)) === dept.departmentId) return true
         return false
       })

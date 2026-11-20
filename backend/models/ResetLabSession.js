@@ -13,9 +13,21 @@ const resetLabSessionSchema = new mongoose.Schema(
 
     sessionType: {
       type: String,
-      enum: ["acoustic-unwind", "express-unwind"],
+      enum: ["acoustic-unwind", "express-unwind", "guided-breathing", "creative-reflection", "sound-stillness"],
       required: true,
       index: true,
+    },
+
+    category: {
+      type: String,
+      default: "Experiential Wellbeing",
+      trim: true,
+    },
+
+    duration: {
+      type: String,
+      default: "45 min",
+      trim: true,
     },
 
     title: {
@@ -73,6 +85,11 @@ const resetLabSessionSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       default: null,
+    },
+
+    isDemoSynthetic: {
+      type: Boolean,
+      default: false,
     },
 
     notes: {

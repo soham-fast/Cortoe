@@ -42,7 +42,14 @@ function requireFacilitatorOrAdmin(req, res, next) {
 // Helper: Generate Unique Session ID (e.g. AU-2026-001, EU-2026-001)
 // ─────────────────────────────────────────────────────────────────────────────
 async function generateUniqueSessionId(sessionType, targetYear = null) {
-  const prefix = sessionType === "express-unwind" ? "EU" : "AU"
+  const prefixMap = {
+    "acoustic-unwind": "AU",
+    "express-unwind": "EU",
+    "guided-breathing": "GB",
+    "creative-reflection": "CR",
+    "sound-stillness": "SS",
+  }
+  const prefix = prefixMap[sessionType] || "RL"
   const year = targetYear || new Date().getFullYear()
   const counterKey = `reset_lab_${prefix}_${year}`
 
@@ -376,6 +383,8 @@ router.post("/checkin", requireUser, async (req, res) => {
       userEmail: user.email || "",
       sessionType: session.sessionType,
       sessionTitle: session.title,
+      sessionCategory: session.category || "Experiential Wellbeing",
+      sessionDuration: session.duration || "45 min",
       checkInTime: new Date(),
       status: "CHECKED_IN",
       preAssessment: {
@@ -604,10 +613,11 @@ router.post("/admin/sessions", requireFacilitatorOrAdmin, async (req, res) => {
       customSessionId = null,
     } = req.body
 
-    if (!sessionType || !["acoustic-unwind", "express-unwind"].includes(sessionType)) {
+    const validTypes = ["acoustic-unwind", "express-unwind", "guided-breathing", "creative-reflection", "sound-stillness"]
+    if (!sessionType || !validTypes.includes(sessionType)) {
       return res.status(400).json({
         success: false,
-        message: 'Valid sessionType is required: "acoustic-unwind" or "express-unwind".',
+        message: `Valid sessionType is required: ${validTypes.join(", ")}.`,
       })
     }
 

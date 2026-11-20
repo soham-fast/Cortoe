@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react"
 import logoSrc from "@/imports/image copy.png"
+import { APPROVED_DEPARTMENTS, normalizeDepartment } from "@/constants/departments"
 import {
   LineChart,
   Line,
@@ -239,7 +240,7 @@ function OverviewScreen({ onNav }: { onNav: (s: HRScreen) => void }) {
         if (!res.ok) throw new Error("Failed to load departments")
         const json = await res.json()
         if (json.success && Array.isArray(json.data)) {
-          setDepartments(json.data)
+          setDepartments(json.data.filter((d: any) => APPROVED_DEPARTMENTS.includes(d.name)))
         }
       } catch (err: any) {
         console.error("[HR-OVERVIEW] Department load error:", err.message)
@@ -277,7 +278,7 @@ function OverviewScreen({ onNav }: { onNav: (s: HRScreen) => void }) {
         setData(json.data)
         // If departments list wasn't loaded or was empty, sync from overview payload
         if (json.data.availableDepartments && json.data.availableDepartments.length > 0) {
-          setDepartments(json.data.availableDepartments)
+          setDepartments(json.data.availableDepartments.filter((d: any) => APPROVED_DEPARTMENTS.includes(d.name)))
         }
       } else {
         throw new Error(json.message || "Failed to load HR overview")
@@ -965,7 +966,8 @@ function TeamsScreen({ onDetail }: { onDetail: (dept: DepartmentTeamItem) => voi
       }
       const json = await res.json()
       if (json.success && Array.isArray(json.departments || json.data)) {
-        setDepartments(json.departments || json.data)
+        const rawDepts = json.departments || json.data
+        setDepartments(rawDepts.filter((d: any) => APPROVED_DEPARTMENTS.includes(d.name)))
       } else {
         throw new Error(json.message || "Unable to load team data")
       }
@@ -1374,7 +1376,7 @@ function InterventionsScreen() {
         if (!res.ok) throw new Error("Failed to load departments")
         const json = await res.json()
         if (json.success && Array.isArray(json.data)) {
-          setDepartments(json.data)
+          setDepartments(json.data.filter((d: any) => APPROVED_DEPARTMENTS.includes(d.name)))
         }
       } catch (err: any) {
         console.warn("[HR-INTERVENTIONS] Could not load departments:", err.message)
@@ -3172,8 +3174,7 @@ function HREmployeeManagementScreen() {
       const data = await res.json()
       if (data.success && Array.isArray(data.employees)) {
         setEmployees(data.employees)
-        const depts = Array.from(new Set(data.employees.map((e: ManagedEmployee) => e.department).filter(Boolean))) as string[]
-        setDepartments(depts)
+        setDepartments([...APPROVED_DEPARTMENTS])
       } else {
         showToast(data.message || "Failed to load employees.")
       }
@@ -3244,7 +3245,7 @@ function HREmployeeManagementScreen() {
     })
     .filter((e) => {
       if (departmentFilter === "all") return true
-      return e.department === departmentFilter
+      return normalizeDepartment(e.department) === departmentFilter || e.department === departmentFilter
     })
     .filter((e) => {
       const q = search.toLowerCase().trim()

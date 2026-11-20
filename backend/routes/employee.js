@@ -755,8 +755,9 @@ router.get("/organisation-departments", requireActiveEmployee, async (req, res) 
     }
 
     const { ensureDepartmentsForOrg } = require("../services/departmentService")
+    const { APPROVED_DEPARTMENTS } = require("../config/departments")
     const depts = await ensureDepartmentsForOrg(org.organisationId)
-    const deptNames = depts.map((d) => d.name)
+    const deptNames = APPROVED_DEPARTMENTS.slice()
 
     return res.status(200).json({
       success: true,

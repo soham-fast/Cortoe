@@ -1,5 +1,6 @@
 import { useState } from "react"
 import logoSrc from "@/imports/image copy.png"
+import { APPROVED_DEPARTMENTS } from "@/constants/departments"
 
 interface OnboardingProps {
   onComplete: (answers: (string | null)[]) => void
@@ -43,16 +44,7 @@ const STEPS = [
     question: "Which department or team are you in?",
     note: "Select the closest match to your current team.",
     type: "choice",
-    options: [
-      "Tech & Product",
-      "Sales & Marketing",
-      "Operations & Admin",
-      "Research & Innovation",
-      "Finance and Legal",
-      "Services / Delivery",
-      "People & Support",
-      "Other",
-    ],
+    options: [...APPROVED_DEPARTMENTS],
   },
   {
     code: "D4",

@@ -54,7 +54,10 @@ export interface AttendanceRecord {
   _id: string
   sessionId: string
   sessionTitle: string
-  sessionType: "acoustic-unwind" | "express-unwind"
+  sessionType: "acoustic-unwind" | "express-unwind" | "guided-breathing" | "creative-reflection" | "sound-stillness" | string
+  sessionCategory?: string
+  sessionDuration?: string
+  isDemoSynthetic?: boolean
   userName?: string
   userEmail?: string
   checkInTime: string
@@ -68,10 +71,12 @@ export interface AttendanceRecord {
 export interface SessionMeta {
   id: string
   sessionId: string
-  sessionType: "acoustic-unwind" | "express-unwind"
+  sessionType: "acoustic-unwind" | "express-unwind" | "guided-breathing" | "creative-reflection" | "sound-stillness" | string
   title: string
+  category?: string
   date: string
   time: string
+  duration?: string
   venue: string
   facilitator: string
   capacity: number
@@ -975,7 +980,7 @@ export function ResetLabsCheckInOutView({
 
 // ─────────────────────────────────────────────────────────────────────────────
 // COMPONENT 2: Visual Session Report Card
-// Displays: Session Info, Before, After, Comparison, Closing Summary
+// Displays: 1. Overview, 2. Pre, 3. Post, 4. Comparison, 5. Reflection, 6. Shift, 7. Summary
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface ReportCardProps {
@@ -1010,94 +1015,184 @@ export function ResetLabsReportCard({ attendance, onClose }: ReportCardProps) {
 
   return (
     <div className="p-6 sm:p-8 rounded-3xl border-2 border-[#F3DCC8] bg-[#FAF4EB] shadow-[0_16px_40px_rgba(121,100,82,0.10),inset_0_2px_4px_rgba(255,255,255,0.95)] space-y-6">
-      {/* ── Header & Session Information ───────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#F3DCC8] pb-5">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
+      {/* ── 1. Session Overview ─────────────────────────────────────────────── */}
+      <div className="border-b border-[#F3DCC8] pb-5 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2 flex-wrap">
             <span className="text-[10px] font-bold text-[#C45B32] uppercase tracking-wider bg-[#F3DCC8] px-2.5 py-0.5 rounded-full border border-[#E0C5AE]">
               Reset Labs Session Report
             </span>
-            <span className="text-xs font-mono-data font-bold text-[#3F3127]">
+            <span className="text-xs font-mono-data font-bold text-[#3F3127] bg-[#FFFDF9] px-2 py-0.5 rounded-lg border border-[#F3DCC8]">
               {attendance.sessionId}
             </span>
+            <span className="text-[9px] font-semibold text-[#C45B32] bg-[#FBECE6] border border-[#E8C0B2] px-2.5 py-0.5 rounded-full tracking-wider">
+              DEMO DATA · SYNTHETIC SESSION RECORDS
+            </span>
           </div>
+
+          <div className="flex items-center gap-3">
+            {/* Net Composite Shift Pill */}
+            <div className="p-2.5 px-3.5 rounded-2xl bg-[#FFFDF9] border border-[#F3DCC8] text-center shadow-xs">
+              <p className="text-[9px] uppercase font-bold text-[#796452] tracking-wider">
+                Composite Shift
+              </p>
+              <p className="text-lg font-bold font-mono-data text-[#C45B32]">
+                {report.overallShiftScore > 0 ? `+${report.overallShiftScore}` : report.overallShiftScore} pts
+              </p>
+            </div>
+            {onClose && (
+              <button
+                type="button"
+                onClick={onClose}
+                className="w-8 h-8 rounded-full bg-[#F3DCC8] hover:bg-[#EAD0B8] border border-[#E0C5AE] text-[#796452] flex items-center justify-center cursor-pointer transition-colors"
+                title="Close report"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div>
           <h2 className="text-xl sm:text-2xl font-bold text-[#3F3127]">
             {attendance.sessionTitle}
           </h2>
-          <p className="text-xs text-[#796452]">
+          <p className="text-xs text-[#796452] mt-0.5">
             Concluded on {formatLocalDate(attendance.checkOutTime)} at {formatLocalTime(attendance.checkOutTime)}
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          {/* Net Relaxation Shift Score Pill */}
-          <div className="p-3 rounded-2xl bg-[#FFFDF9] border border-[#F3DCC8] text-center shadow-xs">
-            <p className="text-[9px] uppercase font-bold text-[#796452] tracking-wider">
-              Composite Shift
-            </p>
-            <p className="text-lg font-bold font-mono-data text-[#C45B32]">
-              {report.overallShiftScore > 0 ? `+${report.overallShiftScore}` : report.overallShiftScore} pts
-            </p>
+        {/* Overview Metadata Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
+          <div className="p-3 rounded-xl bg-[#FFFDF9] border border-[#F3DCC8]">
+            <p className="text-[10px] uppercase font-bold text-[#796452]">Program Category</p>
+            <p className="text-xs font-bold text-[#3F3127] mt-0.5">{attendance.sessionCategory || "Experiential Wellbeing"}</p>
           </div>
-          {onClose && (
-            <button
-              type="button"
-              onClick={onClose}
-              className="w-8 h-8 rounded-full bg-[#F3DCC8] hover:bg-[#EAD0B8] border border-[#E0C5AE] text-[#796452] flex items-center justify-center cursor-pointer transition-colors"
-            >
-              ✕
-            </button>
+          <div className="p-3 rounded-xl bg-[#FFFDF9] border border-[#F3DCC8]">
+            <p className="text-[10px] uppercase font-bold text-[#796452]">Duration</p>
+            <p className="text-xs font-bold text-[#3F3127] mt-0.5">{attendance.sessionDuration || "45 min"}</p>
+          </div>
+          <div className="p-3 rounded-xl bg-[#FFFDF9] border border-[#F3DCC8]">
+            <p className="text-[10px] uppercase font-bold text-[#796452]">Participant</p>
+            <p className="text-xs font-bold text-[#3F3127] mt-0.5">{attendance.userName || "Soham K"}</p>
+          </div>
+          <div className="p-3 rounded-xl bg-[#FFFDF9] border border-[#F3DCC8]">
+            <p className="text-[10px] uppercase font-bold text-[#796452]">Status</p>
+            <p className="text-xs font-bold text-[#4A643E] mt-0.5">✓ Checked Out</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── 2 & 3. Pre-Session vs Post-Session Assessment Breakdown ─────────── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Pre-Session Assessment Card */}
+        <div className="p-5 rounded-2xl bg-[#FFFDF9] border border-[#F3DCC8] space-y-3 shadow-xs">
+          <div className="flex items-center justify-between border-b border-[#F3DCC8] pb-2">
+            <span className="text-[10px] uppercase font-bold text-[#796452] tracking-wider">
+              2. Pre-Session Assessment (Arrival)
+            </span>
+            <span className="text-[10px] font-mono-data font-semibold text-[#796452]">
+              {formatLocalTime(attendance.checkInTime)}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-[#796452]">Starting Emotional State:</span>
+            <span className="text-xs font-bold text-[#C45B32] bg-[#FBECE6] px-2.5 py-0.5 rounded-full border border-[#E8C0B2]">
+              {preAssessment.emotionalState || "Neutral"} ({preAssessment.emotionalRating || 5}/10)
+            </span>
+          </div>
+
+          <div className="space-y-2 text-xs">
+            <div className="flex items-center justify-between">
+              <span className="text-[#796452]">Perceived Stress</span>
+              <strong className="font-mono-data text-[#3F3127]">{preAssessment.stress} / 10</strong>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[#796452]">Physical Tension</span>
+              <strong className="font-mono-data text-[#3F3127]">{preAssessment.physicalTension} / 10</strong>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[#796452]">Mental Calmness</span>
+              <strong className="font-mono-data text-[#3F3127]">{preAssessment.mentalCalmness} / 10</strong>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[#796452]">Feeling of Relaxation</span>
+              <strong className="font-mono-data text-[#3F3127]">{preAssessment.relaxation} / 10</strong>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[#796452]">Overall Wellbeing</span>
+              <strong className="font-mono-data text-[#3F3127]">{preAssessment.wellbeing} / 10</strong>
+            </div>
+          </div>
+
+          {preAssessment.notes && (
+            <div className="p-3 rounded-xl bg-[#FAF4EB] border border-[#F3DCC8] text-[11px] text-[#796452]">
+              <span className="font-bold text-[#3F3127] block mb-0.5">Pre-Session Mindset:</span>
+              <p className="italic">"{preAssessment.notes}"</p>
+            </div>
+          )}
+        </div>
+
+        {/* Post-Session Assessment Card */}
+        <div className="p-5 rounded-2xl bg-[#FFFDF9] border border-[#B9C6A5] space-y-3 shadow-xs">
+          <div className="flex items-center justify-between border-b border-[#B9C6A5]/50 pb-2">
+            <span className="text-[10px] uppercase font-bold text-[#4A643E] tracking-wider">
+              3. Post-Session Assessment (Checkout)
+            </span>
+            <span className="text-[10px] font-mono-data font-semibold text-[#4A643E]">
+              {formatLocalTime(attendance.checkOutTime)}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-[#796452]">Ending Emotional State:</span>
+            <span className="text-xs font-bold text-[#4A643E] bg-[#EAF3E6] px-2.5 py-0.5 rounded-full border border-[#B9C6A5]">
+              {postAssessment.emotionalState || "Centered"} ({postAssessment.emotionalRating || 8}/10)
+            </span>
+          </div>
+
+          <div className="space-y-2 text-xs">
+            <div className="flex items-center justify-between">
+              <span className="text-[#796452]">Perceived Stress</span>
+              <strong className="font-mono-data text-[#4A643E]">{postAssessment.stress} / 10</strong>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[#796452]">Physical Tension</span>
+              <strong className="font-mono-data text-[#4A643E]">{postAssessment.physicalTension} / 10</strong>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[#796452]">Mental Calmness</span>
+              <strong className="font-mono-data text-[#4A643E]">{postAssessment.mentalCalmness} / 10</strong>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[#796452]">Feeling of Relaxation</span>
+              <strong className="font-mono-data text-[#4A643E]">{postAssessment.relaxation} / 10</strong>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[#796452]">Overall Wellbeing</span>
+              <strong className="font-mono-data text-[#4A643E]">{postAssessment.wellbeing} / 10</strong>
+            </div>
+          </div>
+
+          {postAssessment.standoutMoment && (
+            <div className="p-3 rounded-xl bg-[#FAF4EB] border border-[#B9C6A5]/60 text-[11px] text-[#3F3127]">
+              <span className="font-bold text-[#4A643E] block mb-0.5">Standout Experience Moment:</span>
+              <p className="italic">"{postAssessment.standoutMoment}"</p>
+            </div>
           )}
         </div>
       </div>
 
-      {/* ── Summary Cards: Before vs After Emotional State ─────────────────── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* Starting State */}
-        <div className="p-4 rounded-2xl bg-[#FFFDF9] border border-[#F3DCC8] space-y-1.5 shadow-xs">
-          <span className="text-[10px] uppercase font-bold text-[#796452] tracking-wider block">
-            Starting State (Pre-Session)
-          </span>
-          <p className="text-base font-bold text-[#3F3127]">
-            {preAssessment.emotionalState || "Neutral"}
-          </p>
-          <div className="text-xs text-[#796452] space-y-0.5">
-            <p>Perceived Stress: <strong className="text-[#3F3127]">{preAssessment.stress} / 10</strong></p>
-            <p>Physical Tension: <strong className="text-[#3F3127]">{preAssessment.physicalTension} / 10</strong></p>
-            {preAssessment.notes && (
-              <p className="text-[11px] italic pt-1 border-t border-[#F3DCC8]">
-                "{preAssessment.notes}"
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* Ending State */}
-        <div className="p-4 rounded-2xl bg-[#FFFDF9] border border-[#B9C6A5] space-y-1.5 shadow-xs">
-          <span className="text-[10px] uppercase font-bold text-[#4A643E] tracking-wider block">
-            Ending State (Post-Session)
-          </span>
-          <p className="text-base font-bold text-[#3F3127]">
-            {postAssessment.emotionalState || "Centered"}
-          </p>
-          <div className="text-xs text-[#796452] space-y-0.5">
-            <p>Perceived Stress: <strong className="text-[#3F3127]">{postAssessment.stress} / 10</strong></p>
-            <p>Physical Tension: <strong className="text-[#3F3127]">{postAssessment.physicalTension} / 10</strong></p>
-            {postAssessment.standoutMoment && (
-              <p className="text-[11px] italic pt-1 border-t border-[#B9C6A5]/50 text-[#3F3127]">
-                "{postAssessment.standoutMoment}"
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* ── Before vs After Dimension Comparison Grid ──────────────────────── */}
+      {/* ── 4. Before-versus-After Comparison ──────────────────────────────── */}
       <div className="space-y-3">
-        <h3 className="text-sm font-bold text-[#3F3127] flex items-center gap-2">
-          <span>📊</span>
-          <span>Self-Reported Before vs After Comparison</span>
-        </h3>
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-bold text-[#3F3127] flex items-center gap-2">
+            <span>📊</span>
+            <span>4. Before-versus-After Comparison</span>
+          </h3>
+          <span className="text-[10px] text-[#796452]">Self-reported scale (1–10)</span>
+        </div>
 
         <div className="space-y-2.5">
           {report.shifts.map((shift, idx) => {
@@ -1120,6 +1215,10 @@ export function ResetLabsReportCard({ attendance, onClose }: ReportCardProps) {
 
                 {/* Progress bar comparison */}
                 <div className="flex-1 max-w-xs space-y-1">
+                  <div className="flex justify-between text-[9px] text-[#796452]">
+                    <span>Pre: {shift.pre}</span>
+                    <span>Post: {shift.post}</span>
+                  </div>
                   <div className="h-2 w-full bg-[#FAF4EB] rounded-full overflow-hidden flex border border-[#F3DCC8]">
                     <div
                       className="bg-[#D9C0A7] transition-all"
@@ -1139,7 +1238,7 @@ export function ResetLabsReportCard({ attendance, onClose }: ReportCardProps) {
                 {/* Delta and Status Badge */}
                 <div className="flex items-center gap-2 sm:justify-end flex-shrink-0">
                   <span
-                    className={`text-xs font-mono-data font-bold px-2 py-0.5 rounded-lg border ${
+                    className={`text-xs font-mono-data font-bold px-2.5 py-1 rounded-lg border ${
                       isImprovement
                         ? "bg-[#EAF3E6] text-[#4A643E] border-[#B9C6A5]"
                         : isNoChange
@@ -1151,7 +1250,7 @@ export function ResetLabsReportCard({ attendance, onClose }: ReportCardProps) {
                     {shift.percentChange > 0 && ` (${shift.percentChange}%)`}
                   </span>
                   <span
-                    className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
+                    className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${
                       isImprovement
                         ? "bg-[#B9C6A5]/30 text-[#4A643E] border-[#B9C6A5]"
                         : isNoChange
@@ -1168,10 +1267,50 @@ export function ResetLabsReportCard({ attendance, onClose }: ReportCardProps) {
         </div>
       </div>
 
-      {/* ── Closing Neutral Summary ────────────────────────────────────────── */}
+      {/* ── 5. Participant Reflection ──────────────────────────────────────── */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFDF9] border border-[#F3DCC8] space-y-3 shadow-xs">
+        <h4 className="text-xs font-bold text-[#3F3127] uppercase tracking-wider flex items-center gap-2">
+          <span>🌿</span>
+          <span>5. Participant Reflection & Qualitative Notes</span>
+        </h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div className="p-3 rounded-xl bg-[#FAF4EB] border border-[#F3DCC8] space-y-1">
+            <span className="font-bold text-[#796452] text-[10px] uppercase">Arrival Perspective:</span>
+            <p className="text-[#3F3127] italic">"{preAssessment.notes || "Arrived ready for session reset."}"</p>
+          </div>
+          <div className="p-3 rounded-xl bg-[#FAF4EB] border border-[#B9C6A5] space-y-1">
+            <span className="font-bold text-[#4A643E] text-[10px] uppercase">Post-Session Takeaway:</span>
+            <p className="text-[#3F3127] italic">"{postAssessment.notes || "Felt noticeable somatic decompression."}"</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── 6. Self-Reported Changes Summary ───────────────────────────────── */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFDF9] border border-[#F3DCC8] space-y-2.5 shadow-xs">
+        <h4 className="text-xs font-bold text-[#3F3127] uppercase tracking-wider flex items-center gap-2">
+          <span>📈</span>
+          <span>6. Self-Reported Wellbeing Shift</span>
+        </h4>
+        <div className="flex flex-wrap items-center gap-3 text-xs">
+          <div className="px-3 py-1.5 rounded-xl bg-[#EAF3E6] border border-[#B9C6A5] text-[#4A643E] font-semibold">
+            Perceived Stress Reduction: <strong>{Math.abs(report.stressDelta)} pts</strong>
+          </div>
+          <div className="px-3 py-1.5 rounded-xl bg-[#EAF3E6] border border-[#B9C6A5] text-[#4A643E] font-semibold">
+            Relaxation Deepening: <strong>+{report.relaxationDelta} pts</strong>
+          </div>
+          <div className="px-3 py-1.5 rounded-xl bg-[#EAF3E6] border border-[#B9C6A5] text-[#4A643E] font-semibold">
+            Mental Calmness Gain: <strong>+{report.calmnessDelta} pts</strong>
+          </div>
+          <div className="px-3 py-1.5 rounded-xl bg-[#FBECE6] border border-[#E8C0B2] text-[#C45B32] font-semibold">
+            Overall Shift Score: <strong>+{report.overallShiftScore} pts</strong>
+          </div>
+        </div>
+      </div>
+
+      {/* ── 7. Session Summary ─────────────────────────────────────────────── */}
       <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFDF9] border border-[#F3DCC8] space-y-2 shadow-xs">
         <h4 className="text-xs font-bold text-[#3F3127] uppercase tracking-wider">
-          Closing Wellbeing Summary
+          7. Session Summary Narrative
         </h4>
         <p className="text-xs text-[#796452] leading-relaxed">
           {report.summaryText}
@@ -1181,7 +1320,7 @@ export function ResetLabsReportCard({ attendance, onClose }: ReportCardProps) {
       {/* Non-clinical disclaimer */}
       <div className="p-3 rounded-xl bg-[#FAF4EB] border border-[#F3DCC8] text-[10px] text-[#796452] leading-relaxed text-center">
         <em>
-          Cortoe Reset Labs reports reflect self-reported observational wellbeing metrics. They are not intended as clinical diagnoses, therapeutic treatments or psychological medical evaluations.
+          Cortoe Reset Labs reports reflect self-reported observational wellbeing demonstration metrics. They are not intended as clinical diagnoses, therapeutic treatments or medical evidence.
         </em>
       </div>
     </div>
@@ -1190,6 +1329,7 @@ export function ResetLabsReportCard({ attendance, onClose }: ReportCardProps) {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // COMPONENT 3: My Reports View (Participant Historical Reports)
+// Displays: Summary Cards, Historical Sessions List, Individual Report Drilldown
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface MyReportsProps {
@@ -1225,15 +1365,39 @@ export function ResetLabsMyReportsView({ onCheckInNow }: MyReportsProps) {
     fetchReports()
   }, [fetchReports])
 
+  // Summary Metrics calculated dynamically from actual demo records
+  const totalCompleted = reports.length
+  const avgPreStress = totalCompleted > 0
+    ? (reports.reduce((acc, r) => acc + (r.preAssessment?.stress || 0), 0) / totalCompleted).toFixed(1)
+    : "0.0"
+  const avgPostStress = totalCompleted > 0
+    ? (reports.reduce((acc, r) => acc + (r.postAssessment?.stress || 0), 0) / totalCompleted).toFixed(1)
+    : "0.0"
+  const stressDiff = (Number(avgPostStress) - Number(avgPreStress)).toFixed(1)
+  const stressReductionPct = Number(avgPreStress) > 0
+    ? Math.abs(Math.round(((Number(avgPreStress) - Number(avgPostStress)) / Number(avgPreStress)) * 100))
+    : 0
+
+  const avgPreRelax = totalCompleted > 0
+    ? (reports.reduce((acc, r) => acc + (r.preAssessment?.relaxation || 0), 0) / totalCompleted).toFixed(1)
+    : "0.0"
+  const avgPostRelax = totalCompleted > 0
+    ? (reports.reduce((acc, r) => acc + (r.postAssessment?.relaxation || 0), 0) / totalCompleted).toFixed(1)
+    : "0.0"
+  const relaxDiff = (Number(avgPostRelax) - Number(avgPreRelax)).toFixed(1)
+  const relaxIncreasePct = Number(avgPreRelax) > 0
+    ? Math.round(((Number(avgPostRelax) - Number(avgPreRelax)) / Number(avgPreRelax)) * 100)
+    : 0
+
   if (selectedReport) {
     return (
       <div className="space-y-4 animate-fade-in">
         <button
           type="button"
           onClick={() => setSelectedReport(null)}
-          className="text-xs font-semibold text-[#796452] hover:text-[#3F3127] inline-flex items-center gap-1.5 cursor-pointer"
+          className="text-xs font-semibold text-[#796452] hover:text-[#3F3127] inline-flex items-center gap-1.5 cursor-pointer px-3 py-1.5 rounded-xl bg-[#FAF4EB] border border-[#F3DCC8]"
         >
-          <span>← Back to My Reports List</span>
+          <span>← Back to All Reports</span>
         </button>
         <ResetLabsReportCard attendance={selectedReport} onClose={() => setSelectedReport(null)} />
       </div>
@@ -1242,14 +1406,20 @@ export function ResetLabsMyReportsView({ onCheckInNow }: MyReportsProps) {
 
   return (
     <div className="space-y-6">
+      {/* ── View Header ────────────────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h2 className="text-xl font-bold text-[#3F3127] flex items-center gap-2">
-            <span>📑</span>
-            <span>My Reset Labs Reports</span>
-          </h2>
-          <p className="text-xs text-[#796452] mt-0.5">
-            Your self-reported before-and-after session insights and experiential progress.
+          <div className="flex items-center gap-2 flex-wrap mb-1">
+            <h2 className="text-xl font-bold text-[#3F3127] flex items-center gap-2">
+              <span>📑</span>
+              <span>My Reset Labs Reports</span>
+            </h2>
+            <span className="text-[9px] font-semibold text-[#C45B32] bg-[#FBECE6] border border-[#E8C0B2] px-2.5 py-0.5 rounded-full tracking-wider">
+              DEMO DATA · SYNTHETIC SESSION RECORDS
+            </span>
+          </div>
+          <p className="text-xs text-[#796452]">
+            Your self-reported before-and-after session insights and experiential progress across completed Reset Labs.
           </p>
         </div>
 
@@ -1257,12 +1427,57 @@ export function ResetLabsMyReportsView({ onCheckInNow }: MyReportsProps) {
           <button
             type="button"
             onClick={onCheckInNow}
-            className="px-4 py-2 rounded-xl bg-[#C45B32] hover:bg-[#B34E27] text-white text-xs font-semibold shadow-xs cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-[#C45B32] hover:bg-[#B34E27] text-white text-xs font-semibold shadow-xs cursor-pointer flex-shrink-0"
           >
             + Enter Session Check-in / Checkout
           </button>
         )}
       </div>
+
+      {/* ── Summary Cards (Calculated Dynamically from Demo Records) ────────── */}
+      {!isLoading && reports.length > 0 && (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 animate-fade-in">
+          {/* Card 1: Completed Sessions */}
+          <div className="p-4 rounded-2xl bg-[#FFFDF9] border border-[#F3DCC8] shadow-xs space-y-1">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] uppercase font-bold text-[#796452] tracking-wider">Completed Sessions</span>
+              <span className="text-xs">🌿</span>
+            </div>
+            <p className="font-mono-data text-2xl font-bold text-[#3F3127]">{totalCompleted}</p>
+            <p className="text-[11px] text-[#796452]">Historical experiential resets</p>
+          </div>
+
+          {/* Card 2: Average Pre-Session Stress */}
+          <div className="p-4 rounded-2xl bg-[#FFFDF9] border border-[#F3DCC8] shadow-xs space-y-1">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] uppercase font-bold text-[#796452] tracking-wider">Avg Pre-Session Stress</span>
+              <span className="text-xs">⚡</span>
+            </div>
+            <p className="font-mono-data text-2xl font-bold text-[#C45B32]">{avgPreStress} <span className="text-xs text-[#796452] font-normal">/ 10</span></p>
+            <p className="text-[11px] text-[#796452]">Reported arrival stress level</p>
+          </div>
+
+          {/* Card 3: Average Post-Session Stress */}
+          <div className="p-4 rounded-2xl bg-[#FFFDF9] border border-[#B9C6A5] shadow-xs space-y-1">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] uppercase font-bold text-[#4A643E] tracking-wider">Avg Post-Session Stress</span>
+              <span className="text-xs">🕊️</span>
+            </div>
+            <p className="font-mono-data text-2xl font-bold text-[#4A643E]">{avgPostStress} <span className="text-xs text-[#796452] font-normal">/ 10</span></p>
+            <p className="text-[11px] text-[#4A643E] font-medium">{stressDiff} pts ({stressReductionPct}% reduction)</p>
+          </div>
+
+          {/* Card 4: Average Relaxation Change */}
+          <div className="p-4 rounded-2xl bg-[#FFFDF9] border border-[#F3DCC8] shadow-xs space-y-1">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] uppercase font-bold text-[#796452] tracking-wider">Avg Relaxation Shift</span>
+              <span className="text-xs">🧘</span>
+            </div>
+            <p className="font-mono-data text-2xl font-bold text-[#C45B32]">+{relaxDiff} <span className="text-xs text-[#796452] font-normal">pts</span></p>
+            <p className="text-[11px] text-[#796452] font-medium">{avgPreRelax} → {avgPostRelax} / 10 (+{relaxIncreasePct}%)</p>
+          </div>
+        </div>
+      )}
 
       {/* Active in-progress check-ins needing checkout */}
       {activeCheckIns.length > 0 && (
@@ -1308,13 +1523,13 @@ export function ResetLabsMyReportsView({ onCheckInNow }: MyReportsProps) {
         </div>
       )}
 
-      {/* Reports List */}
+      {/* Empty State */}
       {!isLoading && reports.length === 0 && (
         <div className="py-12 px-4 rounded-3xl bg-[#FAF4EB] border border-[#F3DCC8] text-center space-y-3">
           <span className="text-3xl">🌿</span>
           <p className="text-sm font-bold text-[#3F3127]">No completed session reports yet.</p>
           <p className="text-xs text-[#796452] max-w-md mx-auto">
-            Once you attend an Acoustic Unwind or Express & Unwind session and complete your checkout assessment, your detailed Before vs After comparison report will appear here.
+            Once you attend an Acoustic Unwind, Express & Unwind, or other Reset Lab session and complete checkout, your Before vs After comparison report will appear here.
           </p>
           {onCheckInNow && (
             <button
@@ -1328,44 +1543,120 @@ export function ResetLabsMyReportsView({ onCheckInNow }: MyReportsProps) {
         </div>
       )}
 
+      {/* ── Session History (All Completed Sessions) ───────────────────────── */}
       {!isLoading && reports.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {reports.map((r) => (
-            <div
-              key={r._id}
-              onClick={() => setSelectedReport(r)}
-              className="p-5 rounded-3xl border border-[#F3DCC8] bg-[#FAF4EB] hover:border-[#C45B32] transition-all cursor-pointer shadow-[0_8px_20px_rgba(121,100,82,0.06),inset_0_1px_2px_rgba(255,255,255,0.95)] hover:-translate-y-0.5 space-y-3"
-            >
-              <div className="flex items-center justify-between gap-2 border-b border-[#F3DCC8] pb-2">
-                <span className="text-[10px] font-mono-data font-bold text-[#C45B32] bg-[#F3DCC8] px-2.5 py-0.5 rounded-full">
-                  {r.sessionId}
-                </span>
-                <span className="text-[11px] text-[#796452]">
-                  {r.checkOutTime ? new Date(r.checkOutTime).toLocaleDateString([], { month: "short", day: "numeric", year: "numeric" }) : ""}
-                </span>
-              </div>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-bold text-[#3F3127] flex items-center gap-2">
+              <span>📅</span>
+              <span>Session History ({reports.length} sessions)</span>
+            </h3>
+            <span className="text-xs text-[#796452]">Most recent first</span>
+          </div>
 
-              <div>
-                <h3 className="text-base font-bold text-[#3F3127]">{r.sessionTitle}</h3>
-                <p className="text-xs text-[#796452] mt-0.5 line-clamp-2">
-                  {r.report?.summaryText || "Completed session report"}
-                </p>
-              </div>
+          <div className="grid grid-cols-1 gap-4">
+            {reports.map((r) => {
+              const preStress = r.preAssessment?.stress ?? 0
+              const postStress = r.postAssessment?.stress ?? 0
+              const preRelax = r.preAssessment?.relaxation ?? 0
+              const postRelax = r.postAssessment?.relaxation ?? 0
+              const stressDelta = postStress - preStress
+              const relaxDelta = postRelax - preRelax
 
-              <div className="flex items-center justify-between pt-2 border-t border-[#F3DCC8] text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-bold uppercase text-[#796452]">Shift:</span>
-                  <span className="font-mono-data font-bold text-[#C45B32]">
-                    {r.report?.overallShiftScore ? `+${r.report.overallShiftScore} pts` : "Completed"}
-                  </span>
+              return (
+                <div
+                  key={r._id}
+                  className="p-5 sm:p-6 rounded-3xl border border-[#F3DCC8] bg-[#FAF4EB] hover:border-[#C45B32] transition-all shadow-[0_8px_20px_rgba(121,100,82,0.06),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-4"
+                >
+                  {/* Card Header */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#F3DCC8] pb-3">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[10px] font-mono-data font-bold text-[#C45B32] bg-[#F3DCC8] px-2.5 py-0.5 rounded-full">
+                        {r.sessionId}
+                      </span>
+                      <span className="text-[10px] font-semibold text-[#796452] bg-[#FFFDF9] px-2.5 py-0.5 rounded-full border border-[#F3DCC8]">
+                        {r.sessionCategory || "Experiential Wellbeing"}
+                      </span>
+                      <span className="text-[9px] font-semibold text-[#C45B32] bg-[#FBECE6] px-2 py-0.5 rounded-full border border-[#E8C0B2]">
+                        DEMO RECORD
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-xs text-[#796452]">
+                      <span>{r.checkOutTime ? new Date(r.checkOutTime).toLocaleDateString([], { month: "short", day: "numeric", year: "numeric" }) : ""}</span>
+                      <span>·</span>
+                      <span>{r.sessionDuration || "45 min"}</span>
+                    </div>
+                  </div>
+
+                  {/* Title & Narrative */}
+                  <div>
+                    <h4 className="text-base sm:text-lg font-bold text-[#3F3127]">
+                      {r.sessionTitle}
+                    </h4>
+                    <p className="text-xs text-[#796452] mt-1 line-clamp-2 leading-relaxed">
+                      {r.report?.summaryText || "Completed session report"}
+                    </p>
+                  </div>
+
+                  {/* Before vs After Metric Summary Row */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 p-3 rounded-2xl bg-[#FFFDF9] border border-[#F3DCC8] text-xs">
+                    <div className="space-y-0.5">
+                      <span className="text-[10px] uppercase font-bold text-[#796452]">Perceived Stress</span>
+                      <div className="flex items-center gap-1.5 font-mono-data font-bold">
+                        <span className="text-[#3F3127]">{preStress}</span>
+                        <span className="text-[#796452]">→</span>
+                        <span className="text-[#4A643E]">{postStress} / 10</span>
+                        <span className="text-[10px] font-semibold text-[#4A643E] bg-[#EAF3E6] px-1.5 py-0.2 rounded border border-[#B9C6A5]">
+                          {stressDelta} pts
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-0.5">
+                      <span className="text-[10px] uppercase font-bold text-[#796452]">Relaxation</span>
+                      <div className="flex items-center gap-1.5 font-mono-data font-bold">
+                        <span className="text-[#3F3127]">{preRelax}</span>
+                        <span className="text-[#796452]">→</span>
+                        <span className="text-[#C45B32]">{postRelax} / 10</span>
+                        <span className="text-[10px] font-semibold text-[#C45B32] bg-[#FBECE6] px-1.5 py-0.2 rounded border border-[#E8C0B2]">
+                          +{relaxDelta} pts
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-0.5">
+                      <span className="text-[10px] uppercase font-bold text-[#796452]">Emotional Shift</span>
+                      <div className="text-[11px] font-medium text-[#3F3127] truncate">
+                        <span className="text-[#796452]">{r.preAssessment?.emotionalState || "Arrival"}</span>
+                        {" → "}
+                        <strong className="text-[#4A643E]">{r.postAssessment?.emotionalState || "Centered"}</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Footer & View Report Action */}
+                  <div className="flex items-center justify-between pt-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] uppercase font-bold text-[#796452]">Shift Score:</span>
+                      <span className="font-mono-data font-bold text-xs text-[#C45B32] bg-[#F3DCC8]/70 px-2.5 py-0.5 rounded-full border border-[#E0C5AE]">
+                        +{r.report?.overallShiftScore || 0} pts
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setSelectedReport(r)}
+                      className="px-4 py-2 rounded-xl bg-[#C45B32] hover:bg-[#B34E27] text-white text-xs font-semibold shadow-xs cursor-pointer inline-flex items-center gap-1.5 transition-all"
+                    >
+                      <span>View Report</span>
+                      <span>→</span>
+                    </button>
+                  </div>
                 </div>
-                <span className="text-xs font-semibold text-[#C45B32] hover:underline flex items-center gap-1">
-                  <span>View Details</span>
-                  <span>→</span>
-                </span>
-              </div>
-            </div>
-          ))}
+              )
+            })}
+          </div>
         </div>
       )}
     </div>

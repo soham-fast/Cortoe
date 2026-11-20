@@ -10,6 +10,7 @@ const InterventionSession = require("../models/InterventionSession")
 const ReportSchedule = require("../models/ReportSchedule")
 const { requireHR } = require("../middleware/auth")
 const { ensureDepartmentsForOrg } = require("../services/departmentService")
+const { APPROVED_DEPARTMENTS, normalizeDepartment } = require("../config/departments")
 const { ensureInterventionsForOrg } = require("../services/interventionService")
 const { generateReportInsights } = require("../services/aiReportInsightService")
 const { generateDocxReport } = require("../services/reportGenerator")
@@ -188,14 +189,21 @@ async function compileReportMetrics(org, { reportType = "monthly", year, month, 
     { state: "Burnout-risk", pct: totalAssessed > 0 ? Math.round((stateCounts["burnout-risk"] / totalAssessed) * 100) : 0, count: stateCounts["burnout-risk"], color: "#B86B64" },
   ]
 
-  // 3. Departments (using stable departmentId)
-  const allOrgDepts = await ensureDepartmentsForOrg(org.organisationId)
+  // 3. Departments (strictly 8 approved departments)
+  const rawOrgDepts = await ensureDepartmentsForOrg(org.organisationId)
+  const allOrgDepts = rawOrgDepts.filter((d) => APPROVED_DEPARTMENTS.includes(d.name))
   const departmentsData = []
 
   for (const dept of allOrgDepts) {
-    const deptEmployees = employees.filter((e) => e.departmentId === dept.departmentId || e.department === dept.name)
-    const inDept = assessmentsInPeriod.filter((a) => a.departmentId === dept.departmentId || a.department === dept.name)
-    const prevInDept = prevAssessments.filter((a) => a.departmentId === dept.departmentId || a.department === dept.name)
+    const deptEmployees = employees.filter(
+      (e) => e.departmentId === dept.departmentId || normalizeDepartment(e.department) === dept.name
+    )
+    const inDept = assessmentsInPeriod.filter(
+      (a) => a.departmentId === dept.departmentId || normalizeDepartment(a.department) === dept.name
+    )
+    const prevInDept = prevAssessments.filter(
+      (a) => a.departmentId === dept.departmentId || normalizeDepartment(a.department) === dept.name
+    )
 
     const deptCurrent = inDept.length > 0 ? Math.round(inDept.reduce((acc, a) => acc + (a.msi || 0), 0) / inDept.length) : null
     const deptPrev = prevInDept.length > 0 ? Math.round(prevInDept.reduce((acc, a) => acc + (a.msi || 0), 0) / prevInDept.length) : null

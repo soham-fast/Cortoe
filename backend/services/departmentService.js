@@ -1,53 +1,24 @@
 const Department = require("../models/Department")
 const Organisation = require("../models/Organisation")
+const User = require("../models/User")
+const Assessment = require("../models/Assessment")
+const InterventionSession = require("../models/InterventionSession")
 const mongoose = require("mongoose")
+const {
+  APPROVED_DEPARTMENTS,
+  DEPARTMENT_MAPPING,
+  normalizeDepartment,
+  isValidDepartment,
+} = require("../config/departments")
 
-/**
- * Department Name Mapping: Old -> New
- */
-const DEPARTMENT_MAPPING = {
-  "Engineering": "Tech & Product",
-  "Sales": "Sales & Marketing",
-  "HR": "Operations & Admin",
-  "Operations": "Research & Innovation",
-  "Finance": "Finance and Legal",
-  "Marketing": "Services / Delivery",
-  "Customer Support": "People & Support",
-  "Other": "Other",
-}
-
-/**
- * Normalizes legacy department names to new names.
- */
-function normalizeDepartmentName(name) {
-  if (!name || typeof name !== "string") return name
-  const trimmed = name.trim()
-  for (const [oldName, newName] of Object.entries(DEPARTMENT_MAPPING)) {
-    if (trimmed.toLowerCase() === oldName.toLowerCase()) {
-      return newName
-    }
-  }
-  return trimmed
-}
-
-/**
- * Standard department catalogue names
- */
-const DEFAULT_DEPARTMENTS = [
-  "Tech & Product",
-  "Sales & Marketing",
-  "Operations & Admin",
-  "Research & Innovation",
-  "Finance and Legal",
-  "Services / Delivery",
-  "People & Support",
-  "Other",
-]
+// Backwards compatibility alias
+const normalizeDepartmentName = normalizeDepartment
+const DEFAULT_DEPARTMENTS = APPROVED_DEPARTMENTS
 
 /**
  * Generates an organisation-scoped department ID prefix from the organisation.
- * e.g. For "Meridian Group" with organisationCode "MERI4827" or name "Meridian Group", prefix is "MER".
- * For "CortiQuant" (CORT4213) -> "CORT".
+ * e.g. For "Meridian Group" with organisationCode "MERI4827" -> "MERI".
+ * For "CortiQuant" (CORT2480) -> "CORT".
  */
 function getOrgCodePrefix(org) {
   if (!org) return "DEPT"
@@ -63,9 +34,8 @@ function getOrgCodePrefix(org) {
 }
 
 /**
- * Ensures all default departments exist for a given organisation.
- * Existing departments are preserved and never duplicated.
- * Returns map or array of departments.
+ * Ensures strictly the 8 approved departments exist for a given organisation.
+ * Eliminates duplicates, remaps legacy references, and returns exactly the 8 approved departments.
  */
 async function ensureDepartmentsForOrg(organisationId) {
   if (!organisationId) return []
@@ -81,31 +51,90 @@ async function ensureDepartmentsForOrg(organisationId) {
   const orgPrefix = getOrgCodePrefix(org)
   const queryOrgId = org ? org.organisationId : organisationId
 
-  // Fetch existing departments for this organisation
-  const existing = await Department.find({
+  const orgFilter = {
     $or: [
       { organisationId: queryOrgId },
       { organisationId: String(organisationId) },
       ...(mongoose.isValidObjectId(organisationId) ? [{ organisationId: new mongoose.Types.ObjectId(organisationId) }] : []),
     ],
-  })
+  }
 
-  const existingMap = new Map(existing.map((d) => [d.name.trim().toLowerCase(), d]))
+  // Fetch all existing departments for this organisation
+  const existing = await Department.find(orgFilter)
 
-  // Find max sequence number to avoid collisions
+  // Calculate highest sequence number
   let maxSeq = 0
   for (const d of existing) {
-    const match = d.departmentId.match(/-(\d+)$/)
+    const match = d.departmentId?.match(/-(\d+)$/)
     if (match) {
       const num = parseInt(match[1], 10)
       if (num > maxSeq) maxSeq = num
     }
   }
 
-  // Create any missing standard departments
-  for (const name of DEFAULT_DEPARTMENTS) {
-    const key = name.trim().toLowerCase()
-    if (!existingMap.has(key)) {
+  // Group existing departments by canonical approved department name
+  const canonicalGroups = new Map()
+  for (const approved of APPROVED_DEPARTMENTS) {
+    canonicalGroups.set(approved, [])
+  }
+
+  const unmappedDocs = []
+  for (const doc of existing) {
+    const canonicalName = normalizeDepartment(doc.name)
+    if (canonicalGroups.has(canonicalName)) {
+      canonicalGroups.get(canonicalName).push(doc)
+    } else {
+      unmappedDocs.push(doc)
+    }
+  }
+
+  const finalDepartments = []
+
+  for (const approvedName of APPROVED_DEPARTMENTS) {
+    const group = canonicalGroups.get(approvedName) || []
+
+    if (group.length > 0) {
+      // Pick the best doc: exact name match first, or the first one
+      let canonicalDoc = group.find((d) => d.name === approvedName && d.status === "Active")
+      if (!canonicalDoc) {
+        canonicalDoc = group.find((d) => d.name === approvedName) || group[0]
+      }
+
+      // If its name isn't strictly the canonical name, update it
+      if (canonicalDoc.name !== approvedName || canonicalDoc.status !== "Active") {
+        canonicalDoc.name = approvedName
+        canonicalDoc.status = "Active"
+        canonicalDoc.organisationId = queryOrgId
+        await canonicalDoc.save()
+      }
+
+      // Any duplicates in this group must be remapped to canonicalDoc and removed
+      const duplicates = group.filter((d) => String(d._id) !== String(canonicalDoc._id))
+      for (const dup of duplicates) {
+        if (dup.departmentId && dup.departmentId !== canonicalDoc.departmentId) {
+          // Remap users
+          await User.updateMany(
+            { ...orgFilter, departmentId: dup.departmentId },
+            { $set: { departmentId: canonicalDoc.departmentId, department: approvedName } }
+          )
+          // Remap assessments
+          await Assessment.updateMany(
+            { ...orgFilter, departmentId: dup.departmentId },
+            { $set: { departmentId: canonicalDoc.departmentId, department: approvedName } }
+          )
+          // Remap intervention sessions
+          await InterventionSession.updateMany(
+            { ...orgFilter, departmentId: dup.departmentId },
+            { $set: { departmentId: canonicalDoc.departmentId } }
+          )
+        }
+        // Remove duplicate department doc
+        await Department.deleteOne({ _id: dup._id })
+      }
+
+      finalDepartments.push(canonicalDoc)
+    } else {
+      // Create missing approved department
       maxSeq++
       const seqStr = String(maxSeq).padStart(3, "0")
       const departmentId = `DEPT-${orgPrefix}-${seqStr}`
@@ -113,30 +142,48 @@ async function ensureDepartmentsForOrg(organisationId) {
       const newDept = new Department({
         departmentId,
         organisationId: queryOrgId,
-        name,
+        name: approvedName,
         status: "Active",
       })
 
       try {
         await newDept.save()
-        existing.push(newDept)
-        existingMap.set(key, newDept)
+        finalDepartments.push(newDept)
       } catch (err) {
-        // If duplicate key error due to race condition, re-fetch
         if (err.code === 11000) {
-          const found = await Department.findOne({ organisationId: queryOrgId, name })
+          const found = await Department.findOne({ organisationId: queryOrgId, name: approvedName })
           if (found) {
-            existing.push(found)
-            existingMap.set(key, found)
+            finalDepartments.push(found)
           }
         } else {
-          console.error(`[DEPARTMENT-SERVICE] Error creating department ${name}:`, err.message)
+          console.error(`[DEPARTMENT-SERVICE] Error creating department ${approvedName}:`, err.message)
         }
       }
     }
   }
 
-  return existing
+  // Clean up any unmapped legacy docs
+  for (const doc of unmappedDocs) {
+    const targetApproved = normalizeDepartment(doc.name)
+    const canonical = finalDepartments.find((d) => d.name === targetApproved)
+    if (canonical && doc.departmentId && doc.departmentId !== canonical.departmentId) {
+      await User.updateMany(
+        { ...orgFilter, departmentId: doc.departmentId },
+        { $set: { departmentId: canonical.departmentId, department: canonical.name } }
+      )
+      await Assessment.updateMany(
+        { ...orgFilter, departmentId: doc.departmentId },
+        { $set: { departmentId: canonical.departmentId, department: canonical.name } }
+      )
+      await InterventionSession.updateMany(
+        { ...orgFilter, departmentId: doc.departmentId },
+        { $set: { departmentId: canonical.departmentId } }
+      )
+    }
+    await Department.deleteOne({ _id: doc._id })
+  }
+
+  return finalDepartments
 }
 
 /**
@@ -154,70 +201,23 @@ async function getOrCreateDepartment(organisationId, departmentName) {
   })
 
   const queryOrgId = org ? org.organisationId : organisationId
-  const rawTrimmed = departmentName.trim()
-  const trimmedName = normalizeDepartmentName(rawTrimmed)
+  const normalizedDeptName = normalizeDepartment(departmentName)
 
-  // 1. Try to find existing department by name (case-insensitive)
-  let dept = await Department.findOne({
-    $or: [
-      { organisationId: queryOrgId },
-      { organisationId: String(organisationId) },
-      ...(mongoose.isValidObjectId(organisationId) ? [{ organisationId: new mongoose.Types.ObjectId(organisationId) }] : []),
-    ],
-    name: { $regex: new RegExp(`^${trimmedName}$`, "i") },
-  })
+  // Ensure all standard departments exist
+  const allDepts = await ensureDepartmentsForOrg(queryOrgId)
+  const match = allDepts.find((d) => d.name === normalizedDeptName)
+  if (match) return match
 
-  if (dept) return dept
-
-  // 2. If not found, ensure all defaults or create this specific one
-  const existingAll = await Department.find({
-    $or: [
-      { organisationId: queryOrgId },
-      { organisationId: String(organisationId) },
-      ...(mongoose.isValidObjectId(organisationId) ? [{ organisationId: new mongoose.Types.ObjectId(organisationId) }] : []),
-    ],
-  })
-
-  let maxSeq = 0
-  for (const d of existingAll) {
-    const match = d.departmentId.match(/-(\d+)$/)
-    if (match) {
-      const num = parseInt(match[1], 10)
-      if (num > maxSeq) maxSeq = num
-    }
-  }
-
-  const orgPrefix = getOrgCodePrefix(org)
-  const nextSeq = String(maxSeq + 1).padStart(3, "0")
-  const departmentId = `DEPT-${orgPrefix}-${nextSeq}`
-
-  dept = new Department({
-    departmentId,
-    organisationId: queryOrgId,
-    name: trimmedName,
-    status: "Active",
-  })
-
-  try {
-    await dept.save()
-  } catch (err) {
-    if (err.code === 11000) {
-      dept = await Department.findOne({
-        organisationId: queryOrgId,
-        name: { $regex: new RegExp(`^${trimmedName}$`, "i") },
-      })
-    } else {
-      throw err
-    }
-  }
-
-  return dept
+  return allDepts[0] || null
 }
 
 module.exports = {
   ensureDepartmentsForOrg,
   getOrCreateDepartment,
   normalizeDepartmentName,
+  normalizeDepartment,
+  isValidDepartment,
   DEPARTMENT_MAPPING,
   DEFAULT_DEPARTMENTS,
+  APPROVED_DEPARTMENTS,
 }

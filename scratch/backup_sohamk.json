@@ -1,0 +1,164 @@
+{
+  "timestamp": "2026-11-19T09:47:59.011Z",
+  "user": {
+    "organisationLink": {
+      "status": "none",
+      "organisationId": null,
+      "organisationCode": null,
+      "organisationName": null,
+      "department": null,
+      "workingHours": null,
+      "workType": null,
+      "requestedAt": null,
+      "approvedAt": null,
+      "rejectedAt": null,
+      "rejectionReason": null
+    },
+    "latestMbsi": {
+      "score": 44,
+      "bsiScore": 38.1,
+      "msiScore": 48,
+      "calculatedAt": "2026-11-17T09:51:40.635Z",
+      "assessmentId": "6afc23ac2856458c10d0570a"
+    },
+    "settings": {
+      "dailyCheckInReminder": true,
+      "reduceMotion": false,
+      "anonymousMode": true
+    },
+    "_id": "6afc23472856458c10d05630",
+    "name": "sohamk",
+    "username": "sohamk",
+    "email": "kadamsoham1006@gmail.com",
+    "role": "employee",
+    "age": 20,
+    "gender": "Male",
+    "occupation": "Other",
+    "sleepHours": 7,
+    "illnessHistory": "None",
+    "profileCompleted": true,
+    "archetype": null,
+    "status": "Active",
+    "organisationId": null,
+    "organisationCode": null,
+    "pendingEmail": null,
+    "employeeId": null,
+    "department": null,
+    "departmentId": null,
+    "privacyConsent": true,
+    "privacyConsentAt": "2026-11-17T09:49:59.326Z",
+    "participantConsent": true,
+    "participantConsentAt": "2026-11-17T09:49:59.326Z",
+    "approvedAt": null,
+    "approvedBy": null,
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "approvalEmailSentAt": null,
+    "rejectionEmailSentAt": null,
+    "onboardingCompleted": true,
+    "baselineMsi": 48,
+    "baselineCompletedAt": "2026-11-17T09:51:16.684Z",
+    "lastBaselineMsiDate": "2026-11-17T09:51:16.684Z",
+    "nextBaselineMsiDate": "2026-11-24T09:51:16.684Z",
+    "msi": [
+      {
+        "score": 48,
+        "type": "baseline",
+        "recordedAt": "2026-11-17T09:51:16.684Z",
+        "_id": "6afc23942856458c10d0565a"
+      }
+    ],
+    "baselineMsiHistory": [
+      {
+        "score": 48,
+        "completedAt": "2026-11-17T09:51:16.684Z",
+        "_id": "6afc23942856458c10d05659"
+      }
+    ],
+    "createdAt": "2026-11-17T09:49:59.328Z",
+    "updatedAt": "2026-11-17T09:51:40.707Z",
+    "__v": 0
+  },
+  "assessments": [
+    {
+      "responses": {
+        "moodCheck": {
+          "M1": null,
+          "M2": null
+        },
+        "stressPulse": {
+          "SP1": null,
+          "SP2": null,
+          "SP3": null,
+          "SP4": null,
+          "SP5": null,
+          "SP6": null
+        },
+        "physicalCheck": {
+          "PH1": null
+        },
+        "feeling": null,
+        "stressor": null,
+        "physical": null,
+        "driver": null
+      },
+      "scores": {
+        "moodScore": 3,
+        "psychometricScore": 12,
+        "physicalScore": 2,
+        "msi": 48
+      },
+      "_id": "6afc23942856458c10d05655",
+      "userId": "6afc23472856458c10d05630",
+      "employeeId": null,
+      "organisationId": null,
+      "organisationCode": null,
+      "type": "Baseline MSI",
+      "msi": 48,
+      "category": "Moderate",
+      "driver": null,
+      "status": "Active",
+      "departmentId": null,
+      "department": null,
+      "completedAt": "2026-11-17T09:51:16.684Z",
+      "createdAt": "2026-11-17T09:51:16.774Z",
+      "updatedAt": "2026-11-17T09:51:16.774Z",
+      "__v": 0
+    }
+  ],
+  "ledgers": [
+    {
+      "_id": "6afc23942856458c10d05657",
+      "userId": "6afc23472856458c10d05630",
+      "name": "sohamk",
+      "age": 20,
+      "gender": "Male",
+      "profession": "Other",
+      "hoursOfSleep": 7,
+      "medicalHistory": "None",
+      "M1": 2,
+      "M2": 1,
+      "M3": 1,
+      "M4": 2,
+      "S1": 2,
+      "S2": 2,
+      "S3": 2,
+      "S4": 2,
+      "R1": 2,
+      "R2": 2,
+      "R3": 2,
+      "R4": 2,
+      "P1": 2,
+      "P2": 3,
+      "P3": 3,
+      "P4": 3,
+      "calculatedMSI": 48,
+      "assessmentType": "baseline",
+      "assessmentDate": "2026-11-17T09:51:16.684Z",
+      "createdAt": "2026-11-17T09:51:16.794Z",
+      "updatedAt": "2026-11-17T09:51:16.794Z",
+      "__v": 0
+    }
+  ]
+}

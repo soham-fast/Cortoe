@@ -24,6 +24,7 @@ import MovementReset from "./MovementReset"
 import GuidedReset from "./GuidedReset"
 import MindBodyScreen from "./MindBodyScreen"
 import ResetLabsScreen from "./ResetLabsScreen"
+import { APPROVED_DEPARTMENTS } from "@/constants/departments"
 
 export type Screen =
   | "home"
@@ -2289,7 +2290,12 @@ function MyStressScreen({ onNav }: { onNav: (s: Screen) => void }) {
       <div className="card-base p-5 mb-4">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <p className="text-[10px] text-text-muted font-medium">MSI over time</p>
+            <div className="flex items-center gap-2 flex-wrap">
+              <p className="text-[10px] text-text-muted font-medium">MSI over time</p>
+              <span className="text-[9px] font-semibold text-purple-core bg-purple-core/10 border border-purple-core/20 px-2 py-0.5 rounded-full tracking-wider">
+                DEMO DATA · SYNTHETIC HISTORICAL ASSESSMENTS
+              </span>
+            </div>
             <p className="text-[10px] text-text-muted/70 mt-0.5">
               {period === "7D"
                 ? "Actual weekly check-in scores"
@@ -5872,28 +5878,17 @@ function ProfileScreen({ onBack, onNav }: { onBack: () => void; onNav: (s: Scree
 
                 <div>
                   <label className="text-[11px] font-semibold text-text-muted">Department</label>
-                  {availableDepts.length > 0 ? (
-                    <select
-                      value={selectedDept}
-                      onChange={(e) => setSelectedDept(e.target.value)}
-                      className="w-full mt-1 bg-elevated border border-border-p rounded-xl px-3 py-2.5 text-sm text-warm-white outline-none focus:border-purple-core cursor-pointer"
-                    >
-                      {availableDepts.map((d) => (
-                        <option key={d} value={d}>
-                          {d}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <input
-                      type="text"
-                      placeholder="e.g. Tech & Product"
-                      value={selectedDept}
-                      onChange={(e) => setSelectedDept(e.target.value)}
-                      className="w-full mt-1 bg-elevated border border-border-p rounded-xl px-3 py-2 text-sm text-warm-white outline-none focus:border-purple-core"
-                      required
-                    />
-                  )}
+                  <select
+                    value={selectedDept}
+                    onChange={(e) => setSelectedDept(e.target.value)}
+                    className="w-full mt-1 bg-elevated border border-border-p rounded-xl px-3 py-2.5 text-sm text-warm-white outline-none focus:border-purple-core cursor-pointer"
+                  >
+                    {(availableDepts.length > 0 ? availableDepts : APPROVED_DEPARTMENTS).map((d) => (
+                      <option key={d} value={d}>
+                        {d}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div>
